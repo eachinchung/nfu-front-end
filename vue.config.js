@@ -1,5 +1,10 @@
 module.exports = {
     configureWebpack: {
-      devtool: 'source-map'
+      devtool: 'source-map',
+      resolve:{
+        alias:{
+          'home':'@/views/home'
+        }
+      }
     }
   }

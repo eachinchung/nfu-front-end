@@ -1,14 +1,16 @@
 <template>
-  <div>{{init}}</div>
+  <div>
+    <index/>
+  </div>
+  
 </template>
 
 <script>
+import Index from './components/index'
 export default {
   name: "App",
-  data() {
-    return {
-      init: "123"
-    };
+  components:{
+    Index
   }
 };
 </script>
