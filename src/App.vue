@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <index/>
+  <div id="app">
+    <router-view />
+    <tabbar />
   </div>
-  
 </template>
 
 <script>
-import Index from './components/index'
+import Tabbar from "@/components/tabbar";
 export default {
   name: "App",
-  components:{
-    Index
+  components: {
+    Tabbar
   }
 };
 </script>
