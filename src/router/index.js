@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const home = () => import('home')
+const Home = () => import('@/views/Home')
+const ClassSchedule = () => import('@/views/ClassSchedule')
+const SchoolBus = () => import('@/views/SchoolBus')
+const Profile = () => import('@/views/Profile')
 
 const routes = [
   {
@@ -12,25 +15,24 @@ const routes = [
   },
   {
     path: '/home',
-    component: home
+    component: Home
   },
   {
     path: '/class_schedule',
-    component: home
+    component: ClassSchedule
   },
   {
     path: '/school_bus',
-    component: home
+    component: SchoolBus
   },
   {
     path: '/profile',
-    component: home
+    component: Profile
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
