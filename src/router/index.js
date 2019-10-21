@@ -13,6 +13,18 @@ const routes = [
   {
     path: '/home',
     component: home
+  },
+  {
+    path: '/class_schedule',
+    component: home
+  },
+  {
+    path: '/school_bus',
+    component: home
+  },
+  {
+    path: '/profile',
+    component: home
   }
 ]
 
