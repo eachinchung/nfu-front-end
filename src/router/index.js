@@ -1,32 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import MainRouter from './main'
 
 Vue.use(VueRouter)
 
 const Main = () => import('@/views/Main')
-const Home = () => import('@/views/Main/Home')
-const ClassSchedule = () => import('@/views/Main/ClassSchedule')
-const SchoolBus = () => import('@/views/Main/SchoolBus')
-const Profile = () => import('@/views/Main/Profile')
 
-const main = [
-  {
-    path: 'home',
-    component: Home
-  },
-  {
-    path: 'class_schedule',
-    component: ClassSchedule
-  },
-  {
-    path: 'school_bus',
-    component: SchoolBus
-  },
-  {
-    path: 'profile',
-    component: Profile
-  }
-]
+const Login = () => import('@/views/Login')
+const SignUp= () => import('@/views/SignUp')
+
 
 const routes = [
   {
@@ -37,9 +19,19 @@ const routes = [
     path: '/main',
     component: Main,
     redirect: '/main/home',
-    children: main
-  }
+    children: MainRouter
+  },
+  {
+    path: '/login',
+    component: Login
+  },
+  {
+    path: '/sign_up',
+    component: SignUp
+  },
 ]
+
+
 
 const router = new VueRouter({
   mode: 'history',
