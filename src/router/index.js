@@ -3,31 +3,41 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const Home = () => import('@/views/Home')
-const ClassSchedule = () => import('@/views/ClassSchedule')
-const SchoolBus = () => import('@/views/SchoolBus')
-const Profile = () => import('@/views/Profile')
+const Main = () => import('@/views/Main')
+const Home = () => import('@/views/Main/Home')
+const ClassSchedule = () => import('@/views/Main/ClassSchedule')
+const SchoolBus = () => import('@/views/Main/SchoolBus')
+const Profile = () => import('@/views/Main/Profile')
+
+const main = [
+  {
+    path: 'home',
+    component: Home
+  },
+  {
+    path: 'class_schedule',
+    component: ClassSchedule
+  },
+  {
+    path: 'school_bus',
+    component: SchoolBus
+  },
+  {
+    path: 'profile',
+    component: Profile
+  }
+]
 
 const routes = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/main/home'
   },
   {
-    path: '/home',
-    component: Home
-  },
-  {
-    path: '/class_schedule',
-    component: ClassSchedule
-  },
-  {
-    path: '/school_bus',
-    component: SchoolBus
-  },
-  {
-    path: '/profile',
-    component: Profile
+    path: '/main',
+    component: Main,
+    redirect: '/main/home',
+    children: main
   }
 ]
 

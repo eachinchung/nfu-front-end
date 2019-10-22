@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../../assets/logo.png">
+  <div>
+    <router-view />
     <tabbar />
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script>
 import Tabbar from "@/components/tabbar";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Tabbar
   }
