@@ -56,16 +56,15 @@ export default {
       this.room_id = room_id;
     },
     check_username() {
-      return true
-      // if (this.username == null || this.username == "") {
-      //   this.$notify("账号不能为空");
-      //   return false;
-      // }
-      // if (this.password == null || this.password == "") {
-      //   this.$notify("密码不能为空");
-      //   return false;
-      // }
-      // return true;
+      if (this.username == null || this.username == "") {
+        this.$notify("账号不能为空");
+        return false;
+      }
+      if (this.password == null || this.password == "") {
+        this.$notify("密码不能为空");
+        return false;
+      }
+      return true;
     },
     sign_up_btn() {
       if (this.check_username()) {
