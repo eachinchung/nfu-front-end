@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const Main = () => import('@/views/Main')
 
 const Login = () => import('@/views/Login')
-const SignUp= () => import('@/views/SignUp')
+const SignUp = () => import('@/views/SignUp')
 
 
 const routes = [
@@ -30,8 +30,6 @@ const routes = [
     component: SignUp
   },
 ]
-
-
 
 const router = new VueRouter({
   mode: 'history',

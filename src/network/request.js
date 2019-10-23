@@ -5,9 +5,5 @@ export function request(config) {
     timeout: 1000
   })
 
-  instans.interceptors.request.use(config => {
-    return config
-  })
-
   return instans(config)
 }

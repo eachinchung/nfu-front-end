@@ -17,13 +17,13 @@
       <van-button type="primary" class="button" @click="login_btu">登录</van-button>
     </van-row>
     <van-row type="flex" justify="center">
-      <van-button type="default" class="button">注册</van-button>
+      <van-button type="default" class="button" to="sign_up">注册</van-button>
     </van-row>
   </div>
 </template>
 
 <script>
-import { login } from "@/network/login";
+import { login } from "@/network/no_token";
 export default {
   data() {
     return {
@@ -45,22 +45,23 @@ export default {
     },
     login_btu() {
       if (this.check_username()) {
-        login({
-          method: "post",
-          url: "/oauth/token/get",
-          data: {
-            user_id: this.username,
-            password: this.password
-          }
-        }).then(
+        login(this.username, this.password).then(
           res => {
             if (res.data.adopt) {
-              console.log(res);
+
               let exp = new Date();
               exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
               document.cookie =
-                'remember=' + res.data.message.refresh_token + ";expires=" + exp.toGMTString();
-            } else this.$notify(res.data.message);
+                "remember=" +
+                res.data.message.refresh_token +
+                ";expires=" +
+                exp.toGMTString();
+
+              this.$store.commit("upToken", res.data.message.access_token);
+              this.$router.push('/main/home')
+            } else {
+              this.$notify(res.data.message);
+            }
           },
           () => {
             this.$notify("不可预知错误");
@@ -73,9 +74,6 @@ export default {
 </script>
 
 <style>
-body {
-  background: rgb(248, 248, 248);
-}
 .login .button {
   width: 90%;
 }
@@ -89,4 +87,3 @@ body {
   margin-bottom: 15px;
 }
 </style>
-
