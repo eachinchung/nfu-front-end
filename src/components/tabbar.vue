@@ -1,5 +1,5 @@
 <template>
-  <van-tabbar v-model="active">
+  <van-tabbar route>
     <van-tabbar-item icon="home-o" to="/main/home">主页</van-tabbar-item>
     <van-tabbar-item icon="todo-list-o" to="/main/class_schedule">课程</van-tabbar-item>
     <van-tabbar-item icon="logistics" to="/main/school_bus">校车</van-tabbar-item>
@@ -11,12 +11,6 @@
 import { Tabbar, TabbarItem } from "vant";
 
 export default {
-  name: "Index",
-  data() {
-    return {
-      active: 0
-    };
-  },
   components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem

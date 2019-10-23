@@ -59,9 +59,8 @@ export default {
 
               this.$store.commit("upToken", res.data.message.access_token);
               this.$router.push('/main/home')
-            } else {
-              this.$notify(res.data.message);
-            }
+            } else this.$notify(res.data.message);
+
           },
           () => {
             this.$notify("不可预知错误");
