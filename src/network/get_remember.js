@@ -5,9 +5,9 @@ export default () => {
 
   for (let i = 0; i < list.length; i++) {
     let arr = list[i].split("=")
-    if (arr[0] == name)
+    if (arr[0] === name)
       return arr[1]
   }
-  
+
   return null;
 }

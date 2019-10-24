@@ -1,21 +1,16 @@
-import { request } from "./request"
+import store from '@/store'
+import router from '@/router'
 
-export function get_user(token) {
-  return request({
-    method: "get",
-    url: "/user/get",
-    headers:{
-      'Authorization': 'Bearer ' + token
-    }
-  })
-}
-
-export function refresh_token(token) {
-  return request({
-    method: "get",
-    url: "oauth/token/refresh",
-    headers:{
-      'Authorization': 'Bearer ' + token
-    }
-  })
+export function handle_token(res) {
+  console.log(res.data.adopt);
+  if (res.data.adopt) {
+    let exp = new Date();
+    exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
+    document.cookie =
+      "remember=" +
+      res.data.message.refresh_token +
+      ";expires=" +
+      exp.toGMTString();
+    store.commit("upToken", res.data.message.access_token);
+  } else router.push("/login");
 }

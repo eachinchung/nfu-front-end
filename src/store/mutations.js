@@ -11,5 +11,6 @@ export default {
     const user = analysis_token(token)
     state.access_token = token
     state.exp = user.exp
+    state.user = user.data
   }
 }
