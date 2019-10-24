@@ -1,11 +1,15 @@
 function analysis_token(token) {
   const data = token.split('.')
-  return JSON.parse(window.atob(data[0])).exp
+  return {
+    exp: JSON.parse(window.atob(data[0])).exp,
+    data: JSON.parse(window.atob(data[1]))
+  }
 }
 
 export default {
   upToken(state, token) {
+    const user = analysis_token(token)
     state.access_token = token
-    state.exp = analysis_token(token)
+    state.exp = user.exp
   }
 }
