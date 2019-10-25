@@ -1,11 +1,11 @@
 import store from '@/store'
-import router from '@/router'
+// import router from '@/router'
 import remember from './get_remember'
 import request from "./request"
-import { handle_token } from "./token"
 
 
-function refresh_token(token) {
+
+function refresh(token) {
   return request({
     method: "get",
     url: "oauth/token/refresh",
@@ -15,33 +15,31 @@ function refresh_token(token) {
   })
 }
 
-function check_refresh_token() {
+export function check_refresh_token() {
   if (store.state.access_token == null) return true;
   else return new Date().getTime() / 1000 > store.state.exp - 120;
 }
 
-export default () => {
-  if (check_refresh_token()) {
-    const token = remember()
+export function handle_token(res) {
+  if (res.data.adopt) {
+    let exp = new Date();
+    exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
+    document.cookie =
+      "remember=" +
+      res.data.message.refresh_token +
+      ";expires=" + exp + ';path=/';
+    store.commit("upToken", res.data.message.access_token);
+    return true
+  } else return false;
+}
 
-    if (token == null) {
-      router.push("/login");
-      store.commit("rmToken");
-      return store.state.access_token
-    }
 
-    refresh_token(token).then(
-      res => {
-        handle_token(res)
-        return store.state.access_token
-      },
-      () => {
-        router.push("/login")
-        return store.state.access_token
-      }
-    );
-
-  } else return store.state.access_token
+export function refresh_token() {
+  const token = remember()
+  if (token == null) {
+    store.commit("rmToken");
+    return [false]
+  } else return [true, refresh(token)]
 }
 
 

@@ -1,8 +1,8 @@
 <template>
   <div class="login">
-    <van-nav-bar class="title" title="南苑聚合" />
+    <van-nav-bar class="title" title="南苑聚合"/>
     <van-cell-group title="请登录您的账号" class="group">
-      <van-field v-model="username" left-icon="contact" label="学号" placeholder="请输入学号" clearable />
+      <van-field v-model="username" left-icon="contact" label="学号" placeholder="请输入学号" clearable/>
       <van-field
         v-model="password"
         left-icon="edit"
@@ -23,66 +23,73 @@
 </template>
 
 <script>
-import { login } from "@/network/no_token";
-export default {
-  data() {
-    return {
-      username: null,
-      password: null
+    import {login} from "@/network/no_token";
+
+    export default {
+        data() {
+            return {
+                username: null,
+                password: null,
+                path: '/'
+            };
+        },
+        created() {
+            if (this.$route.query.next != null) this.path = this.$route.query.next
+        },
+        methods: {
+            check_username() {
+                if (this.username == null || this.username === "") {
+                    this.$notify("账号不能为空");
+                    return false;
+                }
+                if (this.password == null || this.password === "") {
+                    this.$notify("密码不能为空");
+                    return false;
+                }
+                return true;
+            },
+            login_btu() {
+                if (this.check_username()) {
+                    login(this.username, this.password).then(
+                        res => {
+                            if (res.data.adopt) {
+
+                                let exp = new Date();
+                                exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
+                                document.cookie =
+                                    "remember=" +
+                                    res.data.message.refresh_token +
+                                    ";expires=" + exp + ';path=/';
+
+                                this.$store.commit("upToken", res.data.message.access_token);
+                                this.$router.push(this.path)
+                            } else this.$notify(res.data.message);
+
+                        },
+                        () => {
+                            this.$notify("不可预知错误");
+                        }
+                    );
+                }
+            }
+        }
     };
-  },
-  methods: {
-    check_username() {
-      if (this.username == null || this.username == "") {
-        this.$notify("账号不能为空");
-        return false;
-      }
-      if (this.password == null || this.password == "") {
-        this.$notify("密码不能为空");
-        return false;
-      }
-      return true;
-    },
-    login_btu() {
-      if (this.check_username()) {
-        login(this.username, this.password).then(
-          res => {
-            if (res.data.adopt) {
-
-              let exp = new Date();
-              exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
-              document.cookie =
-                "remember=" +
-                res.data.message.refresh_token +
-                ";expires=" +
-                exp.toGMTString();
-
-              this.$store.commit("upToken", res.data.message.access_token);
-              this.$router.push('/main/home')
-            } else this.$notify(res.data.message);
-
-          },
-          () => {
-            this.$notify("不可预知错误");
-          }
-        );
-      }
-    }
-  }
-};
 </script>
 
 <style>
-.login .button {
-  width: 90%;
-}
-.login .title {
-  margin-bottom: 20px;
-}
-.login .group {
-  margin-bottom: 40px;
-}
-.login .row {
-  margin-bottom: 15px;
-}
+  .login .button {
+    width: 90%;
+  }
+
+  .login .title {
+    margin-bottom: 20px;
+  }
+
+  .login .group {
+    margin-bottom: 40px;
+  }
+
+  .login .row {
+    margin-bottom: 15px;
+  }
 </style>

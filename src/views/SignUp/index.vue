@@ -1,7 +1,7 @@
 <template>
   <div class="sign_up">
-    <van-nav-bar class="title" title="注册新用户" />
-    <user @getUser="get_user_data" />
+    <van-nav-bar class="title" title="注册新用户"/>
+    <user @getUser="get_user_data"/>
 
     <van-cell-group title="请设置个人信息" class="group">
       <van-field
@@ -12,7 +12,7 @@
         placeholder="请输入邮箱地址"
         @keyup.enter="login_btu"
       />
-      <popue @getRoomId="get_dormitory" />
+      <pope @getRoomId="get_dormitory"/>
     </van-cell-group>
 
     <van-row type="flex" justify="center" class="row">
@@ -30,77 +30,81 @@
 </template>
 
 <script>
-import { sign_up } from "@/network/no_token";
-import Popue from "./components/popup";
-import User from "./components/user";
+    import {sign_up} from "@/network/no_token";
+    import Pope from "./components/popup";
+    import User from "./components/user";
 
-export default {
-  data() {
-    return {
-      username: null,
-      password: null,
-      room_id: null,
-      email: null,
-      show: false
-    };
-  },
-  components: {
-    User,
-    Popue
-  },
-  methods: {
-    get_user_data(user) {
-      (this.username = user[0]), (this.password = user[1]);
-    },
-    get_dormitory(room_id) {
-      this.room_id = room_id;
-    },
-    check_username() {
-      if (this.username == null || this.username == "") {
-        this.$notify("账号不能为空");
-        return false;
-      }
-      if (this.password == null || this.password == "") {
-        this.$notify("密码不能为空");
-        return false;
-      }
-      return true;
-    },
-    sign_up_btn() {
-      if (this.check_username()) {
-        sign_up(this.username, this.password, this.room_id, this.email).then(
-          res => {
-            if (res.data.adopt) {
-              this.show=true
-            } else {
-              this.$notify(res.data.message);
+    export default {
+        data() {
+            return {
+                username: null,
+                password: null,
+                room_id: null,
+                email: null,
+                show: false
+            };
+        },
+        components: {
+            User,
+            Pope
+        },
+        methods: {
+            get_user_data(user) {
+                this.username = user[0];
+                this.password = user[1];
+            },
+            get_dormitory(room_id) {
+                this.room_id = room_id;
+            },
+            check_username() {
+                if (this.username == null || this.username === "") {
+                    this.$notify("账号不能为空");
+                    return false;
+                }
+                if (this.password == null || this.password === "") {
+                    this.$notify("密码不能为空");
+                    return false;
+                }
+                return true;
+            },
+            sign_up_btn() {
+                if (this.check_username()) {
+                    sign_up(this.username, this.password, this.room_id, this.email).then(
+                        res => {
+                            if (res.data.adopt) {
+                                this.show = true
+                            } else {
+                                this.$notify(res.data.message);
+                            }
+                        },
+                        () => {
+                            this.$notify("不可预知错误");
+                        }
+                    );
+                }
+            },
+            confirm() {
+                this.$router.push("/login");
             }
-          },
-          () => {
-            this.$notify("不可预知错误");
-          }
-        );
-      }
-    },
-    confirm() {
-      this.$router.push("/login");
-    }
-  }
-};
+        }
+    };
 </script>
 
 <style>
-.sign_up .button {
-  margin-top: 40px;
-  width: 90%;
-}
-.sign_up .title {
-  margin-bottom: 20px;
-}
-.sign_up .group {
-  margin-bottom: 15px;
-}
-.sign_up .row {
-  margin-bottom: 15px;
-}
+  .sign_up .button {
+    margin-top: 40px;
+    width: 90%;
+  }
+
+  .sign_up .title {
+    margin-bottom: 20px;
+  }
+
+  .sign_up .group {
+    margin-bottom: 15px;
+  }
+
+  .sign_up .row {
+    margin-bottom: 15px;
+  }
 </style>
