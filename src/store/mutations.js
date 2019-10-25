@@ -12,5 +12,10 @@ export default {
     state.access_token = token
     state.exp = user.exp
     state.user = user.data
+  },
+  rmToken(state) {
+    state.access_token = null
+    state.exp = null
+    state.user = null
   }
 }
