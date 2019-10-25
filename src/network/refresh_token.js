@@ -15,21 +15,20 @@ function refresh_token(token) {
   })
 }
 
-function check_token() {
-  if (remember() == null) return 0;
-  else if (store.state.access_token == null) return 1;
-  else if (new Date().getTime() / 1000 > store.state.exp - 120) return 2;
-  else return 3
-
+function check_refresh_token() {
+  if (remember() == null) router.push("/login");
+  else if (store.state.access_token == null) return true;
+  else return new Date().getTime() / 1000 > store.state.exp - 120;
 }
 
 export default () => {
-  const code = check_token()
-  if (code === 1) router.push("/login");
-  return 1 < code < 3;
+  if (check_refresh_token()) refresh_token(remember()).then(
+    res => {
+      handle_token(res)
+      return store.state.access_token
+    },
+    () => router.push("/login")
+  ); else return store.state.access_token
 }
 
-// refresh_token(remember()).then(
-//   res => handle_token(res),
-//   () => router.push("/login")
-// )
+

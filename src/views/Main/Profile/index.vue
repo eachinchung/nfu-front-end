@@ -23,7 +23,6 @@
 
 <script>
     import {get_user} from "@/network/profile";
-    import refresh_token from "../../../network/refresh_token"
 
     export default {
         data() {
@@ -35,26 +34,20 @@
             };
         },
         created() {
-            refresh_token()
-            console.log("123");
-            const token = this.$store.getters.token;
-            if (token) {
-                get_user(token).then(
-                    res => {
-                        this.user = res.data.id;
-                        this.name = res.data.name;
-                        this.email = res.data.email;
-                        this.dormitory = res.data.dormitory;
-                    },
-                    () => {
-                        this.$notify("不可预知错误");
-                    }
-                );
-            } else {
-                this.$router.push("/login");
-            }
+            get_user().then(
+                res => {
+                    this.user = res.data.id;
+                    this.name = res.data.name;
+                    this.email = res.data.email;
+                    this.dormitory = res.data.dormitory;
+                },
+                () => {
+                    this.$notify("不可预知错误");
+                }
+            );
         }
-    };
+    }
+    ;
 </script>
 
 <style>
