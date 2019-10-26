@@ -1,6 +1,7 @@
 <template>
   <div class="sign_up">
-    <van-nav-bar class="title" title="注册新用户"/>
+    <van-nav-bar class="title" title="注册新用户" left-arrow
+                 @click-left="onClickLeft"/>
     <user @getUser="get_user_data"/>
 
     <van-cell-group title="请设置个人信息" class="group">
@@ -101,6 +102,9 @@
                 }
             },
             confirm() {
+                this.$router.push("/login");
+            },
+            onClickLeft(){
                 this.$router.push("/login");
             }
         }
