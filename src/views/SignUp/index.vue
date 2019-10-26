@@ -83,6 +83,14 @@
                     this.$notify("密码不能为空");
                     return false;
                 }
+                if (this.email == null || this.email === "") {
+                    this.$notify("邮箱不能为空");
+                    return false;
+                }
+                if (this.room_id == null || this.room_id === "") {
+                    this.$notify("宿舍不能为空");
+                    return false;
+                }
                 return true;
             },
             sign_up_btn() {
