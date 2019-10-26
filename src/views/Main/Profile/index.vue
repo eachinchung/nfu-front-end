@@ -8,7 +8,15 @@
     </van-cell-group>
 
     <van-cell-group>
-      <van-cell size="large" icon="location-o" title="宿舍" :value="dormitory" is-link/>
+      <van-cell
+        size="large"
+        icon="location-o"
+        title="宿舍"
+        :value="dormitory"
+        placeholder="选择宿舍"
+        @click="showPicker = true"
+        is-link
+      />
       <van-cell size="large" icon="envelop-o" title="邮箱" :value="email" is-link/>
     </van-cell-group>
 
@@ -18,12 +26,17 @@
     <van-row type="flex" justify="center">
       <van-button type="warning" class="button" @click="logout">退出登录</van-button>
     </van-row>
+
+    <popup :showPicker="showPicker" @getRoomId="get_dormitory" @close="close"/>
   </div>
 </template>
 
 <script>
     import {get_user} from "@/network/profile";
     import {refresh_token, check_refresh_token, handle_token} from "@/network/refresh_token";
+
+    import Popup from "@/components/dormitory_popup";
+
 
     function init(token, vm) {
         get_user(token).then(
@@ -45,9 +58,14 @@
                 user: null,
                 name: null,
                 email: null,
-                dormitory: null
+                dormitory: null,
+                showPicker: false
             };
         },
+        components: {
+            Popup
+        },
+        // 判断用户有没有登录，并初始化
         beforeRouteEnter: (to, from, next) => {
             if (check_refresh_token()) {
                 const token = refresh_token();
@@ -71,6 +89,13 @@
                 document.cookie = "remember=;expires=-1;path=/";
                 this.$store.commit("rmToken");
                 this.$router.push("/login");
+            },
+            get_dormitory(room) {
+                this.dormitory = room[0]
+                // this.room_id = room[1];
+            },
+            close() {
+                this.showPicker = false
             }
         }
     };

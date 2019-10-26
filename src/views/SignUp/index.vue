@@ -12,7 +12,15 @@
         placeholder="请输入邮箱地址"
         @keyup.enter="login_btu"
       />
-      <pope @getRoomId="get_dormitory"/>
+      <van-field
+        readonly
+        clickable
+        left-icon="location-o"
+        label="宿舍"
+        :value="value"
+        placeholder="选择宿舍"
+        @click="showPicker = true"
+      />
     </van-cell-group>
 
     <van-row type="flex" justify="center" class="row">
@@ -26,12 +34,15 @@
       @confirm="confirm"
     >
     </van-dialog>
+
+    <popup :showPicker="showPicker" @getRoomId="get_dormitory" @close="close"/>
+
   </div>
 </template>
 
 <script>
     import {sign_up} from "@/network/no_token";
-    import Pope from "./components/popup";
+    import Popup from "@/components/dormitory_popup";
     import User from "./components/user";
 
     export default {
@@ -41,20 +52,26 @@
                 password: null,
                 room_id: null,
                 email: null,
-                show: false
+                value: null,
+                show: false,
+                showPicker: false
             };
         },
         components: {
             User,
-            Pope
+            Popup
         },
         methods: {
             get_user_data(user) {
                 this.username = user[0];
                 this.password = user[1];
             },
-            get_dormitory(room_id) {
-                this.room_id = room_id;
+            get_dormitory(room) {
+                this.value = room[0]
+                this.room_id = room[1];
+            },
+            close() {
+                this.showPicker = false
             },
             check_username() {
                 if (this.username == null || this.username === "") {
