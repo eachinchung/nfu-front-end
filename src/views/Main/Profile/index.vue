@@ -27,12 +27,12 @@
       <van-button type="warning" class="button" @click="logout">退出登录</van-button>
     </van-row>
 
-    <popup :showPicker="showPicker" @getRoomId="get_dormitory" @close="close"/>
+    <popup :showPicker="showPicker" @getRoomId="get_dormitory" @close="close" :dormitoryValue="dormitory"/>
   </div>
 </template>
 
 <script>
-    import {get_user} from "@/network/profile";
+    import {get_user, update_dormitory} from "@/network/profile";
     import {refresh_token, check_refresh_token, handle_token} from "@/network/refresh_token";
 
     import Popup from "@/components/dormitory_popup";
@@ -90,9 +90,24 @@
                 this.$store.commit("rmToken");
                 this.$router.push("/login");
             },
-            get_dormitory(room) {
+            get_dormitory: function (room) {
                 this.dormitory = room[0]
-                // this.room_id = room[1];
+
+                update_dormitory(this.$store.state.access_token, room[1]).then(
+                    res => {
+                        if (!res.data.adopt) if (res.data.code === 1001) {
+                            const token = refresh_token();
+                            if (token[0]) token[1].then(
+                                res => {
+                                    if (handle_token(res)) update_dormitory(this.$store.state.access_token, room[1])
+                                    else this.$notify("不可预知错误")
+                                },
+                                () => this.$notify("不可预知错误")
+                            );
+                            else this.$router.push({path: "/login", query: {next: this.$route.fullPath}})
+                        }
+                    }
+                )
             },
             close() {
                 this.showPicker = false

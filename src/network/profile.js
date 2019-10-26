@@ -10,3 +10,16 @@ export function get_user(token) {
     }
   });
 }
+
+export function update_dormitory(token, room_id) {
+  return request({
+    method: "post",
+    url: "/user/dormitory/update",
+    data: {
+      room_id: room_id
+    },
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  });
+}

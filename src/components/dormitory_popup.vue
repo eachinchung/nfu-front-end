@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model="showPicker" position="bottom">
+  <van-popup v-model="showPicker" position="bottom" @close='$emit("close")' @open="setIndex">
     <van-picker
       show-toolbar
       :columns="columns"
@@ -18,18 +18,21 @@
             return {
                 columns: [
                     {
-                        values: Object.keys(dormitory)
+                        values: Object.keys(dormitory),
+                        defaultIndex: 0
                     },
                     {
-                        values: Object.keys(dormitory["西学楼1号"])
+                        values: Object.keys(dormitory["西学楼1号"]),
+                        defaultIndex: 0
                     },
                     {
-                        values: Object.keys(dormitory["西学楼1号"]["1楼"])
+                        values: Object.keys(dormitory["西学楼1号"]["1楼"]),
+                        defaultIndex: 0
                     }
                 ]
             };
         },
-        props: ['showPicker'],
+        props: ['showPicker', 'dormitoryValue'],
         methods: {
             onChange(picker, values) {
                 picker.setColumnValues(1, Object.keys(dormitory[values[0]]));
@@ -41,6 +44,18 @@
                     dormitory[value[0]][value[1]][value[2]]
                 ]);
                 this.$emit("close")
+            },
+            setIndex() {
+                if (this.dormitoryValue != null) {
+                    let my_value = this.dormitoryValue.split(" ")
+
+                    this.columns[1].values = Object.keys(dormitory[my_value[0]])
+                    this.columns[2].values = Object.keys(dormitory[my_value[0]][my_value[1]])
+
+                    this.columns[0].defaultIndex = Object.keys(dormitory).findIndex(item => item === my_value[0])
+                    this.columns[1].defaultIndex = Object.keys(dormitory[my_value[0]]).findIndex(item => item === my_value[1])
+                    this.columns[2].defaultIndex = Object.keys(dormitory[my_value[0]][my_value[1]]).findIndex(item => item === my_value[2])
+                }
             }
         }
     };
