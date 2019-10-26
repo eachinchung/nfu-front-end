@@ -3,7 +3,7 @@
     <van-picker
       show-toolbar
       :columns="columns"
-      @cancel='this.$emit("close")'
+      @cancel='$emit("close")'
       @confirm="onConfirm"
       @change="onChange"
     />
