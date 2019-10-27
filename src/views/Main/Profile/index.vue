@@ -47,7 +47,7 @@
                 vm.dormitory = res.data.dormitory;
             },
             () => {
-                vm.$notify("不可预知错误");
+                vm.$notify("无法连接到服务器");
             }
         );
     }
@@ -66,7 +66,7 @@
             Popup
         },
         // 判断用户有没有登录，并初始化
-        beforeRouteEnter: (to, from, next) => {
+        beforeRouteEnter(to, from, next) {
             if (check_refresh_token()) {
                 const token = refresh_token();
                 if (token[0]) {
@@ -77,11 +77,13 @@
                                     init(vm.$store.state.access_token, vm)
                                 } else vm.$notify("不可预知错误")
                             },
-                            () => vm.$notify("不可预知错误")
+                            () => vm.$notify("无法连接到服务器")
                         );
                     })
                 } else next({path: "/login", query: {next: to.fullPath}})
-            } else next(vm => init(vm.$store.state.access_token, vm))
+            } else next(vm => {
+                if (vm.user == null) init(vm.$store.state.access_token, vm)
+            })
         },
 
         methods: {
@@ -102,11 +104,12 @@
                                     if (handle_token(res)) update_dormitory(this.$store.state.access_token, room[1])
                                     else this.$notify("不可预知错误")
                                 },
-                                () => this.$notify("不可预知错误")
+                                () => this.$notify("无法连接到服务器")
                             );
                             else this.$router.push({path: "/login", query: {next: this.$route.fullPath}})
                         }
-                    }
+                    },
+                    () => this.$notify("无法连接到服务器")
                 )
             },
             close() {
