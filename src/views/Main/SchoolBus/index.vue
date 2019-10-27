@@ -9,7 +9,7 @@
       <van-cell size="large" title="中大南校区->南苑" value="¥20" is-link/>
     </van-cell-group>
 
-    <van-cell-group class="group">
+    <van-cell-group>
       <van-cell size="large" title="预售订单" is-link/>
       <van-cell size="large" title="刷票订单" is-link/>
       <van-cell size="large" title="待乘车订单" is-link/>
