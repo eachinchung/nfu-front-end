@@ -6,6 +6,8 @@ Vue.use(VueRouter)
 
 const Main = () => import('@/views/Main')
 
+const SchoolBus = () => import('@/views/SchoolBus')
+
 const Login = () => import('@/views/Login')
 const SignUp = () => import('@/views/SignUp')
 
@@ -22,13 +24,17 @@ const routes = [
     children: MainRouter
   },
   {
+    path: '/school_bus',
+    component: SchoolBus
+  },
+  {
     path: '/login',
     component: Login
   },
   {
     path: '/sign_up',
     component: SignUp
-  },
+  }
 ]
 
 const router = new VueRouter({
