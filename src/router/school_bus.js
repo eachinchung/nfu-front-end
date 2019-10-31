@@ -1,4 +1,4 @@
-const Schedule = () => import('@/views/Main/Home')
+const Schedule = () => import('@/views/SchoolBus/Schedule')
 
 export default [
   {
