@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainRouter from './main'
+import SchoolBusRouter from './school_bus'
 
 Vue.use(VueRouter)
 
@@ -25,7 +26,8 @@ const routes = [
   },
   {
     path: '/school_bus',
-    component: SchoolBus
+    component: SchoolBus,
+    children: SchoolBusRouter
   },
   {
     path: '/login',

@@ -17,5 +17,8 @@ export default {
     state.access_token = null
     state.exp = null
     state.user = null
+  },
+  upRouteId(state, route_id) {
+    state.route_id = route_id
   }
 }

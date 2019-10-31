@@ -8,12 +8,12 @@ const state = {
   access_token: null,
   exp: null,
   user: null,
-  school_bus: {
-    route_id: null,
-    passenger_ids: null,
-    connect_id: null,
-    date: null
-  }
+
+  route_id: null,
+  passenger_ids: null,
+  connect_id: null,
+  date: null
+
 }
 
 export default new Vuex.Store({

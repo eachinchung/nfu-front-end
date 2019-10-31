@@ -3,5 +3,8 @@
 </template>
 
 <script>
-
+export default {
+  name: "SchoolBus"
+}
 </script>
+
