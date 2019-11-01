@@ -20,5 +20,11 @@ export default {
   },
   upRouteId(state, route_id) {
     state.route_id = route_id
+  },
+  upBusDate(state, date) {
+    state.bus_date = date
+  },
+  SetTicketType(state, type) {
+    state.ticket_type = type
   }
 }

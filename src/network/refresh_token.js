@@ -4,7 +4,6 @@ import remember from './get_remember'
 import request from "./request"
 
 
-
 function refresh(token) {
   return request({
     method: "get",
@@ -42,4 +41,19 @@ export function refresh_token() {
   } else return [true, refresh(token)]
 }
 
-
+export function beforeRouteCheck(next, to, init) {
+  if (check_refresh_token()) {
+    const token = refresh_token();
+    if (token[0]) {
+      next(vm => {
+        token[1].then(
+          res => {
+            if (handle_token(res)) init(vm);
+            else vm.$notify("不可预知错误");
+          },
+          () => vm.$notify("无法连接到服务器")
+        );
+      });
+    } else next({path: "/login", query: {next: to.fullPath}});
+  } else next(vm => init(vm));
+}
