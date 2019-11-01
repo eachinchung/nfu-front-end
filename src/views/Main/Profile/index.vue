@@ -148,20 +148,14 @@ export default {
 </script>
 
 <style>
-.profile .button {
-  width: 90%;
-}
-
-.profile .title {
-  margin-bottom: 25px;
-}
-
-.profile .group {
-  margin-bottom: 30px;
-}
+@import "~@/assets/css/common.css";
 
 .profile .row {
   margin-top: 40px;
   margin-bottom: 15px;
+}
+
+.profile .button {
+  width: 90%;
 }
 </style>

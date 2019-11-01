@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div id="Login">
     <van-nav-bar class="title" title="南苑聚合"/>
     <van-cell-group title="请登录您的账号" class="group">
       <van-field v-model="username" left-icon="contact" label="学号" placeholder="请输入学号" clearable/>
@@ -77,19 +77,5 @@
 </script>
 
 <style>
-  .login .button {
-    width: 90%;
-  }
-
-  .login .title {
-    margin-bottom: 20px;
-  }
-
-  .login .group {
-    margin-bottom: 40px;
-  }
-
-  .login .row {
-    margin-bottom: 15px;
-  }
+@import "~@/assets/css/login.css";
 </style>

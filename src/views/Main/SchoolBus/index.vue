@@ -65,12 +65,6 @@ export default {
 </script>
 
 <style>
-#school_bus .title {
-  margin-bottom: 25px;
-}
-
-#school_bus .group {
-  margin-bottom: 30px;
-}
+@import "~@/assets/css/common.css";
 </style>
 
