@@ -3,10 +3,10 @@
     <van-nav-bar class="title" title="南苑 Bus" />
 
     <van-cell-group title="购买车票" class="group">
-      <van-cell size="large" title="南苑->河堤公园" value="¥5" is-link @click="toSchedule(21)" />
-      <van-cell size="large" title="河堤公园->南苑" value="¥5" is-link @click="toSchedule(22)" />
-      <van-cell size="large" title="南苑->中大南校区" value="¥20" is-link @click="toSchedule(13)" />
-      <van-cell size="large" title="中大南校区->南苑" value="¥20" is-link @click="toSchedule(14)" />
+      <van-cell size="large" title="南苑->河堤公园" value="¥5" is-link @click="toDate(21)" />
+      <van-cell size="large" title="河堤公园->南苑" value="¥5" is-link @click="toDate(22)" />
+      <van-cell size="large" title="南苑->中大南校区" value="¥20" is-link @click="toDate(13)" />
+      <van-cell size="large" title="中大南校区->南苑" value="¥20" is-link @click="toDate(14)" />
     </van-cell-group>
 
     <van-cell-group>
@@ -56,9 +56,9 @@ export default {
     } else next(vm => init(vm.$store.state.user.school_bus, vm, from.fullPath));
   },
   methods: {
-    toSchedule(route_id) {
+    toDate(route_id) {
       this.$store.commit("upRouteId", route_id);
-      this.$router.push("/school_bus/schedule");
+      this.$router.push("/school_bus/date");
     }
   }
 };

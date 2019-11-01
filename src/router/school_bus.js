@@ -1,8 +1,8 @@
-const Schedule = () => import('@/views/SchoolBus/Schedule')
+const Date = () => import('@/views/SchoolBus/Date')
 
 export default [
   {
-    path: 'schedule',
-    component: Schedule
+    path: 'date',
+    component: Date
   }
 ]

@@ -15,14 +15,15 @@ import {
   Dialog,
   Picker,
   Popup,
-  Sticky
+  Sticky,
+  DatetimePicker
 } from "vant"
 
 Vue.use(Row)
   .use(Col).use(Button).use(Cell)
   .use(CellGroup).use(Field).use(NavBar)
   .use(Notify).use(Toast).use(Dialog).use(Picker)
-  .use(Popup).use(Sticky);
+  .use(Popup).use(Sticky).use(DatetimePicker);
 
 Vue.config.productionTip = false
 
