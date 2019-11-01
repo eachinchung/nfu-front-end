@@ -8,7 +8,10 @@
     import {beforeRouteCheck} from "@/network/refresh_token";
 
     function init(vm) {
-        console.log(vm);
+        if (vm.$store.state.bus_date == null || vm.$store.state.route_id == null) {
+            vm.$router.push("/main/school_bus");
+            return null;
+        }
     }
 
     export default {

@@ -1,5 +1,4 @@
 import store from '@/store'
-// import router from '@/router'
 import remember from './get_remember'
 import request from "./request"
 
