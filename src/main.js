@@ -16,14 +16,16 @@ import {
   Picker,
   Popup,
   Sticky,
-  DatetimePicker
+  DatetimePicker,
+  Tag
 } from "vant"
 
 Vue.use(Row)
   .use(Col).use(Button).use(Cell)
   .use(CellGroup).use(Field).use(NavBar)
   .use(Notify).use(Toast).use(Dialog).use(Picker)
-  .use(Popup).use(Sticky).use(DatetimePicker);
+  .use(Popup).use(Sticky).use(DatetimePicker)
+  .use(Tag);
 
 Vue.config.productionTip = false
 
