@@ -23,59 +23,59 @@
 </template>
 
 <script>
-    import {login} from "@/network/no_token";
+  import {login} from "@/network/no_token";
 
-    export default {
-        data() {
-            return {
-                username: null,
-                password: null,
-                path: '/'
-            };
-        },
-        created() {
-            if (this.$route.query.next != null) this.path = this.$route.query.next
-        },
-        methods: {
-            check_username() {
-                if (this.username == null || this.username === "") {
-                    this.$notify("账号不能为空");
-                    return false;
-                }
-                if (this.password == null || this.password === "") {
-                    this.$notify("密码不能为空");
-                    return false;
-                }
-                return true;
-            },
-            login_btu() {
-                if (this.check_username()) {
-                    login(this.username, this.password).then(
-                        res => {
-                            if (res.data.adopt) {
-
-                                let exp = new Date();
-                                exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
-                                document.cookie =
-                                    "remember=" +
-                                    res.data.message.refresh_token +
-                                    ";expires=" + exp + ';path=/';
-
-                                this.$store.commit("upToken", res.data.message.access_token);
-                                this.$router.push(this.path)
-                            } else this.$notify(res.data.message);
-
-                        },
-                        () => {
-                            this.$notify("不可预知错误");
-                        }
-                    );
-                }
-            }
+  export default {
+    data() {
+      return {
+        username: null,
+        password: null,
+        path: '/'
+      };
+    },
+    created() {
+      if (this.$route.query.next != null) this.path = this.$route.query.next
+    },
+    methods: {
+      check_username() {
+        if (this.username == null || this.username === "") {
+          this.$notify("账号不能为空");
+          return false;
         }
-    };
+        if (this.password == null || this.password === "") {
+          this.$notify("密码不能为空");
+          return false;
+        }
+        return true;
+      },
+      login_btu() {
+        if (this.check_username()) {
+          login(this.username, this.password).then(
+            res => {
+              if (res.data.adopt) {
+
+                let exp = new Date();
+                exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
+                document.cookie =
+                  "remember=" +
+                  res.data.message.refresh_token +
+                  ";expires=" + exp + ';path=/';
+
+                this.$store.commit("upToken", res.data.message.access_token);
+                this.$router.push(this.path)
+              } else this.$notify(res.data.message);
+
+            },
+            () => {
+              this.$notify("不可预知错误");
+            }
+          );
+        }
+      }
+    }
+  };
 </script>
 
 <style scoped>
-@import "~@/assets/css/login.css";
+  @import "~@/assets/css/login.css";
 </style>

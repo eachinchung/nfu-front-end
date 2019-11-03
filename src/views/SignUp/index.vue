@@ -1,7 +1,7 @@
 <template>
   <div id="SingUp">
-    <van-nav-bar class="title" title="注册新用户" left-arrow @click-left="onClickLeft" />
-    <user @getUser="get_user_data" />
+    <van-nav-bar class="title" title="注册新用户" left-arrow @click-left="onClickLeft"/>
+    <user @getUser="get_user_data"/>
 
     <van-cell-group title="请设置个人信息">
       <van-field
@@ -29,92 +29,92 @@
 
     <van-dialog v-model="show" title="注册成功" message="激活邮件已发送至您的邮箱，请查看。" @confirm="confirm"></van-dialog>
 
-    <popup :showPicker="showPicker" @getRoomId="get_dormitory" @close="close" />
+    <popup :showPicker="showPicker" @getRoomId="get_dormitory" @close="close"/>
   </div>
 </template>
 
 <script>
-import { sign_up } from "@/network/no_token";
-import Popup from "@/components/dormitory_popup";
-import User from "./components/user";
+  import {sign_up} from "@/network/no_token";
+  import Popup from "@/components/dormitory_popup";
+  import User from "./components/user";
 
-export default {
-  data() {
-    return {
-      username: null,
-      password: null,
-      room_id: null,
-      email: null,
-      value: null,
-      show: false,
-      showPicker: false
-    };
-  },
-  components: {
-    User,
-    Popup
-  },
-  methods: {
-    get_user_data(user) {
-      this.username = user[0];
-      this.password = user[1];
+  export default {
+    data() {
+      return {
+        username: null,
+        password: null,
+        room_id: null,
+        email: null,
+        value: null,
+        show: false,
+        showPicker: false
+      };
     },
-    get_dormitory(room) {
-      this.value = room[0];
-      this.room_id = room[1];
+    components: {
+      User,
+      Popup
     },
-    close() {
-      this.showPicker = false;
-    },
-    check_username() {
-      if (this.username == null || this.username === "") {
-        this.$notify("账号不能为空");
-        return false;
-      }
-      if (this.password == null || this.password === "") {
-        this.$notify("密码不能为空");
-        return false;
-      }
-      if (this.email == null || this.email === "") {
-        this.$notify("邮箱不能为空");
-        return false;
-      }
-      if (this.room_id == null || this.room_id === "") {
-        this.$notify("宿舍不能为空");
-        return false;
-      }
-      return true;
-    },
-    sign_up_btn() {
-      if (this.check_username()) {
-        sign_up(this.username, this.password, this.room_id, this.email).then(
-          res => {
-            if (res.data.adopt) {
-              this.show = true;
-            } else {
-              this.$notify(res.data.message);
+    methods: {
+      get_user_data(user) {
+        this.username = user[0];
+        this.password = user[1];
+      },
+      get_dormitory(room) {
+        this.value = room[0];
+        this.room_id = room[1];
+      },
+      close() {
+        this.showPicker = false;
+      },
+      check_username() {
+        if (this.username == null || this.username === "") {
+          this.$notify("账号不能为空");
+          return false;
+        }
+        if (this.password == null || this.password === "") {
+          this.$notify("密码不能为空");
+          return false;
+        }
+        if (this.email == null || this.email === "") {
+          this.$notify("邮箱不能为空");
+          return false;
+        }
+        if (this.room_id == null || this.room_id === "") {
+          this.$notify("宿舍不能为空");
+          return false;
+        }
+        return true;
+      },
+      sign_up_btn() {
+        if (this.check_username()) {
+          sign_up(this.username, this.password, this.room_id, this.email).then(
+            res => {
+              if (res.data.adopt) {
+                this.show = true;
+              } else {
+                this.$notify(res.data.message);
+              }
+            },
+            () => {
+              this.$notify("不可预知错误");
             }
-          },
-          () => {
-            this.$notify("不可预知错误");
-          }
-        );
+          );
+        }
+      },
+      confirm() {
+        this.$router.push("/login");
+      },
+      onClickLeft() {
+        this.$router.push("/login");
       }
-    },
-    confirm() {
-      this.$router.push("/login");
-    },
-    onClickLeft() {
-      this.$router.push("/login");
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-@import "~@/assets/css/login.css";
+  @import "~@/assets/css/login.css";
 
-.button {
-  margin-top: 55px;
-}
+  .button {
+    margin-top: 55px;
+  }
 </style>

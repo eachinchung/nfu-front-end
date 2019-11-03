@@ -3,9 +3,9 @@
 </template>
 
 <script>
-export default {
-  name:'ClassSchedule'
-}
+  export default {
+    name: 'ClassSchedule'
+  }
 </script>
 
 <style>

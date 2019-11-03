@@ -1,18 +1,19 @@
 <template>
   <div>
     <keep-alive>
-      <router-view />
+      <router-view/>
     </keep-alive>
-    <tabbar />
+    <tabbar/>
   </div>
 </template>
 
 <script>
-import Tabbar from "@/components/tabbar";
-export default {
-  name: "Home",
-  components: {
-    Tabbar
-  }
-};
+  import Tabbar from "@/components/tabbar";
+
+  export default {
+    name: "Home",
+    components: {
+      Tabbar
+    }
+  };
 </script>
