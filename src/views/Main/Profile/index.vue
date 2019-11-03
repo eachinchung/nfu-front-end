@@ -147,7 +147,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "~@/assets/css/common.css";
 
 .profile .row {

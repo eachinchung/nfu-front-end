@@ -3,25 +3,30 @@
     <van-nav-bar class="title" :title="$store.state.bus_date" left-arrow @click-left="onClickLeft"/>
 
     <van-cell-group v-if="typeof scheduleList == 'string'">
+      <!-- 如果scheduleList不是列表，则今天已经没有班车了 -->
       <van-cell size="large" :title="scheduleList"/>
     </van-cell-group>
     <van-cell-group v-else class="group">
       <van-cell v-for="item in scheduleList" :key="item.id" size="large" is-link>
         <template slot="title">
           <b>{{item.start_time}}&nbsp;</b>
+          <!-- 判断是否为加班车 -->
           <van-tag v-if="item.bus_type===2" type="primary">加班车</van-tag>
         </template>
         <template slot="default">
+          <!--  车票剩余0就为红色 -->
           <span v-if="item.ticket_left===0" :style="{color:'red'}">{{item.ticket_left}}</span>
+          <!-- 车票小于20就为橙色 -->
           <span v-else-if="item.ticket_left<20" :style="{color:'orange'}">{{item.ticket_left}}</span>
+          <!-- 车票正常为绿色-->
           <span v-else :style="{color:'green'}">{{item.ticket_left}}</span>
         </template>
         <template slot="label">
+          <!-- 经过的车站 -->
           <div class="ticketList">{{item.pathway}}</div>
         </template>
       </van-cell>
     </van-cell-group>
-
 
   </div>
 </template>
@@ -36,6 +41,7 @@
             return null;
         }
 
+        // 向服务器请求班车数据
         schedule(vm.$store.state.access_token, vm.$store.state.route_id, vm.$store.state.bus_date).then(
             res => {
                 if (res.data.adopt) vm.scheduleList = res.data.message.desc
