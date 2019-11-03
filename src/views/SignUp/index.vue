@@ -114,11 +114,7 @@ export default {
 <style scoped>
 @import "~@/assets/css/login.css";
 
-#SingUp .button {
+.button {
   margin-top: 55px;
-}
-
-#SingUp .group {
-  margin-bottom: 18px;
 }
 </style>
