@@ -10,8 +10,6 @@ const state = {
   user: null,
 
   route_id: null,
-  passenger_ids: null,
-  connect_id: null,
   bus_date: null,
   ticket_type: 1
 

@@ -30,7 +30,7 @@
 
     <!-- 弹出确认订单 -->
     <van-popup v-model="show" position="bottom">
-      <create-order :list="passengerList" :schedule="schedule"/>
+      <create-order :list="passengerList" :schedule="schedule" @close="show=false"/>
     </van-popup>
 
   </div>

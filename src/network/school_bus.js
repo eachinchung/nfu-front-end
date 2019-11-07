@@ -23,3 +23,14 @@ export function passenger(token) {
     }
   });
 }
+
+export function createOrder(token, data) {
+  return request({
+    method: "post",
+    url: "/school_bus/order/create",
+    data,
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  });
+}
