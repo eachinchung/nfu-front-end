@@ -13,3 +13,13 @@ export function schedule(token, routeId, date) {
     }
   });
 }
+
+export function passenger(token) {
+  return request({
+    method: "get",
+    url: "/school_bus/passenger/get",
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  });
+}

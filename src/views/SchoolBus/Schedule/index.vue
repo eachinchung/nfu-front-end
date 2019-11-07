@@ -7,7 +7,7 @@
       <van-cell size="large" :title="scheduleList"/>
     </van-cell-group>
     <van-cell-group v-else class="group">
-      <van-cell v-for="item in scheduleList" :key="item.id" size="large" is-link>
+      <van-cell v-for="item in scheduleList" :key="item.id" size="large" is-link @click="onClickSchedule(item)">
         <template slot="title">
           <b>{{item.start_time}}&nbsp;</b>
           <!-- 判断是否为加班车 -->
@@ -28,12 +28,18 @@
       </van-cell>
     </van-cell-group>
 
+    <!-- 弹出确认订单 -->
+    <van-popup v-model="show" position="bottom">
+      <create-order :list="passengerList" :schedule="schedule"/>
+    </van-popup>
+
   </div>
 </template>
 
 <script>
   import {beforeRouteCheck} from "@/network/refresh_token";
-  import {schedule} from "@/network/school_bus";
+  import {schedule, passenger} from "@/network/school_bus";
+  import CreateOrder from "./components/CreateOrder";
 
   function init(vm) {
     if (vm.$store.state.bus_date == null || vm.$store.state.route_id == null) {
@@ -49,20 +55,36 @@
       }
     )
 
+    // 想服务器请求乘客数据
+    passenger(vm.$store.state.access_token).then(
+      res => {
+        if (res.data.adopt) vm.passengerList = res.data.message
+        else this.$notify(res.data.message);
+      }
+    )
+
   }
 
   export default {
     data() {
       return {
-        scheduleList: []
+        scheduleList: [],
+        passengerList: [],
+        show: false,
+        schedule: null
       }
     },
     beforeRouteEnter(to, from, next) {
       beforeRouteCheck(next, to, init)
     },
+    components: {CreateOrder},
     methods: {
       onClickLeft() {
         this.$router.push("/school_bus/date");
+      },
+      onClickSchedule(schedule) {
+        this.show = true
+        this.schedule = schedule
       }
     }
   }
