@@ -5,8 +5,16 @@
 </template>
 
 <script>
+  import {beforeRouteCheck} from "@/network/refresh_token";
+
+  function init() {
+
+  }
+
   export default {
-    name: "BrushTicket",
+    beforeRouteEnter(to, from, next) {
+      beforeRouteCheck(next, to, init)
+    },
     methods: {
       onClickLeft() {
         this.$router.push("/school_bus/schedule");

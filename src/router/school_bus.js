@@ -1,6 +1,7 @@
 const Date = () => import('@/views/SchoolBus/Date')
 const Schedule = () => import('@/views/SchoolBus/Schedule')
 const BrushTicket = () => import("@/views/SchoolBus/BrushTicket")
+const CreateOrder = () => import("@/views/SchoolBus/CreateOrder")
 
 export default [
   {
@@ -14,5 +15,9 @@ export default [
   {
     path: 'order/brush-ticket',
     component:BrushTicket
+  },
+  {
+    path:"order/create-order",
+    component:CreateOrder
   }
 ]
