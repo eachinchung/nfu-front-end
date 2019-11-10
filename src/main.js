@@ -5,7 +5,8 @@ import store from './store'
 import {
   Button, Cell, CellGroup, Field, NavBar, Row,
   Col, Notify, Toast, Dialog, Picker, Popup, Sticky,
-  DatetimePicker, Tag, Panel, Checkbox, CheckboxGroup
+  DatetimePicker, Tag, Panel, Checkbox, CheckboxGroup,
+  PullRefresh
 } from "vant"
 
 Vue.use(Row)
@@ -13,7 +14,8 @@ Vue.use(Row)
   .use(CellGroup).use(Field).use(NavBar)
   .use(Notify).use(Toast).use(Dialog).use(Picker)
   .use(Popup).use(Sticky).use(DatetimePicker)
-  .use(Tag).use(Panel).use(Checkbox).use(CheckboxGroup);
+  .use(Tag).use(Panel).use(Checkbox).use(CheckboxGroup)
+  .use(PullRefresh);
 
 Vue.config.productionTip = false
 

@@ -11,6 +11,7 @@ const state = {
 
   route_id: null,
   bus_date: null,
+  ticket_data: null,
   ticket_type: 1
 
 }
