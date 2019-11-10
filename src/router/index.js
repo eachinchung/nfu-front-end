@@ -11,6 +11,7 @@ const SchoolBus = () => import('@/views/SchoolBus')
 
 const Login = () => import('@/views/Login')
 const SignUp = () => import('@/views/SignUp')
+const Activation = () => import('@/views/Activation')
 
 
 const routes = [
@@ -27,7 +28,7 @@ const routes = [
   {
     path: '/school_bus',
     component: SchoolBus,
-    redirect:'/main/school_bus',
+    redirect: '/main/school_bus',
     children: SchoolBusRouter
   },
   {
@@ -37,6 +38,10 @@ const routes = [
   {
     path: '/sign_up',
     component: SignUp
+  },
+  {
+    path: '/activation',
+    component: Activation
   }
 ]
 

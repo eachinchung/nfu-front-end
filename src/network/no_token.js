@@ -24,3 +24,13 @@ export function sign_up(username, password, dormitory, email) {
     }
   })
 }
+
+export function Activation(token) {
+  return request({
+    method: "get",
+    url: "/validate/email",
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  })
+}

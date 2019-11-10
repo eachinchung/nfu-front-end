@@ -14,7 +14,7 @@
             @click="toggle(index)"
           >
             <van-checkbox
-              :name="item.id"
+              :name="item"
               ref="checkboxes"
               slot="right-icon"
             />
@@ -38,30 +38,6 @@
       message: res.data.message,
       confirmButtonText: '刷票'
     }).then(() => {
-      const toast = vm.$toast.loading({
-        duration: 0,
-        forbidClick: true,
-        message: '刷票 0 次',
-        mask: true
-      });
-      let post_id = 0;
-      const timer = setInterval(() => {
-        post_id++;
-        toast.message = `刷票 ${post_id} 次`;
-        createOrder(vm.$store.state.access_token, {
-          passenger_ids: vm.result,
-          schedule_id: vm.schedule.id,
-          date: vm.$store.state.bus_date,
-          take_station: vm.schedule.station_from_name
-        }).then(
-          res => {
-            if (res.data.adopt) {
-              clearInterval(timer);
-              vm.$toast.clear();
-            }
-          }
-        )
-      }, 1000);
     }).catch(() => {
     });
   }
@@ -73,6 +49,13 @@
       }
     },
     props: ['list', 'schedule'],
+    computed: {
+      passengerIds() {
+        let passenger_ids = []
+        this.result.forEach(item => passenger_ids.push(item.id))
+        return passenger_ids
+      }
+    },
     methods: {
       toggle(index) {
         this.$refs.checkboxes[index].toggle();
@@ -80,23 +63,33 @@
       createOrder() {
         if (this.result.length === 0) this.$notify('请选择乘车人');
         else {
+          // 关闭选择乘车人的弹窗
           this.$emit('close')
+          // 提示加载中
           this.$toast.loading({
             forbidClick: true,
             duration: 0,
           });
+          // 向服务器发送创建订单的请求
           createOrder(this.$store.state.access_token, {
-            passenger_ids: this.result,
+            passenger_ids: this.passengerIds,
             schedule_id: this.schedule.id,
             date: this.$store.state.bus_date,
             take_station: this.schedule.station_from_name
           }).then(
             res => {
               this.$toast.clear();
-              if (res.data.adopt) console.log(res.data.message);
-              else if (res.data.code === '0009') brush_ticket(this, res)
+              if (res.data.adopt) {
+                // 成功创建订单
+                this.$store.commit("SetTicketData", {
+                  data: res.data,
+                  passenger: this.result,
+                  schedule: this.schedule
+                })
+                this.$router.push("/school_bus/order/create-order")
+              } else if (res.data.code === '0009') brush_ticket(this, res)
               else if (res.data.code === '0002') brush_ticket(this, res)
-              else this.$toast.fail(res.data.message);
+              else this.$toast.fail(res.data.message)
             }
           )
         }
@@ -104,7 +97,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-</style>

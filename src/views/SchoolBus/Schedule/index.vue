@@ -56,7 +56,7 @@
     schedule(vm.$store.state.access_token, vm.$store.state.route_id, vm.$store.state.bus_date).then(
       res => {
         if (res.data.adopt) vm.scheduleList = res.data.message.desc
-        else this.$notify(res.data.message);
+        else vm.$notify(res.data.message);
       }
     )
 
@@ -64,7 +64,7 @@
     passenger(vm.$store.state.access_token).then(
       res => {
         if (res.data.adopt) vm.passengerList = res.data.message
-        else this.$notify(res.data.message);
+        else vm.$notify(res.data.message);
       }
     )
   }
