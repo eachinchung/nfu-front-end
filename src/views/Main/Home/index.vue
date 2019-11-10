@@ -1,9 +1,19 @@
 <template>
-  <h1>这是主页</h1>
+  <div>
+    <van-nav-bar class="title" title="南苑聚合"/>
+  </div>
 </template>
 
 <script>
-  export default {}
+  import {beforeRouteCheck} from "@/network/refresh_token";
+  function init() {
+
+  }
+  export default {
+    beforeRouteEnter(to, from, next) {
+      beforeRouteCheck(next, to, init)
+    },
+  }
 </script>
 
 <style>
