@@ -36,7 +36,7 @@
     },
     methods: {
       onClickLeft() {
-        this.$router.push("/main/school_bus");
+        this.$router.push("/main/school-bus");
       }
     }
   }

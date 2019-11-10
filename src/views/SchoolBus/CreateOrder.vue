@@ -16,7 +16,7 @@
     <van-cell-group class="group">
       <van-cell
         :title="$store.state.ticket_data.schedule.station_from_name+' -> '+$store.state.ticket_data.schedule.station_to_name"
-        value="09:00"
+        :value="$store.state.ticket_data.schedule.start_time"
       />
       <van-cell
         v-for="item in $store.state.ticket_data.passenger"
@@ -45,7 +45,7 @@
 
   function init(vm) {
     if (vm.$store.state.ticket_data == null) {
-      vm.$router.push("/main/school_bus");
+      vm.$router.push("/main/school-bus");
       return null;
     }
   }
@@ -61,7 +61,7 @@
     },
     methods: {
       onClickLeft() {
-        this.$router.push("/school_bus/schedule");
+        this.$router.push("/school-bus/schedule");
       },
       onClickRight() {
 

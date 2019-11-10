@@ -53,7 +53,7 @@
     const day = today.getDate();
 
     if (vm.$store.state.route_id == null) {
-      vm.$router.push("/main/school_bus");
+      vm.$router.push("/main/school-bus");
       return null;
     } else if (vm.$store.state.route_id < 20) {
       loop = 6;
@@ -93,12 +93,12 @@
     },
     methods: {
       onClickLeft() {
-        this.$router.push("/main/school_bus");
+        this.$router.push("/main/school-bus");
       },
       onClickDate(date, type) {
         this.$store.commit("upBusDate", date);
         this.$store.commit("SetTicketType", type);
-        this.$router.push("/school_bus/schedule")
+        this.$router.push("/school-bus/schedule")
       }
     }
   };

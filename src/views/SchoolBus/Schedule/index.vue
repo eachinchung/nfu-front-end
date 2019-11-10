@@ -48,7 +48,7 @@
 
   function init(vm) {
     if (vm.$store.state.bus_date == null || vm.$store.state.route_id == null) {
-      vm.$router.push("/main/school_bus");
+      vm.$router.push("/main/school-bus");
       return null;
     }
 
@@ -91,7 +91,7 @@
     },
     methods: {
       onClickLeft() {
-        this.$router.push("/school_bus/date");
+        this.$router.push("/school-bus/date");
       },
       onClickSchedule(schedule) {
         this.show = true

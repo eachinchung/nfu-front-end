@@ -86,7 +86,7 @@
                   passenger: this.result,
                   schedule: this.schedule
                 })
-                this.$router.push("/school_bus/order/create-order")
+                this.$router.push("/school-bus/order/create-order")
               } else if (res.data.code === '0009') brush_ticket(this, res)
               else if (res.data.code === '0002') brush_ticket(this, res)
               else this.$toast.fail(res.data.message)

@@ -9,7 +9,7 @@
     name: "BrushTicket",
     methods: {
       onClickLeft() {
-        this.$router.push("/school_bus/schedule");
+        this.$router.push("/school-bus/schedule");
       }
     }
   }
