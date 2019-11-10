@@ -57,10 +57,10 @@
       return null;
     } else if (vm.$store.state.route_id < 20) {
       loop = 6;
-      vm.minDate = vm.currentDate = new Date(year, month, day + 5);
+      vm.minDate = vm.currentDate = new Date(year, month, day + 6);
     } else {
       loop = 2;
-      vm.minDate = vm.currentDate = new Date(year, month, day + 1);
+      vm.minDate = vm.currentDate = new Date(year, month, day + 2);
     }
 
     vm.maxDate = new Date(year, month, day + 30);

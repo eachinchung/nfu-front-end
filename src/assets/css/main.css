@@ -1,0 +1,9 @@
+body {
+  background: rgb(248, 248, 248);
+}
+
+.title {
+  position: sticky;
+  top: 0;
+  left: 0;
+}

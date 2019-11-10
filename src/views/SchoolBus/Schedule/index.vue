@@ -98,12 +98,6 @@
     width: 220px;
   }
 
-  .title {
-    position: sticky;
-    top: 0;
-    left: 0;
-  }
-
   .group {
     margin-bottom: 25px;
   }

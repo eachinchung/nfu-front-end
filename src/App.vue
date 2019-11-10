@@ -11,8 +11,6 @@
 </script>
 
 <style>
-  body {
-    background: rgb(248, 248, 248);
-  }
+  @import "~@/assets/css/main.css";
 </style>
 

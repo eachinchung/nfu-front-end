@@ -42,7 +42,7 @@
         duration: 0,
         forbidClick: true,
         message: '刷票 0 次',
-        closeOnClick: true
+        mask: true
       });
       let post_id = 0;
       const timer = setInterval(() => {
@@ -94,9 +94,9 @@
             res => {
               this.$toast.clear();
               if (res.data.adopt) console.log(res.data.message);
-              else if (res.data.code === '0009') {
-                brush_ticket(this, res)
-              }
+              else if (res.data.code === '0009') brush_ticket(this, res)
+              else if (res.data.code === '0002') brush_ticket(this, res)
+              else this.$toast.fail(res.data.message);
             }
           )
         }
