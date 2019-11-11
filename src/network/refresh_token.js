@@ -15,7 +15,7 @@ function refresh(token) {
 
 export function check_refresh_token() {
   if (store.state.access_token == null) return true;
-  else return new Date().getTime() / 1000 > store.state.exp - 120;
+  else return new Date().getTime() / 1000 > store.state.exp - 900;
 }
 
 export function handle_token(res) {

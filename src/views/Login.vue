@@ -17,7 +17,7 @@
       <van-button type="primary" class="button" @click="login_btu">登录</van-button>
     </van-row>
     <van-row type="flex" justify="center">
-      <van-button type="default" class="button" to="sign_up">注册</van-button>
+      <van-button type="default" class="button" to="/sign-up">注册</van-button>
     </van-row>
   </div>
 </template>

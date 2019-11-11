@@ -14,9 +14,9 @@
       />
     </van-cell-group>
 
-    <van-cell-group>
-      <van-cell size="large" title="预售购票" is-link @click="showPicker=true"/>
-    </van-cell-group>
+<!--    <van-cell-group>-->
+<!--      <van-cell size="large" title="预售购票" is-link @click="showPicker=true"/>-->
+<!--    </van-cell-group>-->
 
     <van-popup v-model="showPicker" position="bottom">
       <van-datetime-picker

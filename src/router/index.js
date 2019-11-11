@@ -17,18 +17,18 @@ const Activation = () => import('@/views/Activation')
 const routes = [
   {
     path: '/',
-    redirect: '/main/home'
+    redirect: '/main/school-bus'
   },
   {
     path: '/main',
     component: Main,
-    redirect: '/main/home',
+    redirect: '/main/school-bus',
     children: MainRouter
   },
   {
     path: '/school-bus',
     component: SchoolBus,
-    redirect: '/main/school_bus',
+    redirect: '/main/school-bus',
     children: SchoolBusRouter
   },
   {
@@ -36,7 +36,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/sign_up',
+    path: '/sign-up',
     component: SignUp
   },
   {

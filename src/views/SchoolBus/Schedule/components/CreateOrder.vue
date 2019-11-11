@@ -32,15 +32,15 @@
   import {createOrder} from "@/network/school_bus";
 
   // 刷票
-  function brush_ticket(vm, res) {
-    vm.$dialog.confirm({
-      title: '订单创建失败',
-      message: res.data.message,
-      confirmButtonText: '刷票'
-    }).then(() => {
-    }).catch(() => {
-    });
-  }
+  // function brush_ticket(vm, res) {
+  //   vm.$dialog.confirm({
+  //     title: '订单创建失败',
+  //     message: res.data.message,
+  //     confirmButtonText: '刷票'
+  //   }).then(() => {
+  //   }).catch(() => {
+  //   });
+  // }
 
   export default {
     data() {
@@ -87,8 +87,9 @@
                   schedule: this.schedule
                 })
                 this.$router.push("/school-bus/order/create-order")
-              } else if (res.data.code === '0009') brush_ticket(this, res)
-              else if (res.data.code === '0002') brush_ticket(this, res)
+              }
+              // else if (res.data.code === '0009') brush_ticket(this, res)
+              // else if (res.data.code === '0002') brush_ticket(this, res)
               else this.$toast.fail(res.data.message)
             }
           )
