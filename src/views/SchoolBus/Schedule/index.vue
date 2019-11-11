@@ -1,43 +1,51 @@
 <template>
   <div>
     <van-nav-bar class="title" :title="$store.state.bus_date" left-arrow @click-left="onClickLeft"/>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
+      <div :class="{ refresh: isRefresh }">
+        <div ref="busList">
+          <div v-if="scheduleList">
 
-    <div v-if="scheduleList">
-      <van-cell-group v-if="typeof scheduleList == 'string'">
-        <!-- 如果scheduleList不是列表，则今天已经没有班车了 -->
-        <van-cell size="large" :title="scheduleList"/>
-      </van-cell-group>
-      <van-pull-refresh v-else v-model="isLoading" @refresh="onRefresh" success-text="余票刷新成功">
-        <div :class="{ refresh: isRefresh }">
-          <van-cell-group class="group" ref="busList">
-            <van-cell v-for="item in scheduleList" :key="item.id" size="large" is-link @click="onClickSchedule(item)">
-              <template slot="title">
-                <b>{{item.start_time}}&nbsp;</b>
-                <!-- 判断是否为加班车 -->
-                <van-tag v-if="item.bus_type===2" type="primary">加班车</van-tag>
-              </template>
-              <template slot="default">
-                <!-- 车票剩余0就为红色 -->
-                <span v-if="item.ticket_left===0" class="ticketRed">{{item.ticket_left}}</span>
-                <!-- 车票小于20就为橙色 -->
-                <span v-else-if="item.ticket_left<20" class="ticketOrange">{{item.ticket_left}}</span>
-                <!-- 车票正常为绿色 -->
-                <span v-else class="ticketGreen">{{item.ticket_left}}</span>
-              </template>
-              <template slot="label">
-                <!-- 经过的车站 -->
-                <div class="ticketList">{{item.pathway}}</div>
-              </template>
-            </van-cell>
-          </van-cell-group>
+            <van-cell-group v-if="typeof scheduleList == 'string'">
+              <!-- 如果scheduleList不是列表，则今天已经没有班车了 -->
+              <van-cell size="large" :title="scheduleList"/>
+            </van-cell-group>
+
+            <div v-else>
+              <van-cell-group class="group">
+                <van-cell v-for="item in scheduleList" :key="item.id" size="large" is-link
+                          @click="onClickSchedule(item)">
+                  <template slot="title">
+                    <b>{{item.start_time}}&nbsp;</b>
+                    <!-- 判断是否为加班车 -->
+                    <van-tag v-if="item.bus_type===2" type="primary">加班车</van-tag>
+                  </template>
+                  <template slot="default">
+                    <!-- 车票剩余0就为红色 -->
+                    <span v-if="item.ticket_left===0" class="ticketRed">{{item.ticket_left}}</span>
+                    <!-- 车票小于20就为橙色 -->
+                    <span v-else-if="item.ticket_left<20" class="ticketOrange">{{item.ticket_left}}</span>
+                    <!-- 车票正常为绿色 -->
+                    <span v-else class="ticketGreen">{{item.ticket_left}}</span>
+                  </template>
+                  <template slot="label">
+                    <!-- 经过的车站 -->
+                    <div class="ticketList">{{item.pathway}}</div>
+                  </template>
+                </van-cell>
+              </van-cell-group>
+            </div>
+
+          </div>
         </div>
-      </van-pull-refresh>
+      </div>
+    </van-pull-refresh>
 
-      <!-- 弹出确认订单 -->
-      <van-popup v-model="show" position="bottom">
-        <create-order :list="passengerList" :schedule="schedule" @close="show=false"/>
-      </van-popup>
-    </div>
+    <!-- 弹出确认订单 -->
+    <van-popup v-model="show" position="bottom" safe-area-inset-bottom>
+      <create-order :list="passengerList" :schedule="schedule" @close="show=false"/>
+    </van-popup>
+
 
   </div>
 </template>
@@ -55,7 +63,7 @@
         show: false,
         isLoading: false,
         schedule: null,
-        isRefresh: false
+        isRefresh: true
       }
     },
     beforeRouteEnter(to, from, next) {
@@ -73,7 +81,7 @@
           if (res.data.adopt) this.scheduleList = res.data.message.desc
           else this.$notify(res.data.message);
           setTimeout(() => {
-            if (window.innerHeight - 71 > this.$refs.busList.offsetHeight) this.isRefresh = true
+            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
           }, 100);
         }
       )
@@ -101,7 +109,7 @@
             } else this.$notify(res.data.message);
             this.isLoading = false
             setTimeout(() => {
-              if (window.innerHeight - 71 > this.$refs.busList.offsetHeight) this.isRefresh = true
+              this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
             }, 100);
           }
         )

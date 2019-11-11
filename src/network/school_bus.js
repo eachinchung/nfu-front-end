@@ -1,4 +1,6 @@
 import request from "./request"
+import store from '@/store'
+import {tryRequest} from "./token"
 
 export function schedule(token, routeId, date) {
   return request({
@@ -24,14 +26,14 @@ export function passenger(token) {
   });
 }
 
-export function notUsedOrder(token) {
-  return request({
+export function notUsedOrder(handle) {
+  return tryRequest(request({
     method: "get",
     url: "/school-bus/order/not-used",
     headers: {
-      'Authorization': 'Bearer ' + token
+      'Authorization': 'Bearer ' + store.state.access_token
     }
-  });
+  }),handle);
 }
 
 export function createOrder(token, data) {

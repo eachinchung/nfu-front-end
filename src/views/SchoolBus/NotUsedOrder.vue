@@ -22,7 +22,7 @@
                         :label="`${item.start_from_name} -> ${item.start_to_name}`"
                         :key="item.id"
                         value-class="valueClass"
-                        is-link size="large"
+                        size="large" is-link
                         @click="onClickList(item.id)"
               />
             </van-cell-group>
