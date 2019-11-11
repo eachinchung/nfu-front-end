@@ -44,3 +44,7 @@ export function createOrder(token, data) {
     }
   });
 }
+
+export function ticketUrl(token, orderId) {
+  return process.env.VUE_APP_POST_URL + '/school-bus/ticket?token=' + token + '&order_id=' + orderId
+}

@@ -59,7 +59,7 @@
                 document.cookie =
                   "remember=" +
                   res.data.message.refresh_token +
-                  ";expires=" + exp + ';path=/';
+                  ";expires=" + exp.toGMTString() + ';path=/';
 
                 this.$store.commit("upToken", res.data.message.access_token);
                 this.$router.push(this.path)

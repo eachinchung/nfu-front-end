@@ -25,7 +25,7 @@ export function handle_token(res) {
     document.cookie =
       "remember=" +
       res.data.message.refresh_token +
-      ";expires=" + exp + ';path=/';
+      ";expires=" + exp.toGMTString() + ';path=/';
     store.commit("upToken", res.data.message.access_token);
     return true
   } else return false;
@@ -55,4 +55,20 @@ export function beforeRouteCheck(next, to, init) {
       });
     } else next({path: "/login", query: {next: to.fullPath}});
   } else next(vm => init(vm));
+}
+
+export function beforeRouteCheckNotInit(next, to) {
+  if (check_refresh_token()) {
+    const token = refresh_token();
+    if (token[0]) {
+      next(vm => {
+        token[1].then(
+          res => {
+            if (!handle_token(res)) vm.$notify("不可预知错误");
+          },
+          () => vm.$notify("无法连接到服务器")
+        );
+      });
+    } else next({path: "/login", query: {next: to.fullPath}});
+  } else next();
 }
