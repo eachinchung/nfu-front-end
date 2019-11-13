@@ -7,7 +7,6 @@
           <div v-if="scheduleList">
 
             <van-cell-group v-if="typeof scheduleList == 'string'">
-              <!-- 如果scheduleList不是列表，则今天已经没有班车了 -->
               <van-cell size="large" :title="scheduleList"/>
             </van-cell-group>
 
@@ -17,19 +16,14 @@
                           @click="onClickSchedule(item)">
                   <template slot="title">
                     <b>{{item.start_time}}&nbsp;</b>
-                    <!-- 判断是否为加班车 -->
                     <van-tag v-if="item.bus_type===2" type="primary">加班车</van-tag>
                   </template>
                   <template slot="default">
-                    <!-- 车票剩余0就为红色 -->
                     <span v-if="item.ticket_left===0" class="ticketRed">{{item.ticket_left}}</span>
-                    <!-- 车票小于20就为橙色 -->
                     <span v-else-if="item.ticket_left<20" class="ticketOrange">{{item.ticket_left}}</span>
-                    <!-- 车票正常为绿色 -->
                     <span v-else class="ticketGreen">{{item.ticket_left}}</span>
                   </template>
                   <template slot="label">
-                    <!-- 经过的车站 -->
                     <div class="ticketList">{{item.pathway}}</div>
                   </template>
                 </van-cell>
@@ -41,7 +35,6 @@
       </div>
     </van-pull-refresh>
 
-    <!-- 弹出确认订单 -->
     <van-popup v-model="show" position="bottom" safe-area-inset-bottom>
       <create-order :list="passengerList" :schedule="schedule" @close="show=false"/>
     </van-popup>

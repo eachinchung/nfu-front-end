@@ -88,8 +88,8 @@
                 })
                 this.$router.push("/school-bus/order/create-order")
               }
-              // else if (res.data.code === '0009') brush_ticket(this, res)
-              // else if (res.data.code === '0002') brush_ticket(this, res)
+              // else if (res.data.busCode === '0009') brush_ticket(this, res)
+              // else if (res.data.busCode === '0002') brush_ticket(this, res)
               else this.$toast.fail(res.data.message)
             }
           )
@@ -98,3 +98,6 @@
     }
   }
 </script>
+
+<style scoped>
+</style>

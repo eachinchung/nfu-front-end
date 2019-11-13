@@ -3,7 +3,7 @@ import request from "./request"
 export function schedule(token, routeId, date) {
   return request({
     method: "post",
-    url: "/school-bus/schedule",
+    url: "/schoolBus/schedule",
     data: {
       route_id: routeId,
       date: date
@@ -17,7 +17,7 @@ export function schedule(token, routeId, date) {
 export function passenger(token) {
   return request({
     method: "get",
-    url: "/school-bus/passenger",
+    url: "/schoolBus/passenger",
     headers: {
       'Authorization': 'Bearer ' + token
     }
@@ -27,7 +27,7 @@ export function passenger(token) {
 export function notUsedOrder(token) {
   return request({
     method: "get",
-    url: "/school-bus/order/not-used",
+    url: "/schoolBus/order/notUsed",
     headers: {
       'Authorization': 'Bearer ' + token
     }
@@ -37,7 +37,7 @@ export function notUsedOrder(token) {
 export function createOrder(token, data) {
   return request({
     method: "post",
-    url: "/school-bus/order/create",
+    url: "/schoolBus/order/create",
     data,
     headers: {
       'Authorization': 'Bearer ' + token
@@ -48,7 +48,7 @@ export function createOrder(token, data) {
 export function ticketId(token, order_id) {
   return request({
     method: "post",
-    url: "/school-bus/ticket-id",
+    url: "/schoolBus/ticketId",
     data: {
       order_id: order_id
     },
@@ -61,7 +61,7 @@ export function ticketId(token, order_id) {
 export function returnTicket(token, order_id, ticket_id) {
   return request({
     method: "post",
-    url: "/school-bus/ticket/delete",
+    url: "/schoolBus/ticket/delete",
     data: {
       order_id: order_id,
       ticket_id: ticket_id
@@ -73,5 +73,5 @@ export function returnTicket(token, order_id, ticket_id) {
 }
 
 export function ticketUrl(token, orderId) {
-  return process.env.VUE_APP_POST_URL + '/school-bus/ticket?token=' + token + '&order_id=' + orderId
+  return process.env.VUE_APP_POST_URL + '/schoolBus/ticket?token=' + token + '&orderId=' + orderId
 }

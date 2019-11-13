@@ -7,7 +7,6 @@
       @click-left="onClickLeft"
     />
 
-    <!-- 下拉刷新部分 -->
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
       <div :class="{ refresh: isRefresh }">
         <div ref="busList">
@@ -31,9 +30,8 @@
       </div>
     </van-pull-refresh>
 
-    <!-- 点击票后的弹窗 -->
     <van-popup v-model="show">
-      <van-cell-group class="row">
+      <van-cell-group class="cellGroup">
         <van-cell
           title="电子票"
           size="large"
@@ -43,9 +41,8 @@
       </van-cell-group>
     </van-popup>
 
-    <!-- 退票弹窗 -->
     <van-popup v-model="returnShow">
-      <van-cell-group class="row">
+      <van-cell-group class="cellGroup">
         <van-cell
           v-for="(item, index) in ticketList"
           :key="item.ticket_id"
@@ -160,7 +157,7 @@
 <style scoped>
   @import "~@/assets/css/common.css";
 
-  .row {
+  .cellGroup {
     width: 85vw;
   }
 

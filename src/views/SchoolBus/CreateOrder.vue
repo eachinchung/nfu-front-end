@@ -39,8 +39,13 @@
       </van-row>
 
       <van-popup v-model="show" close-on-popstate>
-        <img :src="$store.state.ticket_data.data.alipays_qr_url" alt="">
+        <van-image :src="$store.state.ticket_data.data.alipays_qr_url" width="80vw" height="80vw">
+          <template v-slot:loading>
+            <van-loading type="spinner" size="20"/>
+          </template>
+        </van-image>
       </van-popup>
+
     </div>
   </div>
 </template>
@@ -104,9 +109,5 @@
     padding: 0 10px 35px;
     color: #6e6f71;
     font-size: 15px;
-  }
-
-  img {
-    width: 80vw;
   }
 </style>
