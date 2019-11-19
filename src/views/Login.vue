@@ -46,6 +46,9 @@
         path: '/'
       };
     },
+    beforeRouteEnter(to, from, next) {
+      if (localStorage.getItem("remember") !== null) next("/")
+    },
     created() {
       if (this.$route.query.next != null) this.path = this.$route.query.next
     },
@@ -56,7 +59,6 @@
             res => {
               if (res.data.code === "1000") {
                 handleToken(res)
-                this.$store.commit("upAccessToken", res.data.message.access_token);
                 this.$router.push(this.path)
               } else this.$notify(res.data.message);
             }

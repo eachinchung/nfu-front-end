@@ -3,18 +3,6 @@ import store from '../store'
 import router from "../router";
 import {handleToken} from "./token";
 
-function getRememberToken() {
-  const name = 'remember'
-  const cookies = document.cookie;
-  const list = cookies.split("; ")
-  for (let i = 0; i < list.length; i++) {
-    let arr = list[i].split("=")
-    if (arr[0] === name)
-      if (arr[1] === "") return null;
-      else return arr[1]
-  }
-  return null;
-}
 
 export default config => {
   const instants = axios.create({
@@ -24,7 +12,7 @@ export default config => {
 
   instants.interceptors.request.use(
     config => {
-      config.headers.Authorization = `Bearer ${store.state.access_token}`
+      config.headers.Authorization = `Bearer ${store.state.accessToken}`
       return config
     }
   )
@@ -35,14 +23,15 @@ export default config => {
         method: "get",
         url: "oauth/token/refresh",
         headers: {
-          'Authorization': `Bearer ${getRememberToken()}`
+          'Authorization': `Bearer ${localStorage.getItem("remember")}`
         }
       }).then(res => {
         if (res.data.code === "1000") {
           handleToken(res)
-          response.config.headers.Authorization = `Bearer ${res.data.message.access_token}`
+          response.config.headers.Authorization = `Bearer ${res.data.message.accessToken}`
           return axios(response.config)
         } else {
+          localStorage.clear()
           router.push({path: "/login", query: {next: router.history.current.fullPath}})
           return response
         }

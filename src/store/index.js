@@ -5,12 +5,12 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-  access_token: null,
+  accessToken: null,
 
-  route_id: null,
-  bus_date: null,
-  ticket_type: 1,
-  ticket_data: null
+  routeId: null,
+  busDate: null,
+  ticketType: 1,
+  ticketData: null
 
 }
 

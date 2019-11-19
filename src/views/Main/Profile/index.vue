@@ -80,8 +80,7 @@
     },
     methods: {
       logout() {
-        document.cookie = "remember=;expires=-1;path=/";
-        this.$store.commit("rmToken");
+        this.$store.commit("rmAccessToken");
         this.$router.push("/login");
       },
       getDormitory(room) {

@@ -1,20 +1,21 @@
 export default {
   upAccessToken(state, token) {
-    state.access_token = token
+    state.accessToken = token
   },
   rmAccessToken(state) {
-    state.access_token = null
+    state.accessToken = null
+    localStorage.clear()
   },
   upRouteId(state, route_id) {
-    state.route_id = route_id
+    state.routeId = route_id
   },
   upBusDate(state, date) {
-    state.bus_date = date
+    state.busDate = date
   },
   SetTicketType(state, type) {
-    state.ticket_type = type
+    state.ticketType = type
   },
   SetTicketData(state, data) {
-    state.ticket_data = data
+    state.ticketData = data
   }
 }
