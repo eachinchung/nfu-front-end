@@ -14,15 +14,15 @@ export default [
     component: Schedule
   },
   {
-    path: "not-used-order",
+    path: "notUsedOrder",
     component: NotUsedOrder
   },
   {
-    path: 'order/brush-ticket',
+    path: 'order/brushTicket',
     component: BrushTicket
   },
   {
-    path: "order/create-order",
+    path: "order/createOrder",
     component: CreateOrder
   },
 ]

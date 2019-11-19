@@ -15,7 +15,7 @@
                 <van-cell v-for="item in scheduleList" :key="item.id" size="large" is-link
                           @click="onClickSchedule(item)">
                   <template slot="title">
-                    <b>{{item.start_time}}&nbsp;</b>
+                    <b :style="{marginRight: '5px',verticalAlign: 'middle'}">{{item.start_time}}</b>
                     <van-tag v-if="item.bus_type===2" type="primary">加班车</van-tag>
                   </template>
                   <template slot="default">

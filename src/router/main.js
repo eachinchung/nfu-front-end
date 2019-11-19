@@ -9,11 +9,11 @@ export default [
     component: Home
   },
   {
-    path: 'class-schedule',
+    path: 'classSchedule',
     component: ClassSchedule
   },
   {
-    path: 'school-bus',
+    path: 'schoolBus',
     component: SchoolBus
   },
   {

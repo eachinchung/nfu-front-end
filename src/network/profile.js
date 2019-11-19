@@ -1,17 +1,18 @@
 import request from "./request"
+import store from '@/store'
 
 
-export function get_user(token) {
+export function getUserData(token) {
   return request({
     method: "get",
-    url: "/user/get",
+    url: "/user/getUserData",
     headers: {
-      'Authorization': 'Bearer ' + token
+      'Authorization': `Bearer ${token}`
     }
   });
 }
 
-export function update_dormitory(token, room_id) {
+export function updateDormitory(room_id) {
   return request({
     method: "post",
     url: "/user/update/dormitory",
@@ -19,7 +20,7 @@ export function update_dormitory(token, room_id) {
       room_id: room_id
     },
     headers: {
-      'Authorization': 'Bearer ' + token
+      'Authorization': `Bearer ${store.state.access_token}`
     }
   });
 }

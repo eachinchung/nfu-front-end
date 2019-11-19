@@ -3,14 +3,13 @@
 </template>
 
 <script>
-  import {Activation} from '@/network/no_token'
+  import {activation} from '../network/oauth'
 
   export default {
     created() {
-      Activation(this.$route.query.token).then(
+      activation(this.$route.query.token).then(
         res => {
-          if (res.data.adopt) this.$toast.success('激活成功');
-          else this.$toast.fail(res.data.message);
+          this.$toast.fail(res.data.message);
           this.$router.push('/login')
         },
         () => {

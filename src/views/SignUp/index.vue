@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import {sign_up} from "@/network/no_token";
+  import {signUp} from "../../network/oauth";
   import Popup from "@/components/dormitory_popup";
   import User from "./components/user";
 
@@ -87,9 +87,9 @@
       },
       sign_up_btn() {
         if (this.check_username()) {
-          sign_up(this.username, this.password, this.room_id, this.email).then(
+          signUp(this.username, this.password, this.room_id, this.email).then(
             res => {
-              if (res.data.adopt) {
+              if (res.data.code==="1000") {
                 this.show = true;
               } else {
                 this.$notify(res.data.message);

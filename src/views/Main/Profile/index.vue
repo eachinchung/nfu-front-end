@@ -36,7 +36,7 @@
 
     <popup
       :showPicker="showPicker"
-      @getRoomId="get_dormitory"
+      @getRoomId="getDormitory"
       @close="close"
       :dormitoryValue="dormitory"
     />
@@ -44,27 +44,19 @@
 </template>
 
 <script>
-  import {get_user, update_dormitory} from "@/network/profile";
-  import {
-    refresh_token,
-    check_refresh_token,
-    handle_token
-  } from "@/network/refresh_token";
+  import {updateDormitory} from "../../../network/profile";
+  import {checkLogin, refresh, handle_token} from "../../../network/token"
+  import {getUserData} from "../../../network/profile";
 
   import Popup from "@/components/dormitory_popup";
 
-  function init(token, vm) {
-    get_user(token).then(
-      res => {
-        vm.user = res.data.id;
-        vm.name = res.data.name;
-        vm.email = res.data.email;
-        vm.dormitory = res.data.dormitory;
-      },
-      () => {
-        vm.$notify("无法连接到服务器");
-      }
-    );
+  function init(vm, res) {
+
+    vm.user = res.data.id;
+    vm.name = res.data.name;
+    vm.email = res.data.email;
+    vm.dormitory = res.data.dormitory;
+
   }
 
   export default {
@@ -80,64 +72,35 @@
     components: {
       Popup
     },
-    // 判断用户有没有登录，并初始化
     beforeRouteEnter(to, from, next) {
-      if (check_refresh_token()) {
-        const token = refresh_token();
-        if (token[0]) {
-          next(vm => {
-            token[1].then(
-              res => {
-                if (handle_token(res)) {
-                  init(vm.$store.state.access_token, vm);
-                } else vm.$notify("不可预知错误");
-              },
-              () => vm.$notify("无法连接到服务器")
-            );
-          });
-        } else next({path: "/login", query: {next: to.fullPath}});
-      } else
-        next(vm => {
-          if (vm.user == null) init(vm.$store.state.access_token, vm);
-        });
+      checkLogin(to, next)
     },
-
+    created() {
+      getUserData(this.$store.state.access_token).then(res => {
+        if (res.data.code === "1000") init(this, res)
+        else if (res.data.code === "1001") return refresh()
+        else this.$notify(res.data.message)
+      }).then(res => {
+        if (res.data.code === "1000") {
+          handle_token(res)
+          return getUserData(this.$store.state.access_token)
+        }
+      }).then(res => {
+        if (res.data.code === "1000") init(this, res)
+      }).catch(() => {
+        this.$notify("不可预知错误")
+      })
+    },
     methods: {
       logout() {
         document.cookie = "remember=;expires=-1;path=/";
         this.$store.commit("rmToken");
         this.$router.push("/login");
       },
-      get_dormitory: function (room) {
+      getDormitory(room) {
         if (room[0] !== this.dormitory) {
           this.dormitory = room[0];
-
-          update_dormitory(this.$store.state.access_token, room[1]).then(
-            res => {
-              if (!res.data.adopt)
-                if (res.data.code === 1001) {
-                  const token = refresh_token();
-                  if (token[0])
-                    token[1].then(
-                      res => {
-                        if (handle_token(res))
-                          update_dormitory(
-                            this.$store.state.access_token,
-                            room[1]
-                          );
-                        else this.$notify("不可预知错误");
-                      },
-                      () => this.$notify("无法连接到服务器")
-                    );
-                  else
-                    this.$router.push({
-                      path: "/login",
-                      query: {next: this.$route.fullPath}
-                    });
-                }
-            },
-            () => this.$notify("无法连接到服务器")
-          );
+          updateDormitory(room[1])
         }
       },
       close() {

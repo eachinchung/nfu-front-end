@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainRouter from './main'
-import SchoolBusRouter from './school_bus'
+import SchoolBusRouter from './schoolBus'
 
 Vue.use(VueRouter)
 
@@ -17,18 +17,18 @@ const Activation = () => import('@/views/Activation')
 const routes = [
   {
     path: '/',
-    redirect: '/main/school-bus'
+    redirect: '/main'
   },
   {
     path: '/main',
     component: Main,
-    redirect: '/main/school-bus',
+    redirect: '/main/home',
     children: MainRouter
   },
   {
-    path: '/school-bus',
+    path: '/schoolBus',
     component: SchoolBus,
-    redirect: '/main/school-bus',
+    redirect: '/main/schoolBus',
     children: SchoolBusRouter
   },
   {

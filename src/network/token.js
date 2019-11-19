@@ -16,54 +16,26 @@ function getRememberToken() {
 }
 
 // 发送刷新cookies的请求
-function refresh() {
+export function refresh() {
   return request({
     method: "get",
     url: "oauth/token/refresh",
     headers: {
-      'Authorization': 'Bearer ' + getRememberToken()
+      'Authorization': `Bearer ${getRememberToken()}`
     }
   })
 }
 
 // 储存获得的token
-function handle_token(res) {
-  if (res.data.adopt) {
-    let exp = new Date();
-    exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
-    document.cookie =
-      "remember=" +
-      res.data.message.refresh_token +
-      ";expires=" + exp.toGMTString() + ';path=/';
-    store.commit("upToken", res.data.message.access_token);
-  }
-
-  return res.data.adopt
+export function handleToken(res) {
+  let exp = new Date();
+  exp.setTime(exp.getTime() + 30 * 24 * 60 * 60 * 1000);
+  document.cookie =`remember=${res.data.message.refresh_token};expires=${exp.toGMTString()};path=/`
+  store.commit("upAccessToken", res.data.message.access_token);
 }
 
 // 检查是否登录
-export function checkLogin(next, to) {
+export function checkLogin(to, next) {
   if (getRememberToken() == null) next({path: "/login", query: {next: to.fullPath}});
   else next();
-}
-
-// 尝试发送网络请求
-export function tryRequest(theRequest, handle) {
-  // 当token不存在时，重新请求token
-  if (store.state.access_token == null) {
-    refresh().then(res => {
-      if (handle_token(res)) theRequest.then(res => handle(res.data))
-    })
-  } else {
-    theRequest.then(res => {
-      // 如果服务器返回签名过期
-      if (res.data.code === 1001)
-      // 则刷新token
-        refresh().then(res => {
-          if (handle_token(res)) theRequest.then(res => handle(res.data))
-        })
-      else handle(res.data)
-    })
-  }
-
 }
