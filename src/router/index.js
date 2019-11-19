@@ -5,13 +5,13 @@ import SchoolBusRouter from './schoolBus'
 
 Vue.use(VueRouter)
 
-const Main = () => import('@/views/Main')
+const Main = () => import('../views/Main')
 
-const SchoolBus = () => import('@/views/SchoolBus')
+const SchoolBus = () => import('../views/SchoolBus')
 
-const Login = () => import('@/views/Login')
-const SignUp = () => import('@/views/SignUp')
-const Activation = () => import('@/views/Activation')
+const Login = () => import('../views/Login')
+const SignUp = () => import('../views/SignUp')
+const Activation = () => import('../views/Activation')
 
 
 const routes = [
