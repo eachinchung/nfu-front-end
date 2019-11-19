@@ -45,18 +45,16 @@
 
 <script>
   import {updateDormitory} from "../../../network/profile";
-  import {checkLogin, refresh, handle_token} from "../../../network/token"
+  import {checkLogin} from "../../../network/token"
   import {getUserData} from "../../../network/profile";
 
   import Popup from "@/components/dormitory_popup";
 
   function init(vm, res) {
-
     vm.user = res.data.id;
     vm.name = res.data.name;
     vm.email = res.data.email;
     vm.dormitory = res.data.dormitory;
-
   }
 
   export default {
@@ -76,20 +74,9 @@
       checkLogin(to, next)
     },
     created() {
-      getUserData(this.$store.state.access_token).then(res => {
-        if (res.data.code === "1000") init(this, res)
-        else if (res.data.code === "1001") return refresh()
-        else this.$notify(res.data.message)
-      }).then(res => {
-        if (res.data.code === "1000") {
-          handle_token(res)
-          return getUserData(this.$store.state.access_token)
-        }
-      }).then(res => {
-        if (res.data.code === "1000") init(this, res)
-      }).catch(() => {
-        this.$notify("不可预知错误")
-      })
+      getUserData()
+        .then(res => init(this, res))
+        .catch(() => this.$notify("不可预知错误"))
     },
     methods: {
       logout() {
@@ -98,10 +85,9 @@
         this.$router.push("/login");
       },
       getDormitory(room) {
-        if (room[0] !== this.dormitory) {
-          this.dormitory = room[0];
-          updateDormitory(room[1])
-        }
+        if (room[0] !== this.dormitory) updateDormitory(room[1])
+          .then(() => this.dormitory = room[0])
+          .catch(() => this.$notify("不可预知错误"))
       },
       close() {
         this.showPicker = false;

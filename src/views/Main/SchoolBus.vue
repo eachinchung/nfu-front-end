@@ -10,8 +10,8 @@
     </van-cell-group>
 
     <van-cell-group>
-<!--      <van-cell size="large" title="预售订单" is-link/>-->
-<!--      <van-cell size="large" title="刷票订单" is-link/>-->
+      <van-cell size="large" title="预售订单" is-link/>
+      <van-cell size="large" title="刷票订单" is-link/>
       <van-cell size="large" title="待乘车订单" is-link to="/school-bus/not-used-order"/>
     </van-cell-group>
   </div>

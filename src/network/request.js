@@ -1,6 +1,7 @@
 import axios from "axios"
-import store from '@/store'
-import {handle_token} from "./token";
+import store from '../store'
+import router from "../router";
+import {handleToken} from "./token";
 
 function getRememberToken() {
   const name = 'remember'
@@ -23,32 +24,29 @@ export default config => {
 
   instants.interceptors.request.use(
     config => {
-      let token = store.state.access_token
-
-      if (token == null) {
-        axios({
-          method: "get",
-          url: `${process.env.VUE_APP_POST_URL}oauth/token/refresh`,
-          headers: {
-            'Authorization': `Bearer ${getRememberToken()}`
-          },
-          timeout: 20000
-        }).then(res=>{
-          if (res.data.code === "1000") {
-            handle_token(res)
-            token = res.data.message.access_token
-          }
-        })
-      }
-
-      config.headers.Authorization=`Bearer ${token}`
-      console.log(config);
+      config.headers.Authorization = `Bearer ${store.state.access_token}`
+      return config
     }
   )
 
   instants.interceptors.response.use(
     response => {
-      console.log(response);
+      if (response.data.code === "1001") return noToken({
+        method: "get",
+        url: "oauth/token/refresh",
+        headers: {
+          'Authorization': `Bearer ${getRememberToken()}`
+        }
+      }).then(res => {
+        if (res.data.code === "1000") {
+          handleToken(res)
+          response.config.headers.Authorization = `Bearer ${res.data.message.access_token}`
+          return axios(response.config)
+        } else {
+          router.push({path: "/login", query: {next: router.history.current.fullPath}})
+          return response
+        }
+      }); else return response
     }
   )
 
@@ -60,6 +58,5 @@ export function noToken(config) {
     baseURL: process.env.VUE_APP_POST_URL,
     timeout: 20000
   })
-
   return instants(config)
 }

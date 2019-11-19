@@ -1,14 +1,10 @@
 import request from "./request"
-import store from '@/store'
 
 
-export function getUserData(token) {
+export function getUserData() {
   return request({
     method: "get",
     url: "/user/getUserData",
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
   });
 }
 
@@ -18,9 +14,6 @@ export function updateDormitory(room_id) {
     url: "/user/update/dormitory",
     data: {
       room_id: room_id
-    },
-    headers: {
-      'Authorization': `Bearer ${store.state.access_token}`
     }
   });
 }
