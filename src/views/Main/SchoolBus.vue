@@ -26,7 +26,7 @@
     },
     methods: {
       toDate(routeId) {
-        this.$store.commit("upRouteId", routeId);
+        this.$store.commit("setRouteId", routeId);
         this.$router.push("/schoolBus/date");
       }
     }

@@ -7,16 +7,16 @@ export default {
     state.accessToken = null
     localStorage.clear()
   },
-  upRouteId(state, route_id) {
+  setRouteId(state, route_id) {
     state.routeId = route_id
   },
-  upBusDate(state, date) {
+  setBusDate(state, date) {
     state.busDate = date
   },
-  SetTicketType(state, type) {
+  setTicketType(state, type) {
     state.ticketType = type
   },
-  SetTicketData(state, data) {
+  setTicketData(state, data) {
     state.ticketData = data
   }
 }

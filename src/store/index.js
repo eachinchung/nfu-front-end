@@ -6,11 +6,11 @@ Vue.use(Vuex)
 
 const state = {
   accessToken: null,
-  busPower:null,
+  busPower:true,
 
   routeId: null,
   busDate: null,
-  ticketType: 1,
+  ticketType: null,
   ticketData: null
 }
 
