@@ -5,17 +5,13 @@
 </template>
 
 <script>
-  import {beforeRouteCheck} from "@/network/refresh_token";
-  function init() {
 
-  }
+  import {checkLogin} from "../../../network/token";
+
   export default {
     beforeRouteEnter(to, from, next) {
-      beforeRouteCheck(next, to, init)
-    },
+      checkLogin(to, next)
+    }
   }
 </script>
 
-<style>
-
-</style>

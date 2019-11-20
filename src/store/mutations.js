@@ -1,6 +1,7 @@
 export default {
   upAccessToken(state, token) {
     state.accessToken = token
+    state.busPower = JSON.parse(window.atob(token.split('.')[1])).busPower
   },
   rmAccessToken(state) {
     state.accessToken = null

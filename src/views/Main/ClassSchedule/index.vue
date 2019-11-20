@@ -1,13 +1,15 @@
 <template>
-  <h1>这是课程表</h1>
+  <div>
+    <van-nav-bar class="title" title="课程表"/>
+  </div>
 </template>
 
 <script>
+  import {checkLogin} from "../../../network/token";
+
   export default {
-    name: 'ClassSchedule'
+    beforeRouteEnter(to, from, next) {
+      checkLogin(to, next)
+    }
   }
 </script>
-
-<style>
-
-</style>

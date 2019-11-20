@@ -17,7 +17,7 @@ const Activation = () => import('../views/Activation')
 const routes = [
   {
     path: '/',
-    redirect: '/main'
+    redirect: '/main/home'
   },
   {
     path: '/main',
