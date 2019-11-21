@@ -2,7 +2,14 @@
   <div id="Login">
     <van-nav-bar class="title" title="南苑聚合"/>
     <van-cell-group title="请登录您的账号" class="group">
-      <van-field v-model="username" left-icon="contact" label="学号" placeholder="请输入学号" clearable/>
+      <van-field
+        v-model="username"
+        left-icon="contact"
+        label="学号"
+        placeholder="请输入学号"
+        clearable
+        :error-message="usernameErr"
+      />
       <van-field
         v-model="password"
         left-icon="edit"
@@ -10,6 +17,7 @@
         label="密码"
         placeholder="请输入密码"
         @keyup.enter="loginBtu"
+        :error-message="passwordErr"
       />
     </van-cell-group>
 
@@ -26,41 +34,45 @@
   import {login} from "../network/oauth"
   import {handleToken} from "../network/token"
 
-  function check(vm) {
-    if (vm.username == null || vm.username === "") {
-      vm.$notify("账号不能为空")
-      return false
-    }
-    if (vm.password == null || vm.password === "") {
-      vm.$notify("密码不能为空")
-      return false
-    }
-    return true
-  }
 
   export default {
     data() {
       return {
+        path: '/',
+        notErr: false,
         username: null,
         password: null,
-        path: '/'
+        usernameErr: null,
+        passwordErr: null
       };
     },
     beforeRouteEnter(to, from, next) {
       if (localStorage.getItem("remember") !== null) next("/")
+      else next()
     },
     created() {
       if (this.$route.query.next != null) this.path = this.$route.query.next
     },
     methods: {
       loginBtu() {
-        if (check(this)) {
+        this.notErr = this.username != null || this.username !== ""
+        if (!this.notErr) this.usernameErr = "账号不能为空"
+        else this.usernameErr = null
+
+        this.notErr = this.password != null || this.password !== ""
+        if (!this.notErr) this.passwordErr = "密码不能为空"
+        else this.passwordErr = null
+
+        if (this.notErr) {
           login(this.username, this.password).then(
             res => {
               if (res.data.code === "1000") {
                 handleToken(res)
                 this.$router.push(this.path)
-              } else this.$notify(res.data.message)
+              }
+              if (res.data.code === "0002") this.$notify(res.data.message)
+              if (res.data.code === "0003") this.passwordErr = res.data.message
+              if (res.data.code === "0001") this.usernameErr = res.data.message
             }
           ).catch(() => this.$notify("不可预知错误"))
         }

@@ -46,6 +46,7 @@
         placeholder="请再次输入密码"
         :error-message="repeatPasswordErr"
         type="password"
+        @keyup.enter="setPassword"
       />
     </van-cell-group>
 
