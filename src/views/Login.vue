@@ -34,7 +34,6 @@
   import {login} from "../network/oauth"
   import {handleToken} from "../network/token"
 
-
   export default {
     data() {
       return {

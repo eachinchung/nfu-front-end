@@ -1,7 +1,3 @@
-<template>
-  <div></div>
-</template>
-
 <script>
   import {activation} from '../network/oauth'
 

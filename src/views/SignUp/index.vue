@@ -87,18 +87,12 @@
       },
       sign_up_btn() {
         if (this.check_username()) {
-          signUp(this.username, this.password, this.room_id, this.email).then(
-            res => {
-              if (res.data.code==="1000") {
-                this.show = true
-              } else {
-                this.$notify(res.data.message)
-              }
-            },
-            () => {
-              this.$notify("不可预知错误")
-            }
-          )
+          signUp(this.username, this.password, this.room_id, this.email)
+            .then(res => {
+              if (res.data.code === "1000") this.show = true
+              else this.$notify(res.data.message)
+            })
+            .catch(() => this.$notify("不可预知错误"))
         }
       },
       confirm() {
