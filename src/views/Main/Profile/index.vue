@@ -28,7 +28,7 @@
     </van-cell-group>
 
     <van-row type="flex" justify="center" class="row">
-      <van-button type="default" class="button" @click="$toast('该功能正在开发中...')">修改密码</van-button>
+      <van-button type="default" class="button" @click="showSetPassword=true">修改密码</van-button>
     </van-row>
     <van-row type="flex" justify="center">
       <van-button type="warning" class="button" @click="logout">退出登录</van-button>
@@ -40,6 +40,10 @@
       @close="close"
       :dormitoryValue="dormitory"
     />
+
+    <van-popup v-model="showSetPassword">
+      <set-password class="myPopup"/>
+    </van-popup>
   </div>
 </template>
 
@@ -48,6 +52,7 @@
   import {checkLogin} from "../../../network/token"
   import {getUserData} from "../../../network/profile";
 
+  import SetPassword from "./components/SetPassword";
   import Popup from "@/components/dormitory_popup";
 
   function init(vm, res) {
@@ -64,11 +69,13 @@
         name: null,
         email: null,
         dormitory: null,
-        showPicker: false
+        showPicker: false,
+        showSetPassword: false
       };
     },
     components: {
-      Popup
+      Popup,
+      SetPassword
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
@@ -105,5 +112,9 @@
 
   .profile .button {
     width: 90%;
+  }
+
+  .myPopup {
+    width: 85vw;
   }
 </style>
