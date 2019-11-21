@@ -23,19 +23,19 @@
 </template>
 
 <script>
-  import {login} from "../network/oauth";
-  import {handleToken} from "../network/token";
+  import {login} from "../network/oauth"
+  import {handleToken} from "../network/token"
 
   function check(vm) {
     if (vm.username == null || vm.username === "") {
-      vm.$notify("账号不能为空");
-      return false;
+      vm.$notify("账号不能为空")
+      return false
     }
     if (vm.password == null || vm.password === "") {
-      vm.$notify("密码不能为空");
-      return false;
+      vm.$notify("密码不能为空")
+      return false
     }
-    return true;
+    return true
   }
 
   export default {
@@ -60,7 +60,7 @@
               if (res.data.code === "1000") {
                 handleToken(res)
                 this.$router.push(this.path)
-              } else this.$notify(res.data.message);
+              } else this.$notify(res.data.message)
             }
           ).catch(() => this.$notify("不可预知错误"))
         }

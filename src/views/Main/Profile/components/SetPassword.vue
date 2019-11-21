@@ -46,7 +46,6 @@
         placeholder="请再次输入密码"
         :error-message="repeatPasswordErr"
         type="password"
-        @blur="repeatPasswordCheck"
       />
     </van-cell-group>
 
@@ -57,7 +56,7 @@
 </template>
 
 <script>
-  import {getVerificationCode, setPassword} from "../../../../network/profile";
+  import {getVerificationCode, setPassword} from "../../../../network/profile"
 
   export default {
     data() {

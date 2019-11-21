@@ -48,18 +48,18 @@
 </template>
 
 <script>
-  import {setDormitory} from "../../../network/profile";
+  import {setDormitory} from "../../../network/profile"
   import {checkLogin} from "../../../network/token"
-  import {getUserData} from "../../../network/profile";
+  import {getUserData} from "../../../network/profile"
 
-  import SetPassword from "./components/SetPassword";
-  import Popup from "../../../components/dormitory_popup";
+  import SetPassword from "./components/SetPassword"
+  import Popup from "../../../components/dormitoryPopup"
 
   function init(vm, res) {
-    vm.user = res.data.id;
-    vm.name = res.data.name;
-    vm.email = res.data.email;
-    vm.dormitory = res.data.dormitory;
+    vm.user = res.data.id
+    vm.name = res.data.name
+    vm.email = res.data.email
+    vm.dormitory = res.data.dormitory
   }
 
   export default {
@@ -87,8 +87,8 @@
     },
     methods: {
       logout() {
-        this.$store.commit("rmAccessToken");
-        this.$router.push("/login");
+        this.$store.commit("rmAccessToken")
+        this.$router.push("/login")
       },
       getDormitory(room) {
         if (room[0] !== this.dormitory) setDormitory(room[1])

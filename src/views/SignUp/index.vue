@@ -34,9 +34,9 @@
 </template>
 
 <script>
-  import {signUp} from "../../network/oauth";
-  import Popup from "@/components/dormitory_popup";
-  import User from "./components/user";
+  import {signUp} from "../../network/oauth"
+  import Popup from "../../components/dormitoryPopup"
+  import User from "./components/user"
 
   export default {
     data() {
@@ -56,56 +56,56 @@
     },
     methods: {
       get_user_data(user) {
-        this.username = user[0];
-        this.password = user[1];
+        this.username = user[0]
+        this.password = user[1]
       },
       get_dormitory(room) {
-        this.value = room[0];
-        this.room_id = room[1];
+        this.value = room[0]
+        this.room_id = room[1]
       },
       close() {
-        this.showPicker = false;
+        this.showPicker = false
       },
       check_username() {
         if (this.username == null || this.username === "") {
-          this.$notify("账号不能为空");
-          return false;
+          this.$notify("账号不能为空")
+          return false
         }
         if (this.password == null || this.password === "") {
-          this.$notify("密码不能为空");
-          return false;
+          this.$notify("密码不能为空")
+          return false
         }
         if (this.email == null || this.email === "") {
-          this.$notify("邮箱不能为空");
-          return false;
+          this.$notify("邮箱不能为空")
+          return false
         }
         if (this.room_id == null || this.room_id === "") {
-          this.$notify("宿舍不能为空");
-          return false;
+          this.$notify("宿舍不能为空")
+          return false
         }
-        return true;
+        return true
       },
       sign_up_btn() {
         if (this.check_username()) {
           signUp(this.username, this.password, this.room_id, this.email).then(
             res => {
               if (res.data.code==="1000") {
-                this.show = true;
+                this.show = true
               } else {
-                this.$notify(res.data.message);
+                this.$notify(res.data.message)
               }
             },
             () => {
-              this.$notify("不可预知错误");
+              this.$notify("不可预知错误")
             }
-          );
+          )
         }
       },
       confirm() {
-        this.$router.push("/login");
+        this.$router.push("/login")
       },
       onClickLeft() {
-        this.$router.push("/login");
+        this.$router.push("/login")
       }
     }
   };

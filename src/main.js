@@ -15,7 +15,7 @@ Vue.use(Row)
   .use(Notify).use(Toast).use(Dialog).use(Picker)
   .use(Popup).use(Sticky).use(DatetimePicker)
   .use(Tag).use(Panel).use(Checkbox).use(CheckboxGroup)
-  .use(PullRefresh).use(Step).use(Steps).use(Image);
+  .use(PullRefresh).use(Step).use(Steps).use(Image)
 
 Vue.config.productionTip = false
 
