@@ -14,7 +14,16 @@
           label="邮箱验证码"
           placeholder="请输入验证码"
         >
-          <van-button slot="button" size="small" type="primary">发送验证码</van-button>
+          <van-button
+            slot="button"
+            size="small"
+            type="primary"
+            @click="getVerificationCode"
+            :disabled="codeDisabled"
+            :style="{width:'78px'}"
+          >{{codeMessage}}
+          </van-button>
+
         </van-field>
       </van-cell-group>
     </div>
@@ -40,6 +49,8 @@
 </template>
 
 <script>
+  import {getVerificationCode} from "../../../../network/profile";
+
   export default {
     name: "SetPassword",
     data() {
@@ -48,7 +59,28 @@
         newPassword: null,
         repeatPassword: null,
         verificationCode: null,
-        repeatPasswordErr: null
+        repeatPasswordErr: null,
+        codeDisabled: false,
+        codeMessage: "发送验证码"
+      }
+    },
+    methods: {
+      getVerificationCode() {
+        getVerificationCode().then(() => {
+        this.codeDisabled = true
+        let second = 60
+        this.codeMessage = second
+        const timer = setInterval(() => {
+          second--
+          if (second) {
+            this.codeMessage = second
+          } else {
+            clearInterval(timer)
+            this.codeMessage = "发送验证码"
+            this.codeDisabled =false
+          }
+        }, 1000)
+        }).catch(() => this.$notify("不可预知错误"))
       }
     }
   }

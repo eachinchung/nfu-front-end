@@ -5,7 +5,7 @@ export function getUserData() {
   return request({
     method: "get",
     url: "/user/getUserData",
-  });
+  })
 }
 
 export function updateDormitory(room_id) {
@@ -15,5 +15,12 @@ export function updateDormitory(room_id) {
     data: {
       room_id: room_id
     }
-  });
+  })
+}
+
+export function getVerificationCode() {
+  return request({
+    method: "get",
+    url: "/validate/getVerificationCode",
+  })
 }
