@@ -8,19 +8,27 @@ export function getUserData() {
   })
 }
 
-export function updateDormitory(room_id) {
-  return request({
-    method: "post",
-    url: "/user/update/dormitory",
-    data: {
-      room_id: room_id
-    }
-  })
-}
-
 export function getVerificationCode() {
   return request({
     method: "get",
     url: "/validate/getVerificationCode",
+  })
+}
+
+export function setDormitory(roomId) {
+  return request({
+    method: "post",
+    url: "/user/set/dormitory",
+    data: {
+      roomId: roomId
+    }
+  })
+}
+
+export function setPassword(data) {
+  return request({
+    method: "post",
+    url: "/user/set/password",
+    data
   })
 }

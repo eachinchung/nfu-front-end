@@ -42,18 +42,18 @@
     />
 
     <van-popup v-model="showSetPassword">
-      <set-password class="myPopup"/>
+      <set-password class="myPopup" @close="showSetPassword=false"/>
     </van-popup>
   </div>
 </template>
 
 <script>
-  import {updateDormitory} from "../../../network/profile";
+  import {setDormitory} from "../../../network/profile";
   import {checkLogin} from "../../../network/token"
   import {getUserData} from "../../../network/profile";
 
   import SetPassword from "./components/SetPassword";
-  import Popup from "@/components/dormitory_popup";
+  import Popup from "../../../components/dormitory_popup";
 
   function init(vm, res) {
     vm.user = res.data.id;
@@ -91,7 +91,7 @@
         this.$router.push("/login");
       },
       getDormitory(room) {
-        if (room[0] !== this.dormitory) updateDormitory(room[1])
+        if (room[0] !== this.dormitory) setDormitory(room[1])
           .then(() => this.dormitory = room[0])
           .catch(() => this.$notify("不可预知错误"))
       },
