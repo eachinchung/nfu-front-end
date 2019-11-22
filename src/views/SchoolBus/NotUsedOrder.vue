@@ -4,7 +4,7 @@
       class="title"
       title="待乘车订单"
       left-arrow
-      @click-left="onClickLeft"
+      @click-left="$router.push('/main/schoolBus')"
     />
 
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
@@ -62,23 +62,11 @@
 </template>
 
 <script>
-  import {beforeRouteCheck} from "@/network/refresh_token";
-  import {notUsedOrder, ticketId, ticketUrl, returnTicket} from "@/network/school_bus";
 
-  function init(vm) {
-    notUsedOrder(vm.$store.state.access_token).then(
-      res => {
-        if (res.data.adopt) vm.list = res.data.message
-        else vm.$notify(res.data.message);
-      },
-      () => vm.$notify('未知错误')
-    )
-  }
+  import {checkLogin} from "../../network/token";
+  import {notUsedOrder, returnTicket, ticketId, ticketUrl} from "../../network/schoolBus";
 
   export default {
-    beforeRouteEnter(to, from, next) {
-      beforeRouteCheck(next, to, init)
-    },
     data() {
       return {
         list: null,
@@ -90,65 +78,78 @@
         returnShow: false
       }
     },
+    beforeRouteEnter(to, from, next) {
+      checkLogin(to, next)
+    },
+
+    mounted() {
+      notUsedOrder()
+        .then(res => {
+          if (res.data.code === "1000") this.list = res.data.message
+          else this.$notify(res.data.message)
+
+          setTimeout(() => {
+            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
+          }, 100);
+        })
+        .catch(() => this.$notify('未知错误'))
+    },
     computed: {
       ticketUrl() {
-        return ticketUrl(this.$store.state.access_token, this.orderId)
+        return ticketUrl(this.$store.state.accessToken, this.orderId)
       }
     },
-    mounted() {
-      setTimeout(() => {
-        this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
-      }, 1000);
-    },
+
     methods: {
-      onClickLeft() {
-        this.$router.push("/main/school-bus");
-      },
       onClickList(order_id) {
         this.show = true
         this.orderId = order_id
       },
       onRefresh() {
-        notUsedOrder(this.$store.state.access_token).then(
-          res => {
-            if (res.data.adopt) this.list = res.data.message
+        notUsedOrder()
+          .then(res => {
+            if (res.data.code === "1000") this.list = res.data.message
             else this.$notify(res.data.message);
             this.isLoading = false
             setTimeout(() => {
               this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
             }, 100);
-          },
-          () => {
+          })
+          .catch(() => {
             this.$notify('未知错误')
             this.isLoading = false
-          }
-        )
+          })
       },
       onClickReturnTicket() {
-        ticketId(this.$store.state.access_token, this.orderId).then(
-          res => {
-            if (res.data.adopt) this.ticketList = res.data.message
+        ticketId(this.orderId)
+          .then(res => {
+            if (res.data.code === "1000") this.ticketList = res.data.message
             this.show = false
             this.returnShow = true
-          }
-        )
+          })
+          .catch(() => this.$notify('未知错误'))
       },
       returnTicket(index) {
         if (this.ticketList[index].code === '1000') {
           this.$toast.loading({
             forbidClick: true,
             duration: 0,
-          });
-          returnTicket(this.$store.state.access_token, this.orderId, this.ticketList[index].ticket_id).then(
+          })
+          returnTicket({
+            orderId: this.orderId,
+            ticketId: this.ticketList[index].ticket_id
+          }).then(
             res => {
-              if (res.data.adopt) {
-                this.$toast.clear();
+              if (res.data.code === "1000") {
                 this.$notify({type: 'primary', message: res.data.message});
                 this.ticketList[index].code = '1001'
-              } else this.$notify(res.data.message);
+              } else this.$notify(res.data.message)
             }
           )
-        } else this.$notify('该车票已退款');
+        } else {
+          this.$notify('该车票已退款')
+          this.$toast.clear()
+        }
       }
     }
   }

@@ -50,44 +50,44 @@
   </div>
 </template>
 
-<script>
-  import {beforeRouteCheck} from "@/network/refresh_token";
+<!--<script>-->
+<!--  import {beforeRouteCheck} from "@/network/refresh_token";-->
 
-  function init(vm) {
-    if (vm.$store.state.ticket_data == null) {
-      vm.$router.push("/main/school-bus");
-      return null;
-    }
-  }
+<!--  function init(vm) {-->
+<!--    if (vm.$store.state.ticket_data == null) {-->
+<!--      vm.$router.push("/main/school-bus");-->
+<!--      return null;-->
+<!--    }-->
+<!--  }-->
 
-  export default {
-    data() {
-      return {
-        show: false,
-        qr: null
-      }
-    },
-    beforeRouteEnter(to, from, next) {
-      beforeRouteCheck(next, to, init)
-    },
-    computed: {
-      price() {
-        return this.$store.state.ticket_data.schedule.price * this.$store.state.ticket_data.passenger.length
-      }
-    },
-    methods: {
-      onClickLeft() {
-        this.$router.push("/school-bus/schedule");
-      },
-      onClickRight() {
-        this.$router.push("/school-bus/not-used-order");
-      },
-      alipay() {
-        location.href = this.$store.state.ticket_data.data.alipays_url
-      }
-    }
-  }
-</script>
+<!--  export default {-->
+<!--    data() {-->
+<!--      return {-->
+<!--        show: false,-->
+<!--        qr: null-->
+<!--      }-->
+<!--    },-->
+<!--    beforeRouteEnter(to, from, next) {-->
+<!--      beforeRouteCheck(next, to, init)-->
+<!--    },-->
+<!--    computed: {-->
+<!--      price() {-->
+<!--        return this.$store.state.ticket_data.schedule.price * this.$store.state.ticket_data.passenger.length-->
+<!--      }-->
+<!--    },-->
+<!--    methods: {-->
+<!--      onClickLeft() {-->
+<!--        this.$router.push("/school-bus/schedule");-->
+<!--      },-->
+<!--      onClickRight() {-->
+<!--        this.$router.push("/school-bus/not-used-order");-->
+<!--      },-->
+<!--      alipay() {-->
+<!--        location.href = this.$store.state.ticket_data.data.alipays_url-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
 
 <style scoped>
   @import "~@/assets/css/common.css";

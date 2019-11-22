@@ -1,5 +1,5 @@
 <template>
-  <div id="school_bus">
+  <div>
     <van-nav-bar class="title" title="南苑 Bus"/>
 
     <van-cell-group title="购买车票" class="group">
@@ -12,6 +12,7 @@
     <van-cell-group>
       <van-cell size="large" title="预售订单" is-link/>
       <van-cell size="large" title="刷票订单" is-link/>
+      <van-cell size="large" title="未付款订单" is-link/>
       <van-cell size="large" title="待乘车订单" is-link to="/schoolBus/notUsedOrder"/>
     </van-cell-group>
   </div>

@@ -43,73 +43,73 @@
   </div>
 </template>
 
-<script>
-  import {beforeRouteCheckNotInit} from "@/network/refresh_token";
-  import {schedule, passenger} from "@/network/school_bus";
-  import CreateOrder from "./components/CreateOrder";
+<!--<script>-->
+<!--  import {beforeRouteCheckNotInit} from "@/network/refresh_token";-->
+<!--  import {schedule, passenger} from "@/network/school_bus";-->
+<!--  import CreateOrder from "./components/CreateOrder";-->
 
-  export default {
-    data() {
-      return {
-        scheduleList: null,
-        passengerList: null,
-        show: false,
-        isLoading: false,
-        schedule: null,
-        isRefresh: true
-      }
-    },
-    beforeRouteEnter(to, from, next) {
-      beforeRouteCheckNotInit(next, to)
-    },
-    components: {CreateOrder},
-    mounted() {
-      if (this.$store.state.bus_date == null || this.$store.state.route_id == null) {
-        this.$router.push("/main/school-bus");
-        return null;
-      }
-      // 向服务器请求班车数据
-      schedule(this.$store.state.access_token, this.$store.state.route_id, this.$store.state.bus_date).then(
-        res => {
-          if (res.data.adopt) this.scheduleList = res.data.message.desc
-          else this.$notify(res.data.message);
-          setTimeout(() => {
-            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
-          }, 100);
-        }
-      )
-      // 想服务器请求乘客数据
-      passenger(this.$store.state.access_token).then(
-        res => {
-          if (res.data.adopt) this.passengerList = res.data.message
-          else this.$notify(res.data.message);
-        }
-      )
-    },
-    methods: {
-      onClickLeft() {
-        this.$router.push("/school-bus/date");
-      },
-      onClickSchedule(schedule) {
-        this.show = true
-        this.schedule = schedule
-      },
-      onRefresh() {
-        schedule(this.$store.state.access_token, this.$store.state.route_id, this.$store.state.bus_date).then(
-          res => {
-            if (res.data.adopt) {
-              this.scheduleList = res.data.message.desc
-            } else this.$notify(res.data.message);
-            this.isLoading = false
-            setTimeout(() => {
-              this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
-            }, 100);
-          }
-        )
-      }
-    }
-  }
-</script>
+<!--  export default {-->
+<!--    data() {-->
+<!--      return {-->
+<!--        scheduleList: null,-->
+<!--        passengerList: null,-->
+<!--        show: false,-->
+<!--        isLoading: false,-->
+<!--        schedule: null,-->
+<!--        isRefresh: true-->
+<!--      }-->
+<!--    },-->
+<!--    beforeRouteEnter(to, from, next) {-->
+<!--      beforeRouteCheckNotInit(next, to)-->
+<!--    },-->
+<!--    components: {CreateOrder},-->
+<!--    mounted() {-->
+<!--      if (this.$store.state.bus_date == null || this.$store.state.route_id == null) {-->
+<!--        this.$router.push("/main/school-bus");-->
+<!--        return null;-->
+<!--      }-->
+<!--      // 向服务器请求班车数据-->
+<!--      schedule(this.$store.state.access_token, this.$store.state.route_id, this.$store.state.bus_date).then(-->
+<!--        res => {-->
+<!--          if (res.data.adopt) this.scheduleList = res.data.message.desc-->
+<!--          else this.$notify(res.data.message);-->
+<!--          setTimeout(() => {-->
+<!--            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;-->
+<!--          }, 100);-->
+<!--        }-->
+<!--      )-->
+<!--      // 想服务器请求乘客数据-->
+<!--      passenger(this.$store.state.access_token).then(-->
+<!--        res => {-->
+<!--          if (res.data.adopt) this.passengerList = res.data.message-->
+<!--          else this.$notify(res.data.message);-->
+<!--        }-->
+<!--      )-->
+<!--    },-->
+<!--    methods: {-->
+<!--      onClickLeft() {-->
+<!--        this.$router.push("/school-bus/date");-->
+<!--      },-->
+<!--      onClickSchedule(schedule) {-->
+<!--        this.show = true-->
+<!--        this.schedule = schedule-->
+<!--      },-->
+<!--      onRefresh() {-->
+<!--        schedule(this.$store.state.access_token, this.$store.state.route_id, this.$store.state.bus_date).then(-->
+<!--          res => {-->
+<!--            if (res.data.adopt) {-->
+<!--              this.scheduleList = res.data.message.desc-->
+<!--            } else this.$notify(res.data.message);-->
+<!--            this.isLoading = false-->
+<!--            setTimeout(() => {-->
+<!--              this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;-->
+<!--            }, 100);-->
+<!--          }-->
+<!--        )-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
+<!--</script>-->
 
 <style scoped>
   .ticketList {

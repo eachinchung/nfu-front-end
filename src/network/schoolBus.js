@@ -1,17 +1,14 @@
 import request from "./request"
 
-export function schedule(token, routeId, date) {
+export function schedule(routeId, date) {
   return request({
     method: "post",
     url: "/schoolBus/schedule",
     data: {
       route_id: routeId,
       date: date
-    },
-    headers: {
-      'Authorization': 'Bearer ' + token
     }
-  });
+  })
 }
 
 export function passenger(token) {
@@ -21,55 +18,40 @@ export function passenger(token) {
     headers: {
       'Authorization': 'Bearer ' + token
     }
-  });
+  })
 }
 
-export function notUsedOrder(token) {
+export function notUsedOrder() {
   return request({
     method: "get",
-    url: "/schoolBus/order/notUsed",
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
-  });
+    url: "/schoolBus/order/notUsed"
+  })
 }
 
-export function createOrder(token, data) {
+export function createOrder(data) {
   return request({
     method: "post",
     url: "/schoolBus/order/create",
-    data,
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
-  });
+    data
+  })
 }
 
-export function ticketId(token, order_id) {
+export function ticketId(orderId) {
   return request({
     method: "post",
     url: "/schoolBus/ticketId",
     data: {
-      order_id: order_id
-    },
-    headers: {
-      'Authorization': 'Bearer ' + token
+      orderId: orderId
     }
-  });
+  })
 }
 
-export function returnTicket(token, order_id, ticket_id) {
+export function returnTicket(data) {
   return request({
     method: "post",
     url: "/schoolBus/ticket/delete",
-    data: {
-      order_id: order_id,
-      ticket_id: ticket_id
-    },
-    headers: {
-      'Authorization': 'Bearer ' + token
-    }
-  });
+    data
+  })
 }
 
 export function ticketUrl(token, orderId) {

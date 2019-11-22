@@ -22,7 +22,7 @@
         icon="envelop-o"
         title="邮箱"
         :value="email"
-        @click="$toast('该功能正在开发中...')"
+        @click="$notify({ type: 'primary', message: '修改邮箱功能预计12月推出' })"
         is-link
       />
     </van-cell-group>
