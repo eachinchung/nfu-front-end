@@ -6,7 +6,7 @@
       label="学号"
       placeholder="请输入学号"
       clearable
-      @input="on_change"
+      @input="onChange"
     />
     <van-field
       v-model="password"
@@ -15,8 +15,8 @@
       label="密码"
       placeholder="请输入密码"
       right-icon="question-o"
-      @input="on_change"
-      @click-right-icon="password_text"
+      @input="onChange"
+      @click-right-icon="passwordText"
     />
   </van-cell-group>
 </template>
@@ -25,15 +25,15 @@
   export default {
     data() {
       return {
-        username: null,
-        password: null
+        username: "",
+        password: ""
       }
     },
     methods: {
-      on_change() {
+      onChange() {
         this.$emit("getUser", [this.username, this.password])
       },
-      password_text() {
+      passwordText() {
         this.$dialog.alert({
           title: "密码说明",
           messageAlign: "left",

@@ -62,17 +62,17 @@
   export default {
     data() {
       return {
-        code: null,
+        code: "",
         codeDisabled: false,
         codeErr: null,
         codeMessage: "发送验证码",
         loading: false,
-        newPassword: null,
+        newPassword: "",
         newPasswordErr: null,
         notErr: false,
-        password: null,
+        password: "",
         passwordErr: null,
-        repeatPassword: null,
+        repeatPassword: "",
         repeatPasswordErr: null
       }
     },
@@ -100,13 +100,13 @@
       },
       passwordCheck() {
         // 检查密码是否为空
-        this.notErr = this.password != null && this.password !== ''
+        this.notErr = this.password !== ''
         if (this.notErr) this.passwordErr = null
         else this.passwordErr = "该选项不能为空"
       },
       codeCheck() {
         // 检查验证码是否为空
-        this.notErr = this.code != null && this.code !== ''
+        this.notErr = this.code !== ''
         if (this.notErr) {
           this.notErr = this.code.length === 6
           if (this.notErr) this.codeErr = null
@@ -115,13 +115,13 @@
       },
       newPasswordCheck() {
         // 检查新密码是否为空
-        this.notErr = this.newPassword != null && this.newPassword !== ''
+        this.notErr = this.newPassword !== ''
         if (this.notErr) this.newPasswordErr = null
         else this.newPasswordErr = "该选项不能为空"
       },
       repeatPasswordCheck() {
         // 检查确认密码是否为空
-        this.notErr = this.repeatPassword != null && this.repeatPassword !== ''
+        this.notErr = this.repeatPassword !== ''
         if (this.notErr) {
           // 两次输入的密码是否一致
           this.notErr = this.newPassword === this.repeatPassword

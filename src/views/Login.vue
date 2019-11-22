@@ -38,9 +38,9 @@
     data() {
       return {
         path: '/',
+        username: "",
+        password: "",
         notErr: false,
-        username: null,
-        password: null,
         usernameErr: null,
         passwordErr: null
       };
@@ -54,11 +54,11 @@
     },
     methods: {
       loginBtu() {
-        this.notErr = this.username != null || this.username !== ""
+        this.notErr = this.username !== ""
         if (!this.notErr) this.usernameErr = "账号不能为空"
         else this.usernameErr = null
 
-        this.notErr = this.password != null || this.password !== ""
+        this.notErr = this.password !== ""
         if (!this.notErr) this.passwordErr = "密码不能为空"
         else this.passwordErr = null
 

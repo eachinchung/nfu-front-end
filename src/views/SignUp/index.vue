@@ -1,7 +1,7 @@
 <template>
   <div id="SingUp">
-    <van-nav-bar class="title" title="注册新用户" left-arrow @click-left="onClickLeft"/>
-    <user @getUser="get_user_data"/>
+    <van-nav-bar class="title" title="注册新用户" left-arrow @click-left="$router.push('/login')"/>
+    <user @getUser="getUserData"/>
 
     <van-cell-group title="请设置个人信息">
       <van-field
@@ -24,30 +24,36 @@
     </van-cell-group>
 
     <van-row type="flex" justify="center" class="row">
-      <van-button type="primary" class="button" @click="sign_up_btn">注册</van-button>
+      <van-button type="primary" class="button" @click="signUpBtn">注册</van-button>
     </van-row>
 
-    <van-dialog v-model="show" title="注册成功" message="激活邮件已发送至您的邮箱，请查看。" @confirm="confirm"></van-dialog>
+    <van-dialog
+      v-model="show"
+      title="注册成功"
+      message="激活邮件已发送至您的邮箱，请查看。"
+      @confirm="$router.push('/login')"
+    />
 
-    <popup :showPicker="showPicker" @getRoomId="get_dormitory" @close="close"/>
+    <popup :showPicker="showPicker" @getRoomId="getDormitory" @close="showPicker = false"/>
   </div>
 </template>
 
 <script>
   import {signUp} from "../../network/oauth"
   import Popup from "../../components/dormitoryPopup"
-  import User from "./components/user"
+  import User from "./components/User"
 
   export default {
     data() {
       return {
-        username: null,
-        password: null,
-        room_id: null,
-        email: null,
-        value: null,
+        email: "",
+        nullErr: null,
+        password: "",
+        roomId: null,
         show: false,
-        showPicker: false
+        showPicker: false,
+        username: "",
+        value: null
       };
     },
     components: {
@@ -55,51 +61,47 @@
       Popup
     },
     methods: {
-      get_user_data(user) {
+      getUserData(user) {
         this.username = user[0]
         this.password = user[1]
       },
-      get_dormitory(room) {
+      getDormitory(room) {
         this.value = room[0]
-        this.room_id = room[1]
+        this.roomId = room[1]
       },
-      close() {
-        this.showPicker = false
+      check() {
+
+        this.nullErr = null
+        if (this.username === "") this.nullErr = "username"
+        else if (this.password === "") this.nullErr = "password"
+        else if (this.email === "") this.nullErr = "email"
+        else if (this.roomId === null) this.nullErr = "roomId"
+
+        switch (this.nullErr) {
+          case "username":
+            this.$notify("账号不能为空")
+            break
+          case "password":
+            this.$notify("密码不能为空")
+            break
+          case "email":
+            this.$notify("邮箱不能为空")
+            break
+          case "roomId":
+            this.$notify("宿舍不能为空")
+            break
+        }
       },
-      check_username() {
-        if (this.username == null || this.username === "") {
-          this.$notify("账号不能为空")
-          return false
-        }
-        if (this.password == null || this.password === "") {
-          this.$notify("密码不能为空")
-          return false
-        }
-        if (this.email == null || this.email === "") {
-          this.$notify("邮箱不能为空")
-          return false
-        }
-        if (this.room_id == null || this.room_id === "") {
-          this.$notify("宿舍不能为空")
-          return false
-        }
-        return true
-      },
-      sign_up_btn() {
-        if (this.check_username()) {
-          signUp(this.username, this.password, this.room_id, this.email)
+      signUpBtn() {
+        this.check()
+        if (this.nullErr == null) {
+          signUp(this.username, this.password, this.roomId, this.email)
             .then(res => {
               if (res.data.code === "1000") this.show = true
               else this.$notify(res.data.message)
             })
             .catch(() => this.$notify("不可预知错误"))
         }
-      },
-      confirm() {
-        this.$router.push("/login")
-      },
-      onClickLeft() {
-        this.$router.push("/login")
       }
     }
   };
