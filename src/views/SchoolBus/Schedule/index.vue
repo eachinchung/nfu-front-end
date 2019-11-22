@@ -1,6 +1,12 @@
 <template>
   <div>
-    <van-nav-bar class="title" :title="$store.state.bus_date" left-arrow @click-left="onClickLeft"/>
+    <van-nav-bar
+      class="title"
+      :title="$store.state.busDate"
+      left-arrow
+      @click-left="$router.push('/schoolBus/date')"
+    />
+
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
       <div :class="{ refresh: isRefresh }">
         <div ref="busList">
@@ -12,20 +18,28 @@
 
             <div v-else>
               <van-cell-group class="group">
-                <van-cell v-for="item in scheduleList" :key="item.id" size="large" is-link
-                          @click="onClickSchedule(item)">
+                <van-cell
+                  @click="onClickSchedule(item)"
+                  v-for="item in scheduleList"
+                  :key="item.id"
+                  size="large"
+                  is-link>
+
                   <template slot="title">
                     <b :style="{marginRight: '5px',verticalAlign: 'middle'}">{{item.start_time}}</b>
                     <van-tag v-if="item.bus_type===2" type="primary">加班车</van-tag>
                   </template>
+
                   <template slot="default">
-                    <span v-if="item.ticket_left===0" class="ticketRed">{{item.ticket_left}}</span>
-                    <span v-else-if="item.ticket_left<20" class="ticketOrange">{{item.ticket_left}}</span>
-                    <span v-else class="ticketGreen">{{item.ticket_left}}</span>
+                    <span :style="{color:surplusTicket(item.ticket_left)}">
+                      {{item.ticket_left}}
+                    </span>
                   </template>
+
                   <template slot="label">
                     <div class="ticketList">{{item.pathway}}</div>
                   </template>
+
                 </van-cell>
               </van-cell-group>
             </div>
@@ -39,77 +53,94 @@
       <create-order :list="passengerList" :schedule="schedule" @close="show=false"/>
     </van-popup>
 
-
   </div>
 </template>
 
-<!--<script>-->
-<!--  import {beforeRouteCheckNotInit} from "@/network/refresh_token";-->
-<!--  import {schedule, passenger} from "@/network/school_bus";-->
-<!--  import CreateOrder from "./components/CreateOrder";-->
+<script>
 
-<!--  export default {-->
-<!--    data() {-->
-<!--      return {-->
-<!--        scheduleList: null,-->
-<!--        passengerList: null,-->
-<!--        show: false,-->
-<!--        isLoading: false,-->
-<!--        schedule: null,-->
-<!--        isRefresh: true-->
-<!--      }-->
-<!--    },-->
-<!--    beforeRouteEnter(to, from, next) {-->
-<!--      beforeRouteCheckNotInit(next, to)-->
-<!--    },-->
-<!--    components: {CreateOrder},-->
-<!--    mounted() {-->
-<!--      if (this.$store.state.bus_date == null || this.$store.state.route_id == null) {-->
-<!--        this.$router.push("/main/school-bus");-->
-<!--        return null;-->
-<!--      }-->
-<!--      // 向服务器请求班车数据-->
-<!--      schedule(this.$store.state.access_token, this.$store.state.route_id, this.$store.state.bus_date).then(-->
-<!--        res => {-->
-<!--          if (res.data.adopt) this.scheduleList = res.data.message.desc-->
-<!--          else this.$notify(res.data.message);-->
-<!--          setTimeout(() => {-->
-<!--            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;-->
-<!--          }, 100);-->
-<!--        }-->
-<!--      )-->
-<!--      // 想服务器请求乘客数据-->
-<!--      passenger(this.$store.state.access_token).then(-->
-<!--        res => {-->
-<!--          if (res.data.adopt) this.passengerList = res.data.message-->
-<!--          else this.$notify(res.data.message);-->
-<!--        }-->
-<!--      )-->
-<!--    },-->
-<!--    methods: {-->
-<!--      onClickLeft() {-->
-<!--        this.$router.push("/school-bus/date");-->
-<!--      },-->
-<!--      onClickSchedule(schedule) {-->
-<!--        this.show = true-->
-<!--        this.schedule = schedule-->
-<!--      },-->
-<!--      onRefresh() {-->
-<!--        schedule(this.$store.state.access_token, this.$store.state.route_id, this.$store.state.bus_date).then(-->
-<!--          res => {-->
-<!--            if (res.data.adopt) {-->
-<!--              this.scheduleList = res.data.message.desc-->
-<!--            } else this.$notify(res.data.message);-->
-<!--            this.isLoading = false-->
-<!--            setTimeout(() => {-->
-<!--              this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;-->
-<!--            }, 100);-->
-<!--          }-->
-<!--        )-->
-<!--      }-->
-<!--    }-->
-<!--  }-->
-<!--</script>-->
+  import CreateOrder from "./components/CreateOrder";
+  import {checkLogin} from "../../../network/token";
+  import {passenger, schedule} from "../../../network/schoolBus";
+
+  export default {
+    data() {
+      return {
+        schedule: null,
+        scheduleList: null,
+        passengerList: null,
+
+        show: false,
+        isLoading: false,
+        isRefresh: true
+      }
+    },
+    beforeRouteEnter(to, from, next) {
+      checkLogin(to, next)
+    },
+    components: {CreateOrder},
+
+    mounted() {
+      if (this.$store.state.busDate == null || this.$store.state.routeId == null) this.$router.push("/main/schoolBus")
+      else {
+        // 提示正在加载中
+        this.$toast.loading({forbidClick: true, duration: 0})
+
+        // 获取班车列表
+        schedule({
+          routeId: this.$store.state.routeId,
+          date: this.$store.state.busDate
+        }).then(res => {
+          if (res.data.code === "1000") this.scheduleList = res.data.message.desc
+          else this.$notify(res.data.message);
+          setTimeout(() => {
+            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
+          }, 100);
+          this.$toast.clear()
+
+          // 获取乘车人数据
+          return passenger()
+        }).then(res => {
+          if (res.data.code === "1000") this.passengerList = res.data.message
+          else this.$notify(res.data.message);
+        }).catch(() => {
+          this.$notify('未知错误')
+          this.$toast.clear()
+        })
+      }
+    },
+
+    methods: {
+      surplusTicket(number) {
+        // 计算余票的颜色
+        if (number === 0) return "#F44336"
+        return number < 20 ? "#FFC107" : "#4CAF50"
+      },
+      onClickSchedule(schedule) {
+        this.show = true
+        this.schedule = schedule
+      },
+      onRefresh() {
+        schedule({
+          routeId: this.$store.state.routeId,
+          date: this.$store.state.busDate
+        }).then(res => {
+          if (res.data.code === "1000") {
+            this.scheduleList = res.data.message.desc
+          } else this.$notify(res.data.message);
+
+          setTimeout(() => {
+            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
+          }, 100);
+
+          this.isLoading = false
+        }).catch(() => {
+          this.$notify('未知错误')
+          this.isLoading = false
+        })
+      }
+    }
+  }
+</script>
 
 <style scoped>
   .ticketList {
@@ -121,18 +152,6 @@
 
   .group {
     margin-bottom: 25px;
-  }
-
-  .ticketRed {
-    color: #F44336;
-  }
-
-  .ticketOrange {
-    color: #FFC107;
-  }
-
-  .ticketGreen {
-    color: #4CAF50;
   }
 
   .refresh {

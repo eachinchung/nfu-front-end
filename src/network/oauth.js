@@ -30,7 +30,7 @@ export function activation(token) {
     method: "get",
     url: "/validate/activation",
     headers: {
-      'Authorization': 'Bearer ' + token
+      'Authorization': `Bearer ${token}`
     }
   })
 }

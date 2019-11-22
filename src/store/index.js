@@ -10,8 +10,7 @@ const state = {
 
   routeId: null,
   busDate: null,
-  ticketType: null,
-  ticketData: null
+  ticketType: null
 }
 
 export default new Vuex.Store({

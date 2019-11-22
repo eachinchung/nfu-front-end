@@ -15,8 +15,5 @@ export default {
   },
   setTicketType(state, type) {
     state.ticketType = type
-  },
-  setTicketData(state, data) {
-    state.ticketData = data
   }
 }
