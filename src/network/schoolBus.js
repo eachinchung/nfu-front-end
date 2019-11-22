@@ -36,7 +36,7 @@ export function createOrder(data) {
   })
 }
 
-export function ticketId(orderId) {
+export function getTicketId(orderId) {
   return request({
     method: "post",
     url: "/schoolBus/ticketId",

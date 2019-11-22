@@ -4,7 +4,7 @@
 
     <van-cell-group title="账号信息" class="group">
       <van-cell size="large" icon="contact" title="账号" :value="user"/>
-      <van-cell size="large" icon="contact" title="姓名" :value="name"/>
+      <van-cell size="large" icon="smile-o" title="姓名" :value="name"/>
     </van-cell-group>
 
     <van-cell-group>

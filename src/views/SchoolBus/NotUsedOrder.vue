@@ -11,19 +11,24 @@
       <div :class="{ refresh: isRefresh }">
         <div ref="busList">
           <div v-if="list">
+
             <van-cell-group v-if="list.length===0">
               <van-cell size="large" title="暂无待乘车订单"/>
             </van-cell-group>
+
             <van-cell-group v-else>
-              <van-cell v-for="item in list"
-                        :title="`${item.date} ${item.week} ${item.start_time}`"
-                        :value="`${item.price}¥`"
-                        :label="`${item.start_from_name} -> ${item.start_to_name}`"
-                        :key="item.id"
-                        value-class="valueClass"
-                        size="large" is-link
-                        @click="onClickList(item.id)"
+
+              <van-cell
+                v-for="item in list"
+                :title="`${item.date} ${item.week} ${item.startTime}`"
+                :value="`${item.price}¥`"
+                :label="`${item.startFromName} -> ${item.startToName}`"
+                :key="item.id"
+                value-class="valueClass"
+                size="large" is-link
+                @click="onClickList(item.id,item.ticketUrl)"
               />
+
             </van-cell-group>
           </div>
         </div>
@@ -36,8 +41,14 @@
           title="电子票"
           size="large"
           clickable
-          :url="ticketUrl"/>
-        <van-cell title="退票" size="large" clickable @click="onClickReturnTicket"/>
+          :url="ticketUrl"
+        />
+        <van-cell
+          title="退票"
+          size="large"
+          clickable
+          @click="onClickReturnTicket"
+        />
       </van-cell-group>
     </van-popup>
 
@@ -49,11 +60,12 @@
           :title="item.name"
           size="large"
           clickable
-          @click="returnTicket(index)"
-        >
+          @click="returnTicket(index)">
+
           <span slot="default" v-if="item.code!=='1000'">
             已退款
           </span>
+
         </van-cell>
       </van-cell-group>
     </van-popup>
@@ -63,8 +75,46 @@
 
 <script>
 
-  import {checkLogin} from "../../network/token";
-  import {notUsedOrder, returnTicket, ticketId, ticketUrl} from "../../network/schoolBus";
+  import {checkLogin} from "../../network/token"
+  import {getTicketId, notUsedOrder, returnTicket} from "../../network/schoolBus"
+
+  function initList(vm, res) {
+    if (res.data.code === "1000") vm.list = res.data.message
+    else vm.$notify(res.data.message)
+
+    // 延时100毫秒，计算车票列表是否高于窗口
+    setTimeout(() => {
+      vm.isRefresh = window.innerHeight - 71 > vm.$refs.busList.offsetHeight
+    }, 100);
+  }
+
+  // 抽出退票函数
+  function rmTicket(vm, ticketIndex) {
+    // 判断车票为未退票
+    if (vm.ticketList[ticketIndex].code === '1000') {
+
+      // 提示加载中
+      vm.$toast.loading({forbidClick: true, duration: 0})
+
+      // 发送退票请求
+      returnTicket({orderId: vm.orderId, ticketId: vm.ticketList[ticketIndex].ticketId})
+        .then(res => {
+
+          // 先擦除加载提示
+          vm.$toast.clear()
+
+          if (res.data.code === "1000") {
+            vm.$notify({type: 'primary', message: res.data.message})
+            vm.ticketList[ticketIndex].code = '1001'
+          } else vm.$notify(res.data.message)
+        })
+        .catch(() => {
+          vm.$toast.clear()
+          vm.$notify('未知错误')
+        })
+
+    } else vm.$notify('该车票已退款')
+  }
 
   export default {
     data() {
@@ -75,53 +125,51 @@
         isLoading: false,
         isRefresh: true,
         ticketList: null,
-        returnShow: false
+        returnShow: false,
+        ticketUrl: null
       }
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
-
     mounted() {
+      // 提示正在加载中
+      this.$toast.loading({forbidClick: true, duration: 0})
+
+      // 获取车票列表
       notUsedOrder()
         .then(res => {
-          if (res.data.code === "1000") this.list = res.data.message
-          else this.$notify(res.data.message)
-
-          setTimeout(() => {
-            this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
-          }, 100);
+          initList(this, res)
+          this.$toast.clear()
         })
-        .catch(() => this.$notify('未知错误'))
-    },
-    computed: {
-      ticketUrl() {
-        return ticketUrl(this.$store.state.accessToken, this.orderId)
-      }
-    },
+        .catch(() => {
+          this.$notify('未知错误')
+          this.$toast.clear()
+        })
 
+    },
     methods: {
-      onClickList(order_id) {
-        this.show = true
-        this.orderId = order_id
-      },
+      // 下拉刷新
       onRefresh() {
         notUsedOrder()
           .then(res => {
-            if (res.data.code === "1000") this.list = res.data.message
-            else this.$notify(res.data.message);
+            initList(this, res)
             this.isLoading = false
-            setTimeout(() => {
-              this.isRefresh = window.innerHeight - 71 > this.$refs.busList.offsetHeight;
-            }, 100);
           })
           .catch(() => {
             this.$notify('未知错误')
             this.isLoading = false
           })
       },
+      // 点击车票
+      onClickList(orderId, ticketUrl) {
+        this.show = true
+        this.orderId = orderId
+        this.ticketUrl = ticketUrl
+      },
+      // 点击退票
       onClickReturnTicket() {
-        ticketId(this.orderId)
+        getTicketId(this.orderId)
           .then(res => {
             if (res.data.code === "1000") this.ticketList = res.data.message
             this.show = false
@@ -129,27 +177,9 @@
           })
           .catch(() => this.$notify('未知错误'))
       },
-      returnTicket(index) {
-        if (this.ticketList[index].code === '1000') {
-          this.$toast.loading({
-            forbidClick: true,
-            duration: 0,
-          })
-          returnTicket({
-            orderId: this.orderId,
-            ticketId: this.ticketList[index].ticket_id
-          }).then(
-            res => {
-              if (res.data.code === "1000") {
-                this.$notify({type: 'primary', message: res.data.message});
-                this.ticketList[index].code = '1001'
-              } else this.$notify(res.data.message)
-            }
-          )
-        } else {
-          this.$notify('该车票已退款')
-          this.$toast.clear()
-        }
+      // 退票
+      returnTicket(ticketIndex) {
+        rmTicket(this,ticketIndex)
       }
     }
   }
