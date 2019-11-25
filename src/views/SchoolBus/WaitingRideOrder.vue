@@ -76,7 +76,7 @@
 <script>
 
   import {checkLogin} from "../../network/token"
-  import {getTicketId, notUsedOrder, returnTicket} from "../../network/schoolBus"
+  import {getTicketId, waitingRideOrder, returnTicket} from "../../network/schoolBus"
 
   function initList(vm, res) {
     if (res.data.code === "1000") vm.list = res.data.message
@@ -137,13 +137,13 @@
       this.$toast.loading({forbidClick: true, duration: 0})
 
       // 获取车票列表
-      notUsedOrder()
+      waitingRideOrder()
         .then(res => {
           initList(this, res)
           this.$toast.clear()
         })
         .catch(() => {
-          this.$notify('未知错误')
+          this.$notify("不可预知错误")
           this.$toast.clear()
         })
 
@@ -151,13 +151,13 @@
     methods: {
       // 下拉刷新
       onRefresh() {
-        notUsedOrder()
+        waitingRideOrder()
           .then(res => {
             initList(this, res)
             this.isLoading = false
           })
           .catch(() => {
-            this.$notify('未知错误')
+            this.$notify("不可预知错误")
             this.isLoading = false
           })
       },
@@ -175,7 +175,7 @@
             this.show = false
             this.returnShow = true
           })
-          .catch(() => this.$notify('未知错误'))
+          .catch(() => this.$notify("不可预知错误"))
       },
       // 退票
       returnTicket(ticketIndex) {

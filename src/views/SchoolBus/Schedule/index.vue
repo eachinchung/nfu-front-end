@@ -103,7 +103,7 @@
           if (res.data.code === "1000") this.passengerList = res.data.message
           else this.$notify(res.data.message);
         }).catch(() => {
-          this.$notify('未知错误')
+          this.$notify("不可预知错误")
           this.$toast.clear()
         })
       }
@@ -134,7 +134,7 @@
 
           this.isLoading = false
         }).catch(() => {
-          this.$notify('未知错误')
+          this.$notify("不可预知错误")
           this.isLoading = false
         })
       }

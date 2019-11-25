@@ -1,7 +1,8 @@
 const Date = () => import('../views/SchoolBus/Date')
 const Schedule = () => import('../views/SchoolBus/Schedule')
 const BrushTicket = () => import("../views/SchoolBus/BrushTicket")
-const NotUsedOrder = () => import("../views/SchoolBus/NotUsedOrder")
+const PendingPayment = () => import("../views/SchoolBus/PendingPayment")
+const WaitingRideOrder = () => import("../views/SchoolBus/WaitingRideOrder")
 const Pay = () => import("../views/SchoolBus/Pay")
 
 export default [
@@ -14,8 +15,12 @@ export default [
     component: Schedule
   },
   {
-    path: "notUsedOrder",
-    component: NotUsedOrder
+    path: "order/pendingPayment",
+    component: PendingPayment
+  },
+  {
+    path: "order/waitingRide",
+    component: WaitingRideOrder
   },
   {
     path: 'order/brushTicket',

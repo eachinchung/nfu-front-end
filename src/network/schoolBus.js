@@ -7,13 +7,19 @@ export function passenger() {
   })
 }
 
-export function notUsedOrder() {
+export function waitingRideOrder() {
   return request({
     method: "get",
-    url: "/schoolBus/order/notUsed"
+    url: "/schoolBus/order/waitingRide"
   })
 }
 
+export function pendingPayment() {
+  return request({
+    method: "get",
+    url: "/schoolBus/order/pendingPayment"
+  })
+}
 export function schedule(data) {
   return request({
     method: "post",

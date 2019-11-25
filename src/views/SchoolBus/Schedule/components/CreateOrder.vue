@@ -86,7 +86,7 @@
             else if (res.data.busCode === '0009') brushTicket(this, res)
             else if (res.data.busCode === '0002') brushTicket(this, res)
             else this.$toast.fail(res.data.message)
-          }).catch(() => this.$toast.fail('未知错误'))
+          }).catch(() => this.$toast.fail("不可预知错误"))
         }
       }
     }

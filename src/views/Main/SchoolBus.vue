@@ -11,8 +11,8 @@
 
     <van-cell-group>
       <van-cell size="large" title="刷票订单" is-link/>
-      <van-cell size="large" title="未付款订单" is-link/>
-      <van-cell size="large" title="待乘车订单" is-link to="/schoolBus/notUsedOrder"/>
+      <van-cell size="large" title="待付款订单" is-link to="/schoolBus/order/pendingPayment"/>
+      <van-cell size="large" title="待乘车订单" is-link to="/schoolBus/order/waitingRide"/>
     </van-cell-group>
   </div>
 </template>
