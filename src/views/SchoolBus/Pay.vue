@@ -5,47 +5,48 @@
       title="确认订单"
       left-arrow
       right-text="已付款"
-      @click-left="$router.push('/schoolBus/schedule')"
+      @click-left="$router.push(path)"
       @click-right="$router.push('/schoolBus/notUsedOrder')"
     />
 
-    <div >
+    <div v-if="ordeData">
       <van-steps :active="1">
         <van-step>生成订单</van-step>
         <van-step>待付款</van-step>
         <van-step>生成车票</van-step>
       </van-steps>
-<!--      <van-cell-group class="group">-->
-<!--        <van-cell-->
-<!--          :title="$store.state.ticket_data.schedule.station_from_name+' -> '+$store.state.ticket_data.schedule.station_to_name"-->
-<!--          :value="$store.state.ticket_data.schedule.start_time"-->
-<!--        />-->
-<!--        <van-cell-->
-<!--          v-for="item in $store.state.ticket_data.passenger"-->
-<!--          :title="item.name"-->
-<!--          :value="$store.state.ticket_data.schedule.price+'¥'"-->
-<!--          :label="item.phone"-->
-<!--          :key="item.id"-->
-<!--        />-->
-<!--      </van-cell-group>-->
-<!--      <div :style="{textAlign:'right'}">-->
-<!--        <p class="total">合计：{{price}}¥</p>-->
-<!--      </div>-->
+      <van-cell-group class="group">
+        <van-cell
+          :title="ordeData.route"
+          :value="ordeData.date"
+        />
+        <van-cell
+          v-for="item in ordeData.passengers"
+          :title="item.name"
+          :value="`${price}¥`"
+          :label="item.phone"
+          :key="item.name"
+        />
+      </van-cell-group>
 
-<!--      <van-row type="flex" justify="center" class="row">-->
-<!--        <van-button type="info" class="button" icon="alipay" @click="alipay">手机支付宝付款</van-button>-->
-<!--      </van-row>-->
-<!--      <van-row type="flex" justify="center">-->
-<!--        <van-button type="default" class="button" @click="show=true">支付宝付款码</van-button>-->
-<!--      </van-row>-->
+      <div :style="{textAlign:'right'}">
+        <p class="total">合计：{{ordeData.price}}¥</p>
+      </div>
 
-<!--      <van-popup v-model="show" close-on-popstate>-->
-<!--        <van-image :src="$store.state.ticket_data.data.alipays_qr_url" width="80vw" height="80vw">-->
-<!--          <template v-slot:loading>-->
-<!--            <van-loading type="spinner" size="20"/>-->
-<!--          </template>-->
-<!--        </van-image>-->
-<!--      </van-popup>-->
+      <van-row type="flex" justify="center" class="row">
+        <van-button type="info" class="button" icon="alipay" @click="alipay">手机支付宝付款</van-button>
+      </van-row>
+      <van-row type="flex" justify="center">
+        <van-button type="default" class="button" @click="show=true">支付宝付款码</van-button>
+      </van-row>
+
+      <van-popup v-model="show" close-on-popstate>
+        <van-image :src="ordeData.alipayQrUrl" width="80vw" height="80vw">
+          <template v-slot:loading>
+            <van-loading type="spinner" size="20"/>
+          </template>
+        </van-image>
+      </van-popup>
 
     </div>
   </div>
@@ -53,42 +54,48 @@
 
 <script>
   import {checkLogin} from "../../network/token";
+  import {ordePay} from "../../network/schoolBus";
 
   export default {
+    data() {
+      return {
+        show: false,
+        ordeData: null,
+        path: null
+      }
+    },
+    computed: {
+      price() {
+        return this.ordeData.price / this.ordeData.passengers.length
+      }
+    },
     beforeRouteEnter(to, from, next) {
-      if (to.query.orderId == null) next('/main/schoolBus')
+      if (to.query.orderId == null || to.query.orderId === "") next("/main/schoolBus")
       checkLogin(to, next)
     },
-    created() {}
-  }
+    created() {
+      // 提示正在加载中
+      this.$toast.loading({forbidClick: true, duration: 0})
 
-  // export default {
-  //   data() {
-  //     return {
-  //       show: false,
-  //       qr: null
-  //     }
-  //   },
-  //   beforeRouteEnter(to, from, next) {
-  //     beforeRouteCheck(next, to, init)
-  //   },
-  //   computed: {
-  //     price() {
-  //       return this.$store.state.ticket_data.schedule.price * this.$store.state.ticket_data.passenger.length
-  //     }
-  //   },
-  //   methods: {
-  //     onClickLeft() {
-  //       this.$router.push("/school-bus/schedule");
-  //     },
-  //     onClickRight() {
-  //       this.$router.push("/school-bus/not-used-order");
-  //     },
-  //     alipay() {
-  //       location.href = this.$store.state.ticket_data.data.alipays_url
-  //     }
-  //   }
-  // }
+      // 从哪来回哪去
+      if (this.$route.query.from == null) this.path = "/main/schoolBus"
+      else this.path = this.$route.query.from
+
+      ordePay(this.$route.query.orderId).then(res => {
+        if (res.data.code === "1000") this.ordeData = res.data.message
+        else this.$notify(res.data.message)
+        this.$toast.clear()
+      }).catch(() => {
+        this.$notify('未知错误')
+        this.$toast.clear()
+      })
+    },
+    methods: {
+      alipay() {
+        location.href = this.ordeData.alipayUrl
+      }
+    }
+  }
 </script>
 
 <style scoped>

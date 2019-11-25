@@ -78,7 +78,10 @@
             this.$toast.clear();
             if (res.data.code === "1000") this.$router.push({
               path: "/schoolBus/order/pay",
-              query: {orderId: res.data.message.orderId}
+              query: {
+                orderId: res.data.message.orderId,
+                from: "/schoolBus/schedule"
+              }
             })
             else if (res.data.busCode === '0009') brushTicket(this, res)
             else if (res.data.busCode === '0002') brushTicket(this, res)

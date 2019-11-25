@@ -38,6 +38,14 @@ export function getTicketId(orderId) {
   })
 }
 
+export function ordePay(orderId) {
+  return request({
+    method: "post",
+    url: "/schoolBus/order/pay",
+    data: {orderId}
+  })
+}
+
 export function returnTicket(data) {
   return request({
     method: "post",
