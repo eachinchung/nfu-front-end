@@ -20,6 +20,7 @@ export function pendingPayment() {
     url: "/schoolBus/order/pendingPayment"
   })
 }
+
 export function schedule(data) {
   return request({
     method: "post",
@@ -32,6 +33,14 @@ export function createOrder(data) {
   return request({
     method: "post",
     url: "/schoolBus/order/create",
+    data
+  })
+}
+
+export function accelerateOrder(data) {
+  return request({
+    method: "post",
+    url: "/schoolBus/order/create/accelerate",
     data
   })
 }

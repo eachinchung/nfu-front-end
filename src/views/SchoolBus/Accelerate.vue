@@ -6,7 +6,6 @@
 
 <script>
   export default {
-    name: "BrushTicket",
     methods: {
       onClickLeft() {
         this.$router.push("/schoolBus/schedule");

@@ -1,8 +1,8 @@
 const Date = () => import('../views/SchoolBus/Date')
 const Schedule = () => import('../views/SchoolBus/Schedule')
-const BrushTicket = () => import("../views/SchoolBus/BrushTicket")
-const PendingPayment = () => import("../views/SchoolBus/PendingPayment")
-const WaitingRideOrder = () => import("../views/SchoolBus/WaitingRideOrder")
+const Accelerate = () => import("../views/SchoolBus/Accelerate")
+const PendingPaymentList = () => import("../views/SchoolBus/PendingPaymentList")
+const WaitingRideList = () => import("../views/SchoolBus/WaitingRideList")
 const Pay = () => import("../views/SchoolBus/Pay")
 
 export default [
@@ -15,16 +15,16 @@ export default [
     component: Schedule
   },
   {
-    path: "order/pendingPayment",
-    component: PendingPayment
+    path: "order/list/pendingPayment",
+    component: PendingPaymentList
   },
   {
-    path: "order/waitingRide",
-    component: WaitingRideOrder
+    path: "order/list/waitingRide",
+    component: WaitingRideList
   },
   {
-    path: 'order/brushTicket',
-    component: BrushTicket
+    path: 'order/accelerate',
+    component: Accelerate
   },
   {
     path: "order/pay",

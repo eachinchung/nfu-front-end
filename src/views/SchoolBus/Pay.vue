@@ -6,7 +6,7 @@
       left-arrow
       right-text="已付款"
       @click-left="$router.push(path)"
-      @click-right="$router.push('/schoolBus/order/waitingRide')"
+      @click-right="$router.push('/schoolBus/order/list/waitingRide')"
     />
 
     <div v-if="ordeData">

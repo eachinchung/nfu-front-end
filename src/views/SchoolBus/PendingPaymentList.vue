@@ -93,7 +93,7 @@
           path: "/schoolBus/order/pay",
           query: {
             orderId,
-            from: "/schoolBus/order/pendingPayment"
+            from: "/schoolBus/order/list/pendingPayment"
           }
         })
       }

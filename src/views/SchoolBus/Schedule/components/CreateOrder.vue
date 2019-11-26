@@ -1,7 +1,7 @@
 <template>
   <div>
     <van-panel
-      :title="schedule.station_from_name+' -> '+schedule.station_to_name"
+      :title="`${schedule.station_from_name} -> ${schedule.station_to_name}`"
       :desc="schedule.pathway"
     >
       <van-checkbox-group v-model="result">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import {createOrder} from "../../../../network/schoolBus"
+  import {accelerateOrder, createOrder} from "../../../../network/schoolBus"
 
   // 刷票
   function brushTicket(vm, res) {
@@ -38,8 +38,24 @@
       message: res.data.message,
       confirmButtonText: '刷票'
     }).then(() => {
-    }).catch(() => {
-    })
+      accelerateOrder({
+        passengerIds: vm.passengerIds,
+        busId: vm.schedule.id,
+        ticketDate: vm.$store.state.busDate,
+        takeStation: vm.schedule.station_from_name,
+        orderState: 1,
+        orderType: 2
+      }).then(res => {
+        if (res.data.code === "1000") this.$router.push({
+          path: "/schoolBus/order/pay",
+          query: {
+            orderId: res.data.orderId,
+            from: "/schoolBus/schedule"
+          }
+        })
+        else this.$notify("不可预知错误")
+      }).catch(() => this.$toast.fail("不可预知错误"))
+    }).catch()
   }
 
   export default {
@@ -75,7 +91,7 @@
             date: this.$store.state.busDate,
             takeStation: this.schedule.station_from_name
           }).then(res => {
-            this.$toast.clear();
+            this.$toast.clear()
             if (res.data.code === "1000") this.$router.push({
               path: "/schoolBus/order/pay",
               query: {
