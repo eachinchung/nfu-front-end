@@ -4,7 +4,7 @@
       class="title"
       :title="$store.state.busDate"
       left-arrow
-      @click-left="$router.push('/schoolBus/date')"
+      @click-left="$router.push('/school-bus/date')"
     />
 
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
@@ -80,7 +80,7 @@
     components: {CreateOrder},
 
     mounted() {
-      if (this.$store.state.busDate == null || this.$store.state.routeId == null) this.$router.push("/main/schoolBus")
+      if (this.$store.state.busDate == null || this.$store.state.routeId == null) this.$router.push("/main/school-bus")
       else {
         // 提示正在加载中
         this.$toast.loading({forbidClick: true, duration: 0})

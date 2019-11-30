@@ -4,14 +4,14 @@ import request from "./request"
 export function getUserData() {
   return request({
     method: "get",
-    url: "/user/getUserData",
+    url: "/user/data",
   })
 }
 
 export function getVerificationCode() {
   return request({
     method: "get",
-    url: "/validate/getVerificationCode",
+    url: "/validate/verification-code",
   })
 }
 

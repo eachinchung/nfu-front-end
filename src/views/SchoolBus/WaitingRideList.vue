@@ -4,7 +4,7 @@
       class="title"
       title="待乘车订单"
       left-arrow
-      @click-left="$router.push('/main/schoolBus')"
+      @click-left="$router.push('/main/school-bus')"
     />
 
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">

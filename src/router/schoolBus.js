@@ -15,11 +15,11 @@ export default [
     component: Schedule
   },
   {
-    path: "order/list/pendingPayment",
+    path: "order/list/pending-payment",
     component: PendingPaymentList
   },
   {
-    path: "order/list/waitingRide",
+    path: "order/list/waiting-ride",
     component: WaitingRideList
   },
   {

@@ -11,8 +11,8 @@
 
     <van-cell-group>
       <van-cell size="large" title="刷票订单" is-link/>
-      <van-cell size="large" title="待付款订单" is-link to="/schoolBus/order/list/pendingPayment"/>
-      <van-cell size="large" title="待乘车订单" is-link to="/schoolBus/order/list/waitingRide"/>
+      <van-cell size="large" title="待付款订单" is-link to="/school-bus/order/list/pending-payment"/>
+      <van-cell size="large" title="待乘车订单" is-link to="/school-bus/order/list/waiting-ride"/>
     </van-cell-group>
   </div>
 </template>
@@ -27,7 +27,7 @@
     methods: {
       toDate(routeId) {
         this.$store.commit("setRouteId", routeId);
-        this.$router.push("/schoolBus/date");
+        this.$router.push("/school-bus/date");
       }
     }
   };

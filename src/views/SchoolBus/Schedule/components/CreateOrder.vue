@@ -34,9 +34,9 @@
   // 刷票
   function brushTicket(vm, res) {
     vm.$dialog.confirm({
-      title: '订单创建失败',
+      title: "订单创建失败",
       message: res.data.message,
-      confirmButtonText: '刷票'
+      confirmButtonText: "刷票"
     }).then(() => {
       accelerateOrder({
         passengerIds: vm.passengerIds,
@@ -46,15 +46,15 @@
         orderState: 1,
         orderType: 2
       }).then(res => {
-        if (res.data.code === "1000") this.$router.push({
-          path: "/schoolBus/order/pay",
+        if (res.data.code === "1000") vm.$router.push({
+          path: "/school-bus/order/accelerate",
           query: {
             orderId: res.data.orderId,
-            from: "/schoolBus/schedule"
+            from: "/school-bus/schedule"
           }
         })
-        else this.$notify("不可预知错误")
-      }).catch(() => this.$toast.fail("不可预知错误"))
+        else vm.$notify(res.data.message)
+      }).catch(() => vm.$notify("不可预知错误"))
     }).catch()
   }
 
@@ -62,7 +62,7 @@
     data() {
       return {result: []}
     },
-    props: ['list', 'schedule'],
+    props: ["list", "schedule"],
     computed: {
       passengerIds() {
         let passenger_ids = []
@@ -75,10 +75,10 @@
         this.$refs.checkboxes[index].toggle()
       },
       createOrder() {
-        if (this.result.length === 0) this.$notify('请选择乘车人')
+        if (this.result.length === 0) this.$notify("请选择乘车人")
         else {
           // 关闭选择乘车人的弹窗
-          this.$emit('close')
+          this.$emit("close")
           // 提示加载中
           this.$toast.loading({
             forbidClick: true,
@@ -93,14 +93,14 @@
           }).then(res => {
             this.$toast.clear()
             if (res.data.code === "1000") this.$router.push({
-              path: "/schoolBus/order/pay",
+              path: "/school-bus/order/pay",
               query: {
                 orderId: res.data.message.orderId,
-                from: "/schoolBus/schedule"
+                from: "/school-bus/schedule"
               }
             })
-            else if (res.data.busCode === '0009') brushTicket(this, res)
-            else if (res.data.busCode === '0002') brushTicket(this, res)
+            else if (res.data.busCode === "0009") brushTicket(this, res)
+            else if (res.data.busCode === "0002") brushTicket(this, res)
             else this.$toast.fail(res.data.message)
           }).catch(() => this.$toast.fail("不可预知错误"))
         }

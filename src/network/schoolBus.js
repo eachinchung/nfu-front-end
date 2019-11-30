@@ -3,28 +3,28 @@ import request from "./request"
 export function passenger() {
   return request({
     method: "get",
-    url: "/schoolBus/passenger"
+    url: "/school-bus/passenger"
   })
 }
 
 export function waitingRideOrder() {
   return request({
     method: "get",
-    url: "/schoolBus/order/waitingRide"
+    url: "/school-bus/order/waiting-ride"
   })
 }
 
 export function pendingPayment() {
   return request({
     method: "get",
-    url: "/schoolBus/order/pendingPayment"
+    url: "/school-bus/order/pending-payment"
   })
 }
 
 export function schedule(data) {
   return request({
     method: "post",
-    url: "/schoolBus/schedule",
+    url: "/school-bus/schedule",
     data
   })
 }
@@ -32,7 +32,7 @@ export function schedule(data) {
 export function createOrder(data) {
   return request({
     method: "post",
-    url: "/schoolBus/order/create",
+    url: "/school-bus/order/create",
     data
   })
 }
@@ -40,7 +40,7 @@ export function createOrder(data) {
 export function accelerateOrder(data) {
   return request({
     method: "post",
-    url: "/schoolBus/order/create/accelerate",
+    url: "/school-bus/order/create/accelerate",
     data
   })
 }
@@ -48,7 +48,7 @@ export function accelerateOrder(data) {
 export function getTicketId(orderId) {
   return request({
     method: "post",
-    url: "/schoolBus/ticketId",
+    url: "/school-bus/ticketId",
     data: {orderId}
   })
 }
@@ -56,7 +56,7 @@ export function getTicketId(orderId) {
 export function ordePay(orderId) {
   return request({
     method: "post",
-    url: "/schoolBus/order/pay",
+    url: "/school-bus/order/pay",
     data: {orderId}
   })
 }
@@ -64,7 +64,7 @@ export function ordePay(orderId) {
 export function returnTicket(data) {
   return request({
     method: "post",
-    url: "/schoolBus/ticket/delete",
+    url: "/school-bus/ticket/delete",
     data
   })
 }

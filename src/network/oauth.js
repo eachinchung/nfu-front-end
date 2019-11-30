@@ -15,7 +15,7 @@ export function login(username, password) {
 export function signUp(username, password, dormitory, email) {
   return noToken({
     method: "post",
-    url: "/oauth/signUp",
+    url: "/oauth/sign-up",
     data: {
       userId: username,
       password: password,

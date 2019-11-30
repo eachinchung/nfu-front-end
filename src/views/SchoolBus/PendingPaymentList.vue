@@ -4,7 +4,7 @@
       class="title"
       title="待付款订单"
       left-arrow
-      @click-left="$router.push('/main/schoolBus')"
+      @click-left="$router.push('/main/school-bus')"
     />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
       <div :class="{ refresh: isRefresh }">
@@ -90,10 +90,10 @@
       },
       pay(orderId){
         this.$router.push({
-          path: "/schoolBus/order/pay",
+          path: "/school-bus/order/pay",
           query: {
             orderId,
-            from: "/schoolBus/order/list/pendingPayment"
+            from: "/school-bus/order/list/pending-payment"
           }
         })
       }

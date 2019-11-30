@@ -6,7 +6,7 @@
       left-arrow
       right-text="已付款"
       @click-left="$router.push(path)"
-      @click-right="$router.push('/schoolBus/order/list/waitingRide')"
+      @click-right="$router.push('/school-bus/order/list/waiting-ride')"
     />
 
     <div v-if="ordeData">
@@ -70,7 +70,7 @@
       }
     },
     beforeRouteEnter(to, from, next) {
-      if (to.query.orderId == null || to.query.orderId === "") next("/main/schoolBus")
+      if (to.query.orderId == null || to.query.orderId === "") next("/main/school-bus")
       checkLogin(to, next)
     },
     created() {
@@ -78,7 +78,7 @@
       this.$toast.loading({forbidClick: true, duration: 0})
 
       // 从哪来回哪去
-      if (this.$route.query.from == null) this.path = "/main/schoolBus"
+      if (this.$route.query.from == null) this.path = "/main/school-bus"
       else this.path = this.$route.query.from
 
       ordePay(this.$route.query.orderId).then(res => {

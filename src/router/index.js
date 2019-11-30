@@ -26,9 +26,9 @@ const routes = [
     children: MainRouter
   },
   {
-    path: '/schoolBus',
+    path: '/school-bus',
     component: SchoolBus,
-    redirect: '/main/schoolBus',
+    redirect: '/main/school-bus',
     children: SchoolBusRouter
   },
   {
