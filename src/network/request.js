@@ -1,7 +1,24 @@
 import axios from "axios"
+import crypto from 'crypto'
 import store from '../store'
 import router from "../router";
 import {handleToken} from "./token";
+
+function generateAuthKey(uri) {
+  const md5 = crypto.createHash("md5");
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  const timestamp = (new Date().getTime() / 1000).toFixed() + 60
+
+  let rand = ""
+  for (let i = 0; i < 32; i++) {
+    const index = Math.floor(Math.random() * chars.length);
+    rand += chars[index];
+  }
+
+  md5.update(`${uri}-${timestamp}-${rand}-0-${process.env.VUE_APP_CDN_PRIVATE_KEY}`)
+
+  return `${timestamp}-${rand}-0-${md5.digest('hex')}`
+}
 
 
 export default config => {
@@ -14,6 +31,11 @@ export default config => {
     config => {
       // 为每个请求都添加token
       config.headers.Authorization = `Bearer ${store.state.accessToken}`
+      config.params = {
+        auth_key: generateAuthKey(config.url)
+      }
+
+      console.log(config);
       return config
     }
   )
@@ -52,7 +74,17 @@ export default config => {
 export function noToken(config) {
   const instants = axios.create({
     baseURL: process.env.VUE_APP_POST_URL,
-    timeout: 20000
+    timeout: 20000,
   })
+
+  instants.interceptors.request.use(
+    config => {
+      config.params = {
+        auth_key: generateAuthKey(config.url)
+      }
+      return config
+    }
+  )
+
   return instants(config)
 }
