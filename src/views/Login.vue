@@ -22,7 +22,7 @@
     </van-cell-group>
 
     <van-row type="flex" justify="center" class="row">
-      <van-button type="primary" class="button" @click="loginBtu">登录</van-button>
+      <van-button type="primary" class="button" :loading="loading" @click="loginBtu">登录</van-button>
     </van-row>
     <van-row type="flex" justify="center">
       <van-button type="default" class="button" to="/sign-up">注册</van-button>
@@ -41,6 +41,7 @@
         username: "",
         password: "",
         notErr: false,
+        loading: false,
         usernameErr: null,
         passwordErr: null
       };
@@ -63,8 +64,12 @@
         else this.passwordErr = null
 
         if (this.notErr) {
+
+          this.loading = true
+
           login(this.username, this.password).then(
             res => {
+              this.loading = false
               if (res.data.code === "1000") {
                 handleToken(res)
                 this.$router.push(this.path)
@@ -73,7 +78,10 @@
               if (res.data.code === "0003") this.passwordErr = res.data.message
               if (res.data.code === "0001") this.usernameErr = res.data.message
             }
-          ).catch(() => this.$notify("不可预知错误"))
+          ).catch(() => {
+            this.loading = false
+            this.$notify("不可预知错误")
+          })
         }
       }
     }

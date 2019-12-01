@@ -24,7 +24,7 @@
     </van-cell-group>
 
     <van-row type="flex" justify="center" class="row">
-      <van-button type="primary" class="button" @click="signUpBtn">注册</van-button>
+      <van-button type="primary" class="button" :loading="loading" @click="signUpBtn">注册</van-button>
     </van-row>
 
     <van-dialog
@@ -47,6 +47,7 @@
     data() {
       return {
         email: "",
+        loading: false,
         nullErr: null,
         password: "",
         roomId: null,
@@ -94,13 +95,22 @@
       },
       signUpBtn() {
         this.check()
+
         if (this.nullErr == null) {
+          this.loading = true
+
           signUp(this.username, this.password, this.roomId, this.email)
             .then(res => {
+              this.loading = false
+
               if (res.data.code === "1000") this.show = true
               else this.$notify(res.data.message)
             })
-            .catch(() => this.$notify("不可预知错误"))
+            .catch(() => {
+              this.loading = false
+              this.$notify("不可预知错误")
+            })
+
         }
       }
     }

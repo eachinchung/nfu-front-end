@@ -48,9 +48,8 @@
 </template>
 
 <script>
-  import {setDormitory} from "../../../network/profile"
+  import {getUserData, setDormitory} from "../../../network/profile"
   import {checkLogin} from "../../../network/token"
-  import {getUserData} from "../../../network/profile"
 
   import SetPassword from "./components/SetPassword"
   import Popup from "../../../components/dormitoryPopup"
@@ -60,6 +59,7 @@
     vm.name = res.data.name
     vm.email = res.data.email
     vm.dormitory = res.data.dormitory
+    vm.$toast.clear()
   }
 
   export default {
@@ -81,9 +81,13 @@
       checkLogin(to, next)
     },
     created() {
+      this.$toast.loading({forbidClick: true, duration: 0})
       getUserData()
         .then(res => init(this, res))
-        .catch(() => this.$notify("不可预知错误"))
+        .catch(() => {
+          this.$notify("不可预知错误")
+          this.$toast.clear()
+        })
     },
     methods: {
       logout() {
