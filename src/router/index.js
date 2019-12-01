@@ -42,6 +42,10 @@ const routes = [
   {
     path: '/activation',
     component: Activation
+  },
+  {
+    path: '*',
+    component: () => import('../views/404')
   }
 ]
 
