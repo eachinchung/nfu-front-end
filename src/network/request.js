@@ -1,13 +1,13 @@
 import axios from "axios"
-import crypto from 'crypto'
-import store from '../store'
+import md5 from 'js-md5'
+import store from "../store"
 import router from "../router";
 import {handleToken} from "./token";
 
+// cdn鉴权
 function generateAuthKey(uri) {
-  const md5 = crypto.createHash("md5");
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-  const timestamp = (new Date().getTime() / 1000).toFixed() + 60
+  const timestamp = ((new Date().getTime() / 1000) + 60).toFixed()
 
   let rand = ""
   for (let i = 0; i < 32; i++) {
@@ -15,9 +15,8 @@ function generateAuthKey(uri) {
     rand += chars[index];
   }
 
-  md5.update(`${uri}-${timestamp}-${rand}-0-${process.env.VUE_APP_CDN_PRIVATE_KEY}`)
-
-  return `${timestamp}-${rand}-0-${md5.digest('hex')}`
+  const hashValue = md5(`${uri}-${timestamp}-${rand}-0-${process.env.VUE_APP_CDN_PRIVATE_KEY}`)
+  return `${timestamp}-${rand}-0-${hashValue}`
 }
 
 
@@ -34,8 +33,6 @@ export default config => {
       config.params = {
         auth_key: generateAuthKey(config.url)
       }
-
-      console.log(config);
       return config
     }
   )
@@ -46,7 +43,7 @@ export default config => {
       // 当服务器返1001，token失效，刷新token
       if (response.data.code === "1001") return noToken({
         method: "get",
-        url: "oauth/token/refresh",
+        url: "/oauth/token/refresh",
         headers: {
           'Authorization': `Bearer ${localStorage.getItem("remember")}`
         }
