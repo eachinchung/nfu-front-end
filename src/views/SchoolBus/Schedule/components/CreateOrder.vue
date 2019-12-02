@@ -29,34 +29,35 @@
 </template>
 
 <script>
-  import {accelerateOrder, createOrder} from "../../../../network/schoolBus"
+  import {createOrder} from "../../../../network/schoolBus"
+  // import {accelerateOrder, createOrder} from "../../../../network/schoolBus"
 
   // 刷票
-  function brushTicket(vm, res) {
-    vm.$dialog.confirm({
-      title: "订单创建失败",
-      message: res.data.message,
-      confirmButtonText: "刷票"
-    }).then(() => {
-      accelerateOrder({
-        passengerIds: vm.passengerIds,
-        busId: vm.schedule.id,
-        ticketDate: vm.$store.state.busDate,
-        takeStation: vm.schedule.station_from_name,
-        orderState: 1,
-        orderType: 2
-      }).then(res => {
-        if (res.data.code === "1000") vm.$router.push({
-          path: "/school-bus/order/accelerate",
-          query: {
-            orderId: res.data.orderId,
-            from: "/school-bus/schedule"
-          }
-        })
-        else vm.$notify(res.data.message)
-      }).catch(() => vm.$notify("不可预知错误"))
-    }).catch()
-  }
+  // function brushTicket(vm, res) {
+  //   vm.$dialog.confirm({
+  //     title: "订单创建失败",
+  //     message: res.data.message,
+  //     confirmButtonText: "刷票"
+  //   }).then(() => {
+  //     accelerateOrder({
+  //       passengerIds: vm.passengerIds,
+  //       busId: vm.schedule.id,
+  //       ticketDate: vm.$store.state.busDate,
+  //       takeStation: vm.schedule.station_from_name,
+  //       orderState: 1,
+  //       orderType: 2
+  //     }).then(res => {
+  //       if (res.data.code === "1000") vm.$router.push({
+  //         path: "/school-bus/order/accelerate",
+  //         query: {
+  //           orderId: res.data.orderId,
+  //           from: "/school-bus/schedule"
+  //         }
+  //       })
+  //       else vm.$notify(res.data.message)
+  //     }).catch(() => vm.$notify("不可预知错误"))
+  //   }).catch()
+  // }
 
   export default {
     data() {
@@ -99,8 +100,8 @@
                 from: "/school-bus/schedule"
               }
             })
-            else if (res.data.busCode === "0009") brushTicket(this, res)
-            else if (res.data.busCode === "0002") brushTicket(this, res)
+            // else if (res.data.busCode === "0009") brushTicket(this, res)
+            // else if (res.data.busCode === "0002") brushTicket(this, res)
             else this.$toast.fail(res.data.message)
           }).catch(() => this.$toast.fail("不可预知错误"))
         }
