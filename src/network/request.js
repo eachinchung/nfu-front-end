@@ -8,7 +8,7 @@ import authKey from "./authKey";
 export default config => {
   const instants = axios.create({
     baseURL: process.env.VUE_APP_POST_URL,
-    timeout: 20000
+    timeout: 30000
   })
 
   instants.interceptors.request.use(
@@ -56,7 +56,7 @@ export default config => {
 export function noToken(config) {
   const instants = axios.create({
     baseURL: process.env.VUE_APP_POST_URL,
-    timeout: 20000,
+    timeout: 30000,
   })
 
   instants.interceptors.request.use(
