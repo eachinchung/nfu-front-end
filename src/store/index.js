@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 const state = {
   accessToken: null,
-  busPower:true,
+  userId: "null",
+  busPower: true,
 
   routeId: null,
   busDate: null,

@@ -1,7 +1,9 @@
 export default {
   upAccessToken(state, token) {
+    const tokenData = JSON.parse(window.atob(token.split('.')[1]))
     state.accessToken = token
-    state.busPower = JSON.parse(window.atob(token.split('.')[1])).busPower
+    state.userId = tokenData.id
+    state.busPower = tokenData.busPower
   },
   rmAccessToken(state) {
     state.accessToken = null

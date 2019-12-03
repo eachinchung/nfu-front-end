@@ -1,23 +1,8 @@
 import axios from "axios"
-import md5 from 'js-md5'
 import store from "../store"
 import router from "../router";
 import {handleToken} from "./token";
-
-// cdn鉴权
-function generateAuthKey(uri) {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-  const timestamp = ((new Date().getTime() / 1000) + 60).toFixed()
-
-  let rand = ""
-  for (let i = 0; i < 32; i++) {
-    const index = Math.floor(Math.random() * chars.length);
-    rand += chars[index];
-  }
-
-  const hashValue = md5(`${uri}-${timestamp}-${rand}-0-${process.env.VUE_APP_CDN_PRIVATE_KEY}`)
-  return `${timestamp}-${rand}-0-${hashValue}`
-}
+import authKey from "./authKey";
 
 
 export default config => {
@@ -31,7 +16,7 @@ export default config => {
       // 为每个请求都添加token
       config.headers.Authorization = `Bearer ${store.state.accessToken}`
       config.params = {
-        auth_key: generateAuthKey(config.url)
+        auth_key: authKey(config.url)
       }
       return config
     }
@@ -77,7 +62,7 @@ export function noToken(config) {
   instants.interceptors.request.use(
     config => {
       config.params = {
-        auth_key: generateAuthKey(config.url)
+        auth_key: authKey(config.url)
       }
       return config
     }
