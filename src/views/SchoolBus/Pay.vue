@@ -106,11 +106,11 @@
     margin-bottom: 0;
   }
 
-  .row {
+  .profileRow {
     margin-bottom: 15px;
   }
 
-  .button {
+  .profileButton {
     width: 90%;
   }
 

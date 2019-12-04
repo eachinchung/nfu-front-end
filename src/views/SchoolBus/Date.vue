@@ -32,34 +32,34 @@
 </template>
 
 <script>
-  import {checkLogin} from "../../network/token";
+  import {checkLogin} from "../../network/token"
 
-  const WeekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+  const WeekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
 
   function init(vm) {
-    let loop;
+    let loop
 
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-    const day = today.getDate();
+    const today = new Date()
+    const year = today.getFullYear()
+    const month = today.getMonth()
+    const day = today.getDate()
 
     // 根据班车路线，选择预售日期的范围
     if (vm.$store.state.routeId == null) {
-      vm.$router.push("/main/school-bus");
+      vm.$router.push("/main/school-bus")
       return null;
     } else if (vm.$store.state.routeId < 20) {
       loop = 6;
-      vm.minDate = vm.currentDate = new Date(year, month, day + 6);
+      vm.minDate = vm.currentDate = new Date(year, month, day + 6)
     } else {
       loop = 2;
-      vm.minDate = vm.currentDate = new Date(year, month, day + 2);
+      vm.minDate = vm.currentDate = new Date(year, month, day + 2)
     }
 
     // 获取预售日期
-    vm.maxDate = new Date(year, month, day + 30);
+    vm.maxDate = new Date(year, month, day + 30)
     for (let i = 0; i < loop; i++) {
-      const theDay = new Date(year, month, day + i);
+      const theDay = new Date(year, month, day + i)
       vm.dateList.push([
         `${theDay.getFullYear()}-${(theDay.getMonth() + 1).toString().padStart(2, "0")}-${theDay.getDate().toString().padStart(2, "0")}`,
         WeekDay[theDay.getDay()]
@@ -85,11 +85,11 @@
     },
     methods: {
       onClickLeft() {
-        this.$router.push("/main/school-bus");
+        this.$router.push("/main/school-bus")
       },
       onClickDate(date, type) {
-        this.$store.commit("setBusDate", date);
-        this.$store.commit("setTicketType", type);
+        this.$store.commit("setBusDate", date)
+        this.$store.commit("setTicketType", type)
         this.$router.push("/school-bus/schedule")
       }
     }

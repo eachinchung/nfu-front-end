@@ -120,7 +120,7 @@
 <style scoped>
   @import "~@/assets/css/login.css";
 
-  .button {
+  .profileButton {
     margin-top: 55px;
   }
 </style>

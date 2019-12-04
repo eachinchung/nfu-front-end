@@ -1,13 +1,10 @@
 <template>
-  <div class="profile">
+  <div>
     <van-nav-bar class="title" title="个人档案"/>
 
     <van-cell-group title="账号信息" class="group">
       <van-cell size="large" icon="contact" title="账号" :value="user"/>
       <van-cell size="large" icon="smile-o" title="姓名" :value="name"/>
-    </van-cell-group>
-
-    <van-cell-group>
       <van-cell
         size="large"
         icon="location-o"
@@ -27,12 +24,32 @@
       />
     </van-cell-group>
 
-    <van-row type="flex" justify="center" class="row">
-      <van-button type="default" class="button" @click="showSetPassword=true">修改密码</van-button>
+    <van-cell-group>
+      <van-cell
+        size="large"
+        icon="comment-o"
+        title="意见反馈"
+        @click="$toast('该功能正在开发中')"
+        is-link
+      />
+      <van-cell
+        size="large"
+        icon="gift-card-o"
+        title="请我喝红牛"
+        @click="$toast('该功能正在开发中')"
+        is-link
+      />
+    </van-cell-group>
+
+
+    <van-row type="flex" justify="center" class="profileRow">
+      <van-button type="default" class="profileButton" @click="showSetPassword=true">修改密码</van-button>
     </van-row>
     <van-row type="flex" justify="center">
-      <van-button type="warning" class="button" @click="logout">退出登录</van-button>
+      <van-button type="warning" class="profileButton" @click="logout">退出登录</van-button>
     </van-row>
+
+    <div :style="{height:'100px'}"></div>
 
     <popup
       :showPicker="showPicker"
@@ -107,14 +124,20 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
+  .title {
+    margin-bottom: 25px;
+  }
 
-  .profile .row {
+  .group {
+    margin-bottom: 30px;
+  }
+
+  .profileRow {
     margin-top: 40px;
     margin-bottom: 15px;
   }
 
-  .profile .button {
+  .profileButton {
     width: 90%;
   }
 
