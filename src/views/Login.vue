@@ -1,5 +1,5 @@
 <template>
-  <div id="Login">
+  <div>
     <van-nav-bar class="title" title="南苑聚合"/>
     <van-cell-group title="请登录您的账号" class="group">
       <van-field

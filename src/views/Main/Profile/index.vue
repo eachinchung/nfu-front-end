@@ -36,7 +36,7 @@
         size="large"
         icon="gift-card-o"
         title="请我喝红牛"
-        @click="$toast('该功能正在开发中')"
+        @click="showPay=true"
         is-link
       />
     </van-cell-group>
@@ -49,7 +49,7 @@
       <van-button type="warning" class="profileButton" @click="logout">退出登录</van-button>
     </van-row>
 
-    <div :style="{height:'100px'}"></div>
+    <div :style="{height:'120px'}"></div>
 
     <popup
       :showPicker="showPicker"
@@ -61,6 +61,24 @@
     <van-popup v-model="showSetPassword">
       <set-password class="myPopup" @close="showSetPassword=false"/>
     </van-popup>
+
+    <van-action-sheet
+      v-model="showPay"
+      :actions="actions"
+      cancel-text="取消"
+      close-on-click-action
+      description="为熬夜写代码的小哥哥，买一瓶红牛"
+      @select="onSelect"
+    />
+
+    <van-popup v-model="showPayQr" close-on-popstate>
+      <van-image :src="qrUrl" width="80vw" height="80vw">
+        <template v-slot:loading>
+          <van-loading type="spinner" size="20"/>
+        </template>
+      </van-image>
+    </van-popup>
+
   </div>
 </template>
 
@@ -86,6 +104,13 @@
         name: null,
         email: null,
         dormitory: null,
+        actions: [
+          {name: '唤起支付宝付款'},
+          {name: '支付宝付款码'}
+        ],
+        qrUrl: require('../../../assets/img/eachinAlipay.jpg'),
+        showPay: false,
+        showPayQr: false,
         showPicker: false,
         showSetPassword: false
       };
@@ -118,6 +143,10 @@
       },
       close() {
         this.showPicker = false;
+      },
+      onSelect(item) {
+        if (item.name === '唤起支付宝付款') location.href = 'alipays://platformapi/startapp?appId=20000067&url=https%3A%2F%2Fqr.alipay.com%2Ffkx00396eoerrddsjcajh76'
+        if (item.name === '支付宝付款码') this.showPayQr = true
       }
     }
   };
