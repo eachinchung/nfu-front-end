@@ -165,7 +165,7 @@
 </script>
 
 <style scoped>
-  .profileButton {
+  .button {
     width: 80%;
   }
 
