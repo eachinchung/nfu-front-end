@@ -10,7 +10,7 @@
         type="text"
         label="邮箱"
         placeholder="请输入邮箱地址"
-        @keyup.enter="login_btu"
+        @keyup.enter="signUpBtn"
       />
       <van-field
         readonly
@@ -39,8 +39,8 @@
 </template>
 
 <script>
-  import {signUp} from "../../network/oauth"
-  import Popup from "../../components/dormitoryPopup"
+  import {signUp} from "@/network/oauth"
+  import Popup from "@/components/dormitoryPopup"
   import User from "./components/User"
 
   export default {

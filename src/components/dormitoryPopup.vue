@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import dormitory from "../assets/dormitory.json"
+import dormitory from "@/assets/dormitory.json"
 
 export default {
   data() {

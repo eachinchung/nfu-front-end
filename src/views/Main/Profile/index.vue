@@ -83,11 +83,11 @@
 </template>
 
 <script>
-  import {getUserData, setDormitory} from "../../../network/profile"
-  import {checkLogin} from "../../../network/token"
+  import {getUserData, setDormitory} from "@/network/profile"
+  import {checkLogin} from "@/network/token"
 
   import SetPassword from "./components/SetPassword"
-  import Popup from "../../../components/dormitoryPopup"
+  import Popup from "@/components/dormitoryPopup"
 
   function init(vm, res) {
     vm.user = res.data.id

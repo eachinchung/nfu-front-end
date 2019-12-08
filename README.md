@@ -1,4 +1,4 @@
-# nfu-front-end
+# 南苑聚合 web 前端
 
 ## Project setup
 ```
