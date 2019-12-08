@@ -113,6 +113,7 @@
 
   function init(vm, res) {
     if (res.data.code === "1000") vm.achievement = res.data.message
+    else vm.$notify(res.data.message)
     vm.$toast.clear()
   }
 
