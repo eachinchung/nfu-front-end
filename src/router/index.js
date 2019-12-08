@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 
 const Main = () => import('../views/Main')
 
+const Credit = () => import('../views/Credit')
 const SchoolBus = () => import('../views/SchoolBus')
 
 const Login = () => import('../views/Login')
@@ -24,6 +25,10 @@ const routes = [
     component: Main,
     redirect: '/main/home',
     children: MainRouter
+  },
+  {
+    path: '/credit',
+    component: Credit
   },
   {
     path: '/school-bus',
