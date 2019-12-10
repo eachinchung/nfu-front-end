@@ -7,18 +7,12 @@
  * See http://pajhome.org.uk/crypt/md5 for more info.
  */
 
-/*
- * 可配置变量。你可能需要调整这些以与
- * 服务器端，但默认设置在大多数情况下都有效。
- */
 const hexcase = 0;  // 十六进制输出格式。0-小写；1-大写
 const chrsz = 8;    // 每输入字符位数。8-ASCII；16-Unicode
 
-export default s => binl2hex(core_md5(str2binl(s), s.length * chrsz))
+export default str => binl2hex(core_md5(str2binl(str), str.length * chrsz))
 
-/*
- * 计算一个小尾数单词数组的MD5，以及一个位长度
- */
+// 计算一个小尾数单词数组的MD5，以及一个位长度
 function core_md5(x, len) {
   // 附加填充
   x[len >> 5] |= 0x80 << ((len) % 32);
@@ -112,9 +106,6 @@ function core_md5(x, len) {
 
 }
 
-/*
- * 这些函数实现了算法使用的四个基本操作。
- */
 function md5_cmn(q, a, b, x, s, t) {
   return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s), b);
 }
@@ -136,27 +127,21 @@ function md5_ii(a, b, c, d, x, s, t) {
 }
 
 
-/*
- * 添加整数，在2^32处换行。这在内部使用16位操作
- * 解决一些JS解释器中的错误。
- */
+// 添加整数，在2^32处换行。这在内部使用16位操作
+// 解决一些JS解释器中的错误。
 function safe_add(x, y) {
   const lsw = (x & 0xFFFF) + (y & 0xFFFF);
   const msw = (x >> 16) + (y >> 16) + (lsw >> 16);
   return (msw << 16) | (lsw & 0xFFFF);
 }
 
-/*
- * 按位向左旋转32位数字。
- */
+// 按位向左旋转32位数字。
 function bit_rol(num, cnt) {
   return (num << cnt) | (num >>> (32 - cnt));
 }
 
-/*
- * 将字符串转换为一个由小尾数词组成的数组
- * 如果chrsz是ASCII，则大于255的字符的hi字节将被忽略。
- */
+// 将字符串转换为一个由小尾数词组成的数组
+// 如果chrsz是ASCII，则大于255的字符的hi字节将被忽略。
 function str2binl(str) {
   const bin = Array();
   const mask = (1 << chrsz) - 1;
@@ -165,10 +150,7 @@ function str2binl(str) {
   return bin;
 }
 
-
-/*
- * 将一个由小尾数字组成的数组转换为十六进制字符串。
- */
+// 将一个由小尾数字组成的数组转换为十六进制字符串。
 function binl2hex(binarray) {
   const hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
   let str = "";
