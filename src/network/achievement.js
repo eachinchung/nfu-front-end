@@ -6,3 +6,10 @@ export function getAchievement() {
     url: "/achievement/get",
   })
 }
+
+export function getTotalAchievement() {
+  return request({
+    method: "get",
+    url: "/achievement/total",
+  })
+}

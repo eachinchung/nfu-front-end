@@ -25,7 +25,7 @@
         size="large"
         icon="orders-o"
         title="成绩查询"
-        @click="$toast('该功能正在开发中')"
+        to="/achievement"
         is-link
       />
     </van-cell-group>

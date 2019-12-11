@@ -14,7 +14,7 @@
         class="group"
       >
         <div class="classList">
-          <div v-for="item in classification.professionalCore" :key="item.courseId">
+          <div v-for="(item,index) in classification.professionalCore" :key="index">
             <div :style="{float:'right'}">
               {{item.credit}}
             </div>
@@ -30,7 +30,7 @@
         class="group"
       >
         <div class="classList">
-          <div v-for="item in classification.professionalDirection" :key="item.courseId">
+          <div v-for="(item,index) in classification.professionalDirection" :key="index">
             <div :style="{float:'right'}">
               {{item.credit}}
             </div>
@@ -46,7 +46,7 @@
         class="group"
       >
         <div class="classList">
-          <div v-for="item in classification.professionalElective" :key="item.courseId">
+          <div v-for="(item,index) in classification.professionalElective" :key="index">
             <div :style="{float:'right'}">
               {{item.credit}}
             </div>
@@ -62,7 +62,7 @@
         class="group"
       >
         <div class="classList">
-          <div v-for="item in classification.publicCompulsory" :key="item.courseId">
+          <div v-for="(item,index) in classification.publicCompulsory" :key="index">
             <div :style="{float:'right'}">
               {{item.credit}}
             </div>
@@ -78,7 +78,7 @@
         class="group"
       >
         <div class="classList">
-          <div v-for="item in classification.growingCompulsory" :key="item.courseId">
+          <div v-for="(item,index) in classification.growingCompulsory" :key="index">
             <div :style="{float:'right'}">
               {{item.credit}}
             </div>
@@ -94,7 +94,7 @@
         class="group"
       >
         <div class="classList">
-          <div v-for="item in classification.publicElective" :key="item.courseId">
+          <div v-for="(item,index) in classification.publicElective" :key="index">
             <div :style="{float:'right'}">
               {{item.credit}}
             </div>
@@ -152,7 +152,6 @@
     data() {
       return {
         achievement: null,
-
       }
     },
     computed: {

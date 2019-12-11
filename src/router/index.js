@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 
 const Main = () => import('../views/Main')
 
+const Achievement = () => import('../views/Achievement')
 const Credit = () => import('../views/Credit')
 const SchoolBus = () => import('../views/SchoolBus')
 
@@ -25,6 +26,10 @@ const routes = [
     component: Main,
     redirect: '/main/home',
     children: MainRouter
+  },
+  {
+    path: '/achievement',
+    component: Achievement
   },
   {
     path: '/credit',
