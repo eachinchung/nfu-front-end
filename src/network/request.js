@@ -2,7 +2,6 @@ import axios from "axios"
 import store from "../store"
 import router from "../router";
 import {handleToken} from "./token";
-import authKey from "./authKey";
 
 
 export default config => {
@@ -15,9 +14,6 @@ export default config => {
     config => {
       // 为每个请求都添加token
       config.headers.Authorization = `Bearer ${store.state.accessToken}`
-      config.params = {
-        auth_key: authKey(config.url)
-      }
       return config
     }
   )
@@ -61,9 +57,6 @@ export function noToken(config) {
 
   instants.interceptors.request.use(
     config => {
-      config.params = {
-        auth_key: authKey(config.url)
-      }
       return config
     }
   )
