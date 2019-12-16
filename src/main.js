@@ -3,20 +3,18 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import {
-  Button, Cell, CellGroup, Field, NavBar, Row, ActionSheet,
+  Button, Cell, CellGroup, Field, NavBar, Row,
   Col, Notify, Toast, Dialog, Picker, Popup, Collapse,
-  DatetimePicker, Tag, Panel, Checkbox, CheckboxGroup, CollapseItem,
-  PullRefresh, Step, Steps, Image, Loading, DropdownMenu, DropdownItem
+  Tag, Panel, CollapseItem,
+  PullRefresh, Step, Steps, Image, Loading
 } from "vant"
 
-Vue.use(Row)
-  .use(Col).use(Button).use(Cell).use(Collapse)
-  .use(CellGroup).use(Field).use(NavBar).use(Loading)
-  .use(Notify).use(Toast).use(Dialog).use(Picker)
-  .use(Popup).use(DatetimePicker).use(ActionSheet)
-  .use(Tag).use(Panel).use(Checkbox).use(CheckboxGroup)
+Vue.use(Col).use(Button).use(Cell).use(Collapse).use(CellGroup)
+  .use(Field).use(NavBar).use(Loading).use(Notify).use(Toast)
+  .use(Dialog).use(Picker).use(Popup).use(Row)
+  .use(Tag).use(Panel)
   .use(PullRefresh).use(Step).use(Steps).use(Image)
-  .use(DropdownMenu).use(DropdownItem).use(CollapseItem)
+  .use(CollapseItem)
 
 Vue.config.productionTip = false
 

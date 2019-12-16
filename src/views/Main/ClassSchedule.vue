@@ -34,6 +34,7 @@
 <script>
   import {checkLogin} from "../../network/token"
   import {getClassSchedule, schoolConfig} from "../../network/classSchedule"
+  import {DropdownItem, DropdownMenu} from 'vant'
 
   const times = [
     ['08:00', '08:40'],
@@ -71,6 +72,9 @@
   export default {
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
+    },
+    components: {
+      [DropdownMenu.name]: DropdownMenu, [DropdownItem.name]: DropdownItem
     },
     data() {
       return {

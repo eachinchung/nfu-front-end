@@ -17,5 +17,13 @@ export default {
   },
   setTicketType(state, type) {
     state.ticketType = type
+  },
+  setUserData(state, data) {
+    state.name = data.name
+    state.email = data.email
+    state.dormitory = data.dormitory
+  },
+  updateDormitory(state, dormitory) {
+    state.dormitory = dormitory
   }
 }

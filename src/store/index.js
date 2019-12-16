@@ -9,6 +9,10 @@ const state = {
   userId: "null",
   busPower: true,
 
+  name: null,
+  email: null,
+  dormitory: null,
+
   routeId: null,
   busDate: null,
   ticketType: null

@@ -3,13 +3,13 @@
     <van-nav-bar class="title" title="个人档案"/>
 
     <van-cell-group title="账号信息" class="group">
-      <van-cell size="large" icon="contact" title="账号" :value="user"/>
-      <van-cell size="large" icon="smile-o" title="姓名" :value="name"/>
+      <van-cell size="large" icon="contact" title="账号" :value="$store.state.userId"/>
+      <van-cell size="large" icon="smile-o" title="姓名" :value="$store.state.name"/>
       <van-cell
         size="large"
         icon="location-o"
         title="宿舍"
-        :value="dormitory"
+        :value="$store.state.dormitory"
         placeholder="选择宿舍"
         @click="showPicker = true"
         is-link
@@ -18,7 +18,7 @@
         size="large"
         icon="envelop-o"
         title="邮箱"
-        :value="email"
+        :value="$store.state.email"
         @click="$toast('该功能正在开发中')"
         is-link
       />
@@ -50,6 +50,7 @@
     </van-row>
 
     <div :style="{height:'120px'}"></div>
+
 
     <popup
       :showPicker="showPicker"
@@ -88,22 +89,12 @@
 
   import SetPassword from "./components/SetPassword"
   import Popup from "@/components/dormitoryPopup"
+  import {ActionSheet} from "vant";
 
-  function init(vm, res) {
-    vm.user = res.data.id
-    vm.name = res.data.name
-    vm.email = res.data.email
-    vm.dormitory = res.data.dormitory
-    vm.$toast.clear()
-  }
 
   export default {
     data() {
       return {
-        user: null,
-        name: null,
-        email: null,
-        dormitory: null,
         actions: [
           {name: '唤起支付宝付款'},
           {name: '支付宝付款码'}
@@ -117,19 +108,20 @@
     },
     components: {
       Popup,
-      SetPassword
+      SetPassword,
+      [ActionSheet.name]: ActionSheet
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
     created() {
-      this.$toast.loading({forbidClick: true, duration: 0})
-      getUserData()
-        .then(res => init(this, res))
-        .catch(() => {
-          this.$notify("服务器通信错误")
-          this.$toast.clear()
-        })
+      if (this.$store.state.dormitory == null) getUserData()
+        .then(res => this.$store.commit("setUserData", {
+          name: res.data.name,
+          email: res.data.email,
+          dormitory: res.data.dormitory
+        }))
+        .catch(() => this.$notify("服务器通信错误"))
     },
     methods: {
       logout() {
@@ -138,7 +130,7 @@
       },
       getDormitory(room) {
         if (room[0] !== this.dormitory) setDormitory(room[1])
-          .then(() => this.dormitory = room[0])
+          .then(() => this.$store.commit("updateDormitory", room[0]))
           .catch(() => this.$notify("服务器通信错误"))
       },
       close() {
