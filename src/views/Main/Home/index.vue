@@ -2,8 +2,12 @@
   <div>
     <van-nav-bar class="title" title="南苑聚合"/>
 
-    <van-panel title="通知" status="2019-12-04" class="group">
-      <div class="notice" v-html="notice"/>
+    <van-panel title="更新日志" status="bate v0.1.2" class="group">
+      <div class="notice">
+        开放电费管理功能。<br><br>
+        目前学校电费数据停止更新，故电费不是实时数据。<br>
+        此版本测试，电费充值功能正常。
+      </div>
     </van-panel>
 
     <van-cell-group>
@@ -11,7 +15,7 @@
         size="large"
         icon="bulb-o"
         title="电费管理"
-        @click="$toast('该功能正在开发中')"
+        to="/electric"
         is-link
       />
       <van-cell
@@ -39,11 +43,6 @@
   export default {
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
-    },
-    data() {
-      return {
-        notice: '此版本为第一个测试版。<br><br>修改邮箱功能、意见反馈功能预计下学期开放。<br>自定义课表功能等，也将陆续开放。'
-      }
     }
   }
 </script>

@@ -127,7 +127,7 @@
       getUserData()
         .then(res => init(this, res))
         .catch(() => {
-          this.$notify("不可预知错误")
+          this.$notify("服务器通信错误")
           this.$toast.clear()
         })
     },
@@ -139,7 +139,7 @@
       getDormitory(room) {
         if (room[0] !== this.dormitory) setDormitory(room[1])
           .then(() => this.dormitory = room[0])
-          .catch(() => this.$notify("不可预知错误"))
+          .catch(() => this.$notify("服务器通信错误"))
       },
       close() {
         this.showPicker = false;

@@ -141,7 +141,7 @@
           this.$toast.clear()
         })
         .catch(() => {
-          this.$notify("不可预知错误")
+          this.$notify("服务器通信错误")
           this.$toast.clear()
         })
 
