@@ -57,23 +57,19 @@
         说明
       </div>
       <div class="notice">
-        学校电费价格参考：¥0.67/kW·h<br>
-        在微信打开此网页充值，可直接唤起微信支付。<br>
-        <br>
         电费充值即时到账。<br>
+        学校电费价格参考：¥0.67/kW·h<br>
         学校电费系统每天刷新一次余额，请以实际为准。<br>
         南苑聚合对接学校支付接口，我们不会收取其他费用
       </div>
     </div>
 
     <van-popup v-model="showPay" close-on-popstate>
-      <div>
-        <van-image :src="qrUrl" width="80vw" height="80vw">
-          <template v-slot:loading>
-            <van-loading type="spinner" size="20"/>
-          </template>
-        </van-image>
-      </div>
+      <van-image :src="qrUrl" width="90vw" height="90vw">
+        <template v-slot:loading>
+          <van-loading type="spinner" size="20"/>
+        </template>
+      </van-image>
     </van-popup>
   </div>
 </template>
@@ -136,7 +132,6 @@
     border-radius: 8px;
     margin-left: 10px;
     margin-right: 10px;
-    height: 200px;
   }
 
   .plain {
