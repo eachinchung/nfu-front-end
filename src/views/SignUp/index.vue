@@ -108,7 +108,7 @@
             })
             .catch(() => {
               this.loading = false
-              this.$notify("服务器通信错误")
+              this.$notify("无法连接到服务器")
             })
 
         }

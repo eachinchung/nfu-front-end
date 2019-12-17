@@ -9,7 +9,7 @@
           this.$router.push('/login')
         }
       ).catch(() => {
-        this.$toast.fail('服务器通信错误')
+        this.$toast.fail('无法连接到服务器')
         this.$router.push('/login')
       })
     }

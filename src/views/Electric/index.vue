@@ -11,11 +11,15 @@
       :row="10"
       :loading="electric==null||$store.state.dormitory==null"
     >
-      <van-panel :title="$store.state.dormitory" :status="date" :style="{marginBottom:'55px'}">
+      <div class="card">
+        <div class="room">
+          {{$store.state.dormitory}}
+        </div>
+<!--        {{date}}-->
         <div class="electric">
           <b>{{electric}}&nbsp;kW·h</b>
         </div>
-      </van-panel>
+      </div>
 
       <van-row type="flex" justify="center">
         <van-button type="primary" @click="$toast('该功能正在开发中')" class="button">
@@ -55,12 +59,12 @@
           email: res.data.email,
           dormitory: res.data.dormitory
         }))
-        .catch(() => this.$notify("服务器通信错误"))
+        .catch(() => this.$notify("无法连接到服务器"))
 
       getElectric().then(res => {
         this.date = res.data.date
         this.electric = res.data.electric
-      }).catch(() => this.$notify("服务器通信错误"))
+      }).catch(() => this.$notify("无法连接到服务器"))
     }
   }
 </script>
@@ -70,12 +74,27 @@
 
   .electric {
     text-align: center;
-    padding-top: 30px;
-    padding-bottom: 35px;
+    padding-top: 38px;
     font-size: 24px;
   }
 
+  .card{
+    background: #ffffff;
+    border-radius:8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 45px;
+    height: 168px;
+  }
+
+  .room{
+    padding-top: 15px;
+    padding-left: 18px;
+    color: #6e6f71;
+  }
+
   .button {
-    width: 80%;
+    width: 75%;
+    border-radius:5px;
   }
 </style>

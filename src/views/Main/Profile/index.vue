@@ -1,62 +1,67 @@
 <template>
   <div>
     <van-nav-bar class="title" title="个人档案"/>
+    <van-skeleton
+      title
+      :row="12"
+      :loading="$store.state.dormitory==null"
+    >
+      <van-cell-group title="账号信息" class="group">
+        <van-cell size="large" icon="contact" title="账号" :value="$store.state.userId"/>
+        <van-cell size="large" icon="smile-o" title="姓名" :value="$store.state.name"/>
+        <van-cell
+          size="large"
+          icon="location-o"
+          title="宿舍"
+          :value="$store.state.dormitory"
+          placeholder="选择宿舍"
+          @click="showPicker = true"
+          is-link
+        />
+        <van-cell
+          size="large"
+          icon="envelop-o"
+          title="邮箱"
+          :value="$store.state.email"
+          @click="$toast('该功能正在开发中')"
+          is-link
+        />
+      </van-cell-group>
 
-    <van-cell-group title="账号信息" class="group">
-      <van-cell size="large" icon="contact" title="账号" :value="$store.state.userId"/>
-      <van-cell size="large" icon="smile-o" title="姓名" :value="$store.state.name"/>
-      <van-cell
-        size="large"
-        icon="location-o"
-        title="宿舍"
-        :value="$store.state.dormitory"
-        placeholder="选择宿舍"
-        @click="showPicker = true"
-        is-link
-      />
-      <van-cell
-        size="large"
-        icon="envelop-o"
-        title="邮箱"
-        :value="$store.state.email"
-        @click="$toast('该功能正在开发中')"
-        is-link
-      />
-    </van-cell-group>
-
-    <van-cell-group>
-      <van-cell
-        size="large"
-        icon="comment-o"
-        title="意见反馈"
-        @click="$toast('该功能正在开发中')"
-        is-link
-      />
-      <van-cell
-        size="large"
-        icon="gift-card-o"
-        title="请我喝红牛"
-        @click="showPay=true"
-        is-link
-      />
-    </van-cell-group>
+      <van-cell-group>
+        <van-cell
+          size="large"
+          icon="comment-o"
+          title="意见反馈"
+          @click="$toast('该功能正在开发中')"
+          is-link
+        />
+        <van-cell
+          size="large"
+          icon="gift-card-o"
+          title="请我喝红牛"
+          @click="showPay=true"
+          is-link
+        />
+      </van-cell-group>
 
 
-    <van-row type="flex" justify="center" class="profileRow">
-      <van-button type="default" class="profileButton" @click="showSetPassword=true">修改密码</van-button>
-    </van-row>
-    <van-row type="flex" justify="center">
-      <van-button type="warning" class="profileButton" @click="logout">退出登录</van-button>
-    </van-row>
+      <van-row type="flex" justify="center" class="profileRow">
+        <van-button type="default" class="profileButton" @click="showSetPassword=true">修改密码</van-button>
+      </van-row>
+      <van-row type="flex" justify="center">
+        <van-button type="warning" class="profileButton" @click="logout">退出登录</van-button>
+      </van-row>
 
-    <div :style="{height:'120px'}"></div>
+      <div :style="{height:'120px'}"></div>
+    </van-skeleton>
 
 
     <popup
       :showPicker="showPicker"
       @getRoomId="getDormitory"
       @close="close"
-      :dormitoryValue="dormitory"
+      :dormitoryValue="$store.state.dormitory"
     />
 
     <van-popup v-model="showSetPassword">
@@ -89,7 +94,7 @@
 
   import SetPassword from "./components/SetPassword"
   import Popup from "@/components/dormitoryPopup"
-  import {ActionSheet} from "vant";
+  import {ActionSheet, Skeleton} from "vant";
 
 
   export default {
@@ -109,7 +114,8 @@
     components: {
       Popup,
       SetPassword,
-      [ActionSheet.name]: ActionSheet
+      [ActionSheet.name]: ActionSheet,
+      [Skeleton.name]: Skeleton
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
@@ -121,7 +127,7 @@
           email: res.data.email,
           dormitory: res.data.dormitory
         }))
-        .catch(() => this.$notify("服务器通信错误"))
+        .catch(() => this.$notify("无法连接到服务器"))
     },
     methods: {
       logout() {
@@ -131,7 +137,7 @@
       getDormitory(room) {
         if (room[0] !== this.dormitory) setDormitory(room[1])
           .then(() => this.$store.commit("updateDormitory", room[0]))
-          .catch(() => this.$notify("服务器通信错误"))
+          .catch(() => this.$notify("无法连接到服务器"))
       },
       close() {
         this.showPicker = false;
@@ -150,7 +156,7 @@
   }
 
   .group {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
   .profileRow {

@@ -56,7 +56,7 @@
   //         }
   //       })
   //       else vm.$notify(res.data.message)
-  //     }).catch(() => vm.$notify("服务器通信错误"))
+  //     }).catch(() => vm.$notify("无法连接到服务器"))
   //   }).catch()
   // }
 
@@ -107,7 +107,7 @@
             // else if (res.data.busCode === "0009") brushTicket(this, res)
             // else if (res.data.busCode === "0002") brushTicket(this, res)
             else this.$toast.fail(res.data.message)
-          }).catch(() => this.$toast.fail("服务器通信错误"))
+          }).catch(() => this.$toast.fail("无法连接到服务器"))
         }
       }
     }

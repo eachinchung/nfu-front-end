@@ -77,10 +77,9 @@
               if (res.data.code === "0002") this.$notify(res.data.message)
               if (res.data.code === "0003") this.passwordErr = res.data.message
               if (res.data.code === "0001") this.usernameErr = res.data.message
-            }
-          ).catch(() => {
+            }).catch(() => {
             this.loading = false
-            this.$notify("服务器通信错误")
+            this.$notify("无法连接到服务器")
           })
         }
       }

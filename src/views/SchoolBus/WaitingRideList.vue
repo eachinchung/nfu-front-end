@@ -143,7 +143,7 @@
           this.$toast.clear()
         })
         .catch(() => {
-          this.$notify("服务器通信错误")
+          this.$notify("无法连接到服务器")
           this.$toast.clear()
         })
 
@@ -157,7 +157,7 @@
             this.isLoading = false
           })
           .catch(() => {
-            this.$notify("服务器通信错误")
+            this.$notify("无法连接到服务器")
             this.isLoading = false
           })
       },
@@ -175,7 +175,7 @@
             this.show = false
             this.returnShow = true
           })
-          .catch(() => this.$notify("服务器通信错误"))
+          .catch(() => this.$notify("无法连接到服务器"))
       },
       // 退票
       returnTicket(ticketIndex) {

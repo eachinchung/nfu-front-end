@@ -96,7 +96,7 @@
             }
           }, 1000)
 
-        }).catch(() => this.$notify("服务器通信错误"))
+        }).catch(() => this.$notify("无法连接到服务器"))
       },
       passwordCheck() {
         // 检查密码是否为空
@@ -155,7 +155,7 @@
             if (res.data.code === "2000") this.$notify(res.data.message)
           }).catch(() => {
             this.loading = false
-            this.$notify("服务器通信错误")
+            this.$notify("无法连接到服务器")
           })
 
         }
