@@ -62,6 +62,7 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {getAchievement, getTotalAchievement} from "@/network/achievement";
+  import {Collapse, CollapseItem} from "vant";
 
   function init(vm, data) {
 
@@ -75,6 +76,7 @@
 
 
   export default {
+    components: {[Collapse.name]: Collapse, [CollapseItem.name]: CollapseItem},
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },

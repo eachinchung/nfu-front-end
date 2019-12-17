@@ -9,7 +9,7 @@
       @click-right="$router.push('/school-bus/order/list/waiting-ride')"
     />
 
-    <div v-if="ordeData">
+    <div v-if="orderData">
       <van-steps :active="1">
         <van-step>生成订单</van-step>
         <van-step>待付款</van-step>
@@ -17,11 +17,11 @@
       </van-steps>
       <van-cell-group class="group">
         <van-cell
-          :title="ordeData.route"
-          :value="ordeData.date"
+          :title="orderData.route"
+          :value="orderData.date"
         />
         <van-cell
-          v-for="item in ordeData.passengers"
+          v-for="item in orderData.passengers"
           :title="item.name"
           :value="`${price}¥`"
           :label="item.phone"
@@ -30,7 +30,7 @@
       </van-cell-group>
 
       <div :style="{textAlign:'right'}">
-        <p class="total">合计：{{ordeData.price}}¥</p>
+        <p class="total">合计：{{orderData.price}}¥</p>
       </div>
 
       <van-row type="flex" justify="center" class="row">
@@ -41,7 +41,7 @@
       </van-row>
 
       <van-popup v-model="show" close-on-popstate>
-        <van-image :src="ordeData.alipayQrUrl" width="80vw" height="80vw">
+        <van-image :src="orderData.alipayQrUrl" width="80vw" height="80vw">
           <template v-slot:loading>
             <van-loading type="spinner" size="20"/>
           </template>
@@ -55,19 +55,26 @@
 <script>
   import {checkLogin} from "../../network/token";
   import {ordePay} from "../../network/schoolBus";
+  import {Image, Loading, Step, Steps} from "vant";
 
   export default {
     data() {
       return {
         show: false,
-        ordeData: null,
+        orderData: null,
         path: null
       }
     },
     computed: {
       price() {
-        return this.ordeData.price / this.ordeData.passengers.length
+        return this.orderData.price / this.orderData.passengers.length
       }
+    },
+    components: {
+      [Image.name]: Image,
+      [Step.name]: Step,
+      [Steps.name]: Steps,
+      [Loading.name]: Loading
     },
     beforeRouteEnter(to, from, next) {
       if (to.query.orderId == null || to.query.orderId === "") next("/main/school-bus")
@@ -82,7 +89,7 @@
       else this.path = this.$route.query.from
 
       ordePay(this.$route.query.orderId).then(res => {
-        if (res.data.code === "1000") this.ordeData = res.data.message
+        if (res.data.code === "1000") this.orderData = res.data.message
         else this.$notify(res.data.message)
         this.$toast.clear()
       }).catch(() => {
@@ -92,7 +99,7 @@
     },
     methods: {
       alipay() {
-        location.href = this.ordeData.alipayUrl
+        location.href = this.orderData.alipayUrl
       }
     }
   }

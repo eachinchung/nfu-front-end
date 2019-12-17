@@ -94,7 +94,7 @@
 
   import SetPassword from "./components/SetPassword"
   import Popup from "@/components/dormitoryPopup"
-  import {ActionSheet, Skeleton} from "vant";
+  import {ActionSheet, Image, Loading, Skeleton} from "vant";
 
 
   export default {
@@ -115,7 +115,9 @@
       Popup,
       SetPassword,
       [ActionSheet.name]: ActionSheet,
-      [Skeleton.name]: Skeleton
+      [Skeleton.name]: Skeleton,
+      [Image.name]: Image,
+      [Loading.name]: Loading
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)

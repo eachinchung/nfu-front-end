@@ -34,7 +34,7 @@
 <script>
   import {checkLogin} from "../../network/token"
   import {getClassSchedule, schoolConfig} from "../../network/classSchedule"
-  import {DropdownItem, DropdownMenu} from 'vant'
+  import {Collapse, CollapseItem, DropdownItem, DropdownMenu} from 'vant'
 
   const times = [
     ['08:00', '08:40'],
@@ -74,7 +74,10 @@
       checkLogin(to, next)
     },
     components: {
-      [DropdownMenu.name]: DropdownMenu, [DropdownItem.name]: DropdownItem
+      [DropdownMenu.name]: DropdownMenu,
+      [DropdownItem.name]: DropdownItem,
+      [Collapse.name]: Collapse,
+      [CollapseItem.name]: CollapseItem
     },
     data() {
       return {

@@ -15,7 +15,6 @@
         <div class="room">
           {{$store.state.dormitory}}
         </div>
-<!--        {{date}}-->
         <div class="electric">
           <b>{{electric}}&nbsp;kW·h</b>
         </div>
