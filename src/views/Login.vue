@@ -33,8 +33,10 @@
 <script>
   import {login} from "../network/oauth"
   import {handleToken} from "../network/token"
+  import {Button} from "vant";
 
   export default {
+    components:{[Button.name]: Button},
     data() {
       return {
         path: '/',

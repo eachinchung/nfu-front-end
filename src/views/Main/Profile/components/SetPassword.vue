@@ -58,8 +58,10 @@
 
 <script>
   import {getVerificationCode, setPassword} from "../../../../network/profile"
+  import {Button} from "vant";
 
   export default {
+    components:{[Button.name]: Button},
     data() {
       return {
         code: "",

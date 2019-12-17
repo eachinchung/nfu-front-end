@@ -55,7 +55,7 @@
 <script>
   import {checkLogin} from "../../network/token";
   import {ordePay} from "../../network/schoolBus";
-  import {Image, Loading, Step, Steps} from "vant";
+  import {Button, Image, Loading, Popup, Step, Steps} from "vant";
 
   export default {
     data() {
@@ -74,7 +74,9 @@
       [Image.name]: Image,
       [Step.name]: Step,
       [Steps.name]: Steps,
-      [Loading.name]: Loading
+      [Loading.name]: Loading,
+      [Popup.name]: Popup,
+      [Button.name]: Button
     },
     beforeRouteEnter(to, from, next) {
       if (to.query.orderId == null || to.query.orderId === "") next("/main/school-bus")

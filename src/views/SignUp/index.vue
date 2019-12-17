@@ -42,6 +42,7 @@
   import {signUp} from "@/network/oauth"
   import Popup from "@/components/dormitoryPopup"
   import User from "./components/User"
+  import {Button} from "vant";
 
   export default {
     data() {
@@ -59,7 +60,8 @@
     },
     components: {
       User,
-      Popup
+      Popup,
+      [Button.name]: Button
     },
     methods: {
       getUserData(user) {

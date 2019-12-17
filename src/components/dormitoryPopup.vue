@@ -18,10 +18,10 @@
 
 <script>
   import dormitory from "@/assets/dormitory.json"
-  import {Picker} from "vant";
+  import {Picker, Popup} from "vant";
 
   export default {
-    components: {[Picker.name]: Picker},
+    components: {[Picker.name]: Picker, [Popup.name]: Popup},
     data() {
       return {
         columns: [

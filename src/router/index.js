@@ -2,12 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainRouter from './main'
 import SchoolBusRouter from './schoolBus'
+import ElectricRouter from './electric'
 
 Vue.use(VueRouter)
 
 const Main = () => import('../views/Main')
 
-const Electric = () => import('../views/Electric/index')
+const Electric = () => import('../views/Electric')
+
 const Achievement = () => import('../views/Achievement')
 const Credit = () => import('../views/Credit')
 const SchoolBus = () => import('../views/SchoolBus')
@@ -30,7 +32,9 @@ const routes = [
   },
   {
     path: '/electric',
-    component: Electric
+    component: Electric,
+    redirect: '/electric/main',
+    children: ElectricRouter
   },
   {
     path: '/achievement',

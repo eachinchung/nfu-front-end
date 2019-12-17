@@ -77,7 +77,7 @@
 
   import {checkLogin} from "../../network/token"
   import {getTicketId, returnTicket, waitingRideOrder} from "../../network/schoolBus"
-  import {PullRefresh} from "vant";
+  import {Popup, PullRefresh} from "vant";
 
   function initList(vm, res) {
     if (res.data.code === "1000") vm.list = res.data.message
@@ -118,7 +118,7 @@
   }
 
   export default {
-    components: {[PullRefresh.name]: PullRefresh},
+    components: {[PullRefresh.name]: PullRefresh, [Popup.name]: Popup},
     data() {
       return {
         list: null,

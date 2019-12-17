@@ -33,6 +33,7 @@
 
 <script>
   import {checkLogin} from "../../network/token"
+  import {Popup} from "vant";
 
   const WeekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
 
@@ -68,6 +69,7 @@
   }
 
   export default {
+    components: {[Popup.name]: Popup},
     data() {
       return {
         dateList: [],

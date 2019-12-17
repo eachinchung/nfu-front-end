@@ -15,7 +15,7 @@
         size="large"
         icon="bulb-o"
         title="电费管理"
-        to="/electric"
+        to="/electric/main"
         is-link
       />
       <van-cell

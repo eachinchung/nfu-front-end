@@ -57,7 +57,7 @@
     </van-skeleton>
 
 
-    <popup
+    <my-popup
       :showPicker="showPicker"
       @getRoomId="getDormitory"
       @close="close"
@@ -93,8 +93,8 @@
   import {checkLogin} from "@/network/token"
 
   import SetPassword from "./components/SetPassword"
-  import Popup from "@/components/dormitoryPopup"
-  import {ActionSheet, Image, Loading, Skeleton} from "vant";
+  import MyPopup from "@/components/dormitoryPopup"
+  import {ActionSheet, Button, Image, Loading, Popup, Skeleton} from "vant";
 
 
   export default {
@@ -112,12 +112,14 @@
       };
     },
     components: {
-      Popup,
+      MyPopup,
       SetPassword,
       [ActionSheet.name]: ActionSheet,
       [Skeleton.name]: Skeleton,
       [Image.name]: Image,
-      [Loading.name]: Loading
+      [Loading.name]: Loading,
+      [Popup.name]: Popup,
+      [Button.name]: Button
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)

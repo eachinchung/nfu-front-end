@@ -61,7 +61,7 @@
   import CreateOrder from "./components/CreateOrder";
   import {checkLogin} from "../../../network/token";
   import {passenger, schedule} from "../../../network/schoolBus";
-  import {PullRefresh, Tag} from "vant";
+  import {Popup, PullRefresh, Tag} from "vant";
 
   export default {
     data() {
@@ -78,7 +78,7 @@
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
-    components: {CreateOrder, [Tag.name]: Tag, [PullRefresh.name]: PullRefresh},
+    components: {CreateOrder, [Tag.name]: Tag, [PullRefresh.name]: PullRefresh, [Popup.name]: Popup},
 
     mounted() {
       if (this.$store.state.busDate == null || this.$store.state.routeId == null) this.$router.push("/main/school-bus")

@@ -6,3 +6,11 @@ export function getElectric() {
     url: "/electric/get",
   })
 }
+
+export function createOrder(data) {
+  return request({
+    method: "post",
+    url: "/electric/order/create",
+    data
+  })
+}
