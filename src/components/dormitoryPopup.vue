@@ -17,19 +17,21 @@
 </template>
 
 <script>
-import dormitory from "@/assets/dormitory.json"
+  import dormitory from "@/assets/dormitory.json"
+  import {Picker} from "vant";
 
-export default {
-  data() {
-    return {
-      columns: [
-        {
-          values: Object.keys(dormitory),
-          defaultIndex: 0
-        },
-        {
-          values: Object.keys(dormitory["西学楼1号"]),
-          defaultIndex: 0
+  export default {
+    components: {[Picker.name]: Picker},
+    data() {
+      return {
+        columns: [
+          {
+            values: Object.keys(dormitory),
+            defaultIndex: 0
+          },
+          {
+            values: Object.keys(dormitory["西学楼1号"]),
+            defaultIndex: 0
         },
         {
           values: Object.keys(dormitory["西学楼1号"]["1楼"]),
