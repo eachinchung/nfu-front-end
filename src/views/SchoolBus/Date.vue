@@ -2,9 +2,10 @@
   <div>
     <van-nav-bar class="title" title="请选择乘车日期" left-arrow @click-left="onClickLeft"/>
 
-    <van-cell-group title="选择购买日期" class="group">
+    <div class="card">
       <van-cell
         size="large"
+        class="cardItem"
         v-for="item in dateList"
         :title="item[0]"
         :value="item[1]"
@@ -12,22 +13,22 @@
         is-link
         @click="onClickDate(item[0],1)"
       />
-    </van-cell-group>
+    </div>
 
 <!--    <van-cell-group>-->
 <!--      <van-cell size="large" title="预售购票" is-link @click="showPicker=true"/>-->
 <!--    </van-cell-group>-->
 
-    <van-popup v-model="showPicker" position="bottom">
-      <van-datetime-picker
-        v-model="currentDate"
-        type="date"
-        :min-date="minDate"
-        :max-date="maxDate"
-        @cancel="showPicker=false"
-        @confirm="showPicker=false"
-      />
-    </van-popup>
+<!--    <van-popup v-model="showPicker" position="bottom">-->
+<!--      <van-datetime-picker-->
+<!--        v-model="currentDate"-->
+<!--        type="date"-->
+<!--        :min-date="minDate"-->
+<!--        :max-date="maxDate"-->
+<!--        @cancel="showPicker=false"-->
+<!--        @confirm="showPicker=false"-->
+<!--      />-->
+<!--    </van-popup>-->
   </div>
 </template>
 
@@ -99,5 +100,5 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
+  @import "~@/assets/css/card.css";
 </style>

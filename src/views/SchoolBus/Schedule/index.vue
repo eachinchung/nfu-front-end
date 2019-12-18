@@ -12,18 +12,19 @@
         <div ref="busList">
           <div v-if="scheduleList">
 
-            <van-cell-group v-if="typeof scheduleList == 'string'">
-              <van-cell size="large" :title="scheduleList"/>
-            </van-cell-group>
+            <div class="card" v-if="typeof scheduleList == 'string'">
+              <van-cell class="cardItem" size="large" :title="scheduleList" :style="{color:'#6e6f71'}"/>
+            </div>
 
             <div v-else>
-              <van-cell-group class="group">
+              <div class="card">
                 <van-cell
+                  class="cardItem"
                   @click="onClickSchedule(item)"
                   v-for="item in scheduleList"
                   :key="item.id"
-                  size="large"
-                  is-link>
+                  is-link
+                >
 
                   <template slot="title">
                     <b :style="{marginRight: '5px',verticalAlign: 'middle'}">{{item.start_time}}</b>
@@ -37,11 +38,11 @@
                   </template>
 
                   <template slot="label">
-                    <div class="ticketList">{{item.pathway}}</div>
+                    <div class="ticketPathway">{{item.pathway}}</div>
                   </template>
 
                 </van-cell>
-              </van-cell-group>
+              </div>
             </div>
 
           </div>
@@ -144,15 +145,12 @@
 </script>
 
 <style scoped>
-  .ticketList {
+  @import "~@/assets/css/card.css";
+  .ticketPathway {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 220px;
-  }
-
-  .group {
-    margin-bottom: 25px;
   }
 
   .refresh {

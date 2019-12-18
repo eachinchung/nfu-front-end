@@ -6,10 +6,11 @@
       :row="12"
       :loading="$store.state.dormitory==null"
     >
-      <van-cell-group title="账号信息" class="group">
-        <van-cell size="large" icon="contact" title="账号" :value="$store.state.userId"/>
-        <van-cell size="large" icon="smile-o" title="姓名" :value="$store.state.name"/>
+      <div class="card">
+        <van-cell class="cardItem" size="large" icon="contact" title="账号" :value="$store.state.userId"/>
+        <van-cell class="cardItem" size="large" icon="smile-o" title="姓名" :value="$store.state.name"/>
         <van-cell
+          class="cardItem"
           size="large"
           icon="location-o"
           title="宿舍"
@@ -19,6 +20,7 @@
           is-link
         />
         <van-cell
+          class="cardItem"
           size="large"
           icon="envelop-o"
           title="邮箱"
@@ -26,10 +28,11 @@
           @click="$toast('该功能正在开发中')"
           is-link
         />
-      </van-cell-group>
+      </div>
 
-      <van-cell-group>
+      <div class="card">
         <van-cell
+          class="cardItem"
           size="large"
           icon="comment-o"
           title="意见反馈"
@@ -37,13 +40,14 @@
           is-link
         />
         <van-cell
+          class="cardItem"
           size="large"
           icon="gift-card-o"
           title="请我喝红牛"
           @click="showPay=true"
           is-link
         />
-      </van-cell-group>
+      </div>
 
 
       <van-row type="flex" justify="center" class="profileRow">
@@ -53,7 +57,7 @@
         <van-button type="warning" class="profileButton" @click="logout">退出登录</van-button>
       </van-row>
 
-      <div :style="{height:'120px'}"></div>
+      <div :style="{height:'100px'}"></div>
     </van-skeleton>
 
 
@@ -156,13 +160,7 @@
 </script>
 
 <style scoped>
-  .title {
-    margin-bottom: 25px;
-  }
-
-  .group {
-    margin-bottom: 20px;
-  }
+  @import "~@/assets/css/card.css";
 
   .profileRow {
     margin-top: 40px;
@@ -170,7 +168,8 @@
   }
 
   .profileButton {
-    width: 90%;
+    width: 85%;
+    border-radius: 5px;
   }
 
   .myPopup {

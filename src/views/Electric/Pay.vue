@@ -7,7 +7,7 @@
       @click-left="$router.push('/electric/main')"
     />
 
-    <van-cell-group class="cardCellGroup">
+    <div class="card">
       <van-cell
         value="1.5 kW·h"
         title="1¥"
@@ -50,7 +50,7 @@
         @click="createOrder(200)"
         class="cardItem"
       />
-    </van-cell-group>
+    </div>
 
     <div class="card">
       <div class="plain">
@@ -125,14 +125,7 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
-
-  .card {
-    background: #ffffff;
-    border-radius: 8px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
+  @import "~@/assets/css/card.css";
 
   .plain {
     padding-top: 15px;
@@ -144,16 +137,5 @@
     padding: 20px;
     font-size: 14px;
     color: #6e6f71;
-  }
-
-  .cardCellGroup {
-    border-radius: 8px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 18px;
-  }
-
-  .cardItem {
-    border-radius: 8px;
   }
 </style>

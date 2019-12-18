@@ -2,47 +2,58 @@
   <div>
     <van-nav-bar class="title" title="南苑聚合"/>
 
-    <van-panel title="更新日志" status="bate v0.1.2" class="group">
-      <div class="notice">
-        开放电费管理功能。<br><br>
-        目前学校电费数据停止更新，故电费不是实时数据。<br>
-        电费充值功能已开放。
+    <div class="card">
+      <div class="version">
+        bate v0.1.8
       </div>
-    </van-panel>
+      <div class="plain">
+        更新日志
+      </div>
+      <div class="notice">
+        电费充值功能已开放。<br>
+        目前学校电费数据停止更新，故电费不是实时数据。<br>
+        <br>
+        美化首页 UI。<br>
+        美化个人档案 UI。<br>
+        美化学分查询 UI，增加课程详细类别。<br>
+        <br>
+        学分查询页面，下拉刷新缓存。
 
-    <van-cell-group>
-      <van-cell
-        size="large"
-        icon="bulb-o"
-        title="电费管理"
-        to="/electric/main"
-        is-link
-      />
-      <van-cell
-        size="large"
-        icon="medel-o"
-        title="学分查询"
-        to="/credit"
-        is-link
-      />
-      <van-cell
-        size="large"
-        icon="orders-o"
-        title="成绩查询"
-        to="/achievement"
-        is-link
-      />
-    </van-cell-group>
+      </div>
+    </div>
+
+
+    <van-row class="cardLinks">
+      <van-col span="8" @click="$router.push('/electric/main')">
+        <van-icon name="bulb-o" size="25" :style="{marginBottom: '8px'}"/>
+        <br>
+        电费管理
+      </van-col>
+      <van-col span="8" @click="$router.push('/credit')">
+        <van-icon name="medel-o" size="25" :style="{marginBottom: '8px'}"/>
+        <br>
+        学分查询
+      </van-col>
+      <van-col span="8" @click="$router.push('/achievement')">
+        <van-icon name="orders-o" size="25" :style="{marginBottom: '8px'}"/>
+        <br>
+        成绩查询
+      </van-col>
+    </van-row>
 
   </div>
 </template>
 
 <script>
   import {checkLogin} from "@/network/token";
-  import {Panel} from "vant";
+  import {Col, Icon, Row} from "vant";
 
   export default {
-    components: {[Panel.name]: Panel},
+    components: {
+      [Row.name]: Row,
+      [Col.name]: Col,
+      [Icon.name]: Icon
+    },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     }
@@ -50,11 +61,43 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
 
   .notice {
     padding: 20px;
     font-size: 14px;
+    color: #6e6f71;
+  }
+
+  .plain {
+    padding-top: 15px;
+    padding-left: 20px;
+    color: #2196f3;
+  }
+
+  .version{
+    float: right;
+    padding-top: 15px;
+    padding-right: 20px;
+    font-size: 14px;
+    color: #6e6f71;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+  .cardLinks {
+    border-radius: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 15px 0;
+    font-size: 12px;
+    text-align: center;
+    background-color: #fff;
     color: #6e6f71;
   }
 </style>

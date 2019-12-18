@@ -110,7 +110,6 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
 
   .group {
     margin-top: 15px;

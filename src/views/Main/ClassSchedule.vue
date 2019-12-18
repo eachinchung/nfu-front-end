@@ -159,7 +159,6 @@
 
 <style scoped>
   .title {
-    margin-bottom: 25px;
     z-index: 99;
   }
 

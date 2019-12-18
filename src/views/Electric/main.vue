@@ -72,8 +72,6 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
-
   .electric {
     text-align: center;
     padding-top: 38px;

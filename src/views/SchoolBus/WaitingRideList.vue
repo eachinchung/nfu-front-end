@@ -12,24 +12,23 @@
         <div ref="busList">
           <div v-if="list">
 
-            <van-cell-group v-if="list.length===0">
-              <van-cell size="large" title="暂无待乘车订单"/>
-            </van-cell-group>
+            <div class="card" v-if="list.length===0">
+              <van-cell class="cardItem" size="large" title="暂无待乘车订单" :style="{color:'#6e6f71'}"/>
+            </div>
 
-            <van-cell-group v-else>
-
+            <div class="card" v-else>
               <van-cell
+                class="cardItem"
                 v-for="item in list"
                 :title="`${item.date} ${item.week} ${item.startTime}`"
                 :value="`${item.price}¥`"
                 :label="`${item.startFromName} -> ${item.startToName}`"
                 :key="item.id"
                 value-class="valueClass"
-                size="large" is-link
+                is-link
                 @click="onClickList(item.id,item.ticketUrl)"
               />
-
-            </van-cell-group>
+            </div>
           </div>
         </div>
       </div>
@@ -188,7 +187,7 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
+  @import "~@/assets/css/card.css";
 
   .cellGroup {
     width: 85vw;

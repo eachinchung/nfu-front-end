@@ -48,7 +48,6 @@
             />
           </div>
 
-
           <div
             v-if="classification.professionalDirection.length!==0"
             class="card"
@@ -227,16 +226,5 @@
 </script>
 
 <style scoped>
-
-  .card {
-    background: #ffffff;
-    border-radius: 8px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 20px;
-  }
-
-  .cardItem {
-    border-radius: 8px;
-  }
+  @import "~@/assets/css/card.css";
 </style>
