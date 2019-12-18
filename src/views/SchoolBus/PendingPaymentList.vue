@@ -49,7 +49,7 @@
     // 延时100毫秒，计算车票列表是否高于窗口
     setTimeout(() => {
       vm.isRefresh = window.innerHeight - 71 > vm.$refs.busList.offsetHeight
-    }, 100);
+    }, 100)
   }
 
   export default {
