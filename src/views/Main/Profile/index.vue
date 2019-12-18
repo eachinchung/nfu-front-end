@@ -78,7 +78,7 @@
     />
 
     <van-popup v-model="showPayQr" close-on-popstate>
-      <van-image :src="qrUrl" width="80vw" height="80vw">
+      <van-image src="/img/eachinAlipay.jpg" width="80vw" height="80vw">
         <template v-slot:loading>
           <van-loading type="spinner" size="20"/>
         </template>
@@ -104,7 +104,6 @@
           {name: '唤起支付宝付款'},
           {name: '支付宝付款码'}
         ],
-        qrUrl: require('../../../assets/img/eachinAlipay.jpg'),
         showPay: false,
         showPayQr: false,
         showPicker: false,
