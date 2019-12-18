@@ -21,7 +21,7 @@
       <van-cell
         size="large"
         icon="medel-o"
-        title="学分管理"
+        title="学分查询"
         to="/credit"
         is-link
       />

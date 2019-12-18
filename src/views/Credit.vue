@@ -1,116 +1,158 @@
 <template>
   <div>
     <van-nav-bar
-      class="title"
-      title="学分管理"
+      title="学分查询"
+      :border="false"
       left-arrow
       @click-left="$router.push('/main/home')"
     />
     <div v-if="achievement">
-      <van-panel
-        title="专业核心课"
-        v-if="classification.professionalCore.length!==0"
-        :status="`${total(classification.professionalCore)}`"
-        class="group"
+      <van-tabs
+        v-model="active"
+        sticky
+        swipeable
+        animated
       >
-        <div class="classList">
-          <div v-for="(item,index) in classification.professionalCore" :key="index">
-            <div :style="{float:'right'}">
-              {{item.credit}}
-            </div>
-            {{item.courseName}}
-          </div>
-        </div>
-      </van-panel>
+        <van-tab title="专业课">
+          <div :style="{height:'20px'}"></div>
 
-      <van-panel
-        title="专业方向课"
-        v-if="classification.professionalDirection.length!==0"
-        :status="`${total(classification.professionalDirection)}`"
-        class="group"
-      >
-        <div class="classList">
-          <div v-for="(item,index) in classification.professionalDirection" :key="index">
-            <div :style="{float:'right'}">
-              {{item.credit}}
-            </div>
-            {{item.courseName}}
+          <div class="card">
+            <van-cell
+              v-if="classification.professionalCore.length!==0"
+              title="专业核心课"
+              :value="`${total(classification.professionalCore)}`"
+              class="cardItem"
+            />
+            <van-cell
+              v-if="classification.professionalDirection.length!==0"
+              title="专业方向课"
+              :value="`${total(classification.professionalDirection)}`"
+              class="cardItem"
+            />
+            <van-cell
+              v-if="classification.professionalElective.length!==0"
+              title="专业选修课"
+              :value="`${total(classification.professionalElective)}`"
+              class="cardItem"
+            />
           </div>
-        </div>
-      </van-panel>
 
-      <van-panel
-        title="专业选修课"
-        v-if="classification.professionalElective.length!==0"
-        :status="`${total(classification.professionalElective)}`"
-        class="group"
-      >
-        <div class="classList">
-          <div v-for="(item,index) in classification.professionalElective" :key="index">
-            <div :style="{float:'right'}">
-              {{item.credit}}
-            </div>
-            {{item.courseName}}
+          <div class="card" v-if="classification.professionalCore.length!==0">
+            <van-cell
+              v-for="(item,index) in classification.professionalCore"
+              :key="index"
+              :title="item.courseName"
+              :value="item.credit"
+              :label="item.subdivisionType"
+              class="cardItem"
+            />
           </div>
-        </div>
-      </van-panel>
 
-      <van-panel
-        title="公共必修课"
-        v-if="classification.publicCompulsory.length!==0"
-        :status="`${total(classification.publicCompulsory)}`"
-        class="group"
-      >
-        <div class="classList">
-          <div v-for="(item,index) in classification.publicCompulsory" :key="index">
-            <div :style="{float:'right'}">
-              {{item.credit}}
-            </div>
-            {{item.courseName}}
-          </div>
-        </div>
-      </van-panel>
 
-      <van-panel
-        title="成长必修课"
-        v-if="classification.growingCompulsory.length!==0"
-        :status="`${total(classification.growingCompulsory)}`"
-        class="group"
-      >
-        <div class="classList">
-          <div v-for="(item,index) in classification.growingCompulsory" :key="index">
-            <div :style="{float:'right'}">
-              {{item.credit}}
-            </div>
-            {{item.courseName}}
+          <div
+            v-if="classification.professionalDirection.length!==0"
+            class="card"
+          >
+            <van-cell
+              v-for="(item,index) in classification.professionalDirection"
+              :key="index"
+              :title="item.courseName"
+              :value="item.credit"
+              :label="item.subdivisionType"
+              class="cardItem"
+            />
           </div>
-        </div>
-      </van-panel>
 
-      <van-panel
-        title="公共选修课"
-        v-if="classification.publicElective.length!==0"
-        :status="`${total(classification.publicElective)}`"
-        class="group"
-      >
-        <div class="classList">
-          <div v-for="(item,index) in classification.publicElective" :key="index">
-            <div :style="{float:'right'}">
-              {{item.credit}}
-            </div>
-            {{item.courseName}}
+          <div
+            v-if="classification.professionalElective.length!==0"
+            class="card"
+          >
+            <van-cell
+              v-for="(item,index) in classification.professionalElective"
+              :key="index"
+              :title="item.courseName"
+              :value="item.credit"
+              class="cardItem"
+              :label="item.subdivisionType"
+            />
           </div>
-        </div>
-      </van-panel>
+        </van-tab>
+
+        <van-tab title="公共课">
+          <div :style="{height:'20px'}"></div>
+
+          <div class="card">
+            <van-cell
+              v-if="classification.publicCompulsory.length!==0"
+              title="公共必修课"
+              :value="`${total(classification.publicCompulsory)}`"
+              class="cardItem"
+            />
+            <van-cell
+              v-if="classification.growingCompulsory.length!==0"
+              title="成长必修课"
+              :value="`${total(classification.growingCompulsory)}`"
+              class="cardItem"
+            />
+            <van-cell
+              v-if="classification.publicElective.length!==0"
+              title="公共选修课"
+              :value="`${total(classification.publicElective)}`"
+              class="cardItem"
+            />
+          </div>
+
+          <div
+            v-if="classification.publicCompulsory.length!==0"
+            class="card"
+          >
+            <van-cell
+              v-for="(item,index) in classification.publicCompulsory"
+              :key="index"
+              :title="item.courseName"
+              :value="item.credit"
+              :label="item.subdivisionType"
+              class="cardItem"
+            />
+          </div>
+
+          <div
+            v-if="classification.growingCompulsory.length!==0"
+            class="card"
+          >
+            <van-cell
+              v-for="(item,index) in classification.growingCompulsory"
+              :key="index"
+              :title="item.courseName"
+              :value="item.credit"
+              :label="item.subdivisionType"
+              class="cardItem"
+            />
+          </div>
+
+          <div
+            v-if="classification.publicElective.length!==0"
+            class="card"
+          >
+            <van-cell
+              v-for="(item,index) in classification.publicElective"
+              :key="index"
+              :title="item.courseName"
+              :value="item.credit"
+              :label="item.subdivisionType"
+              class="cardItem"
+            />
+          </div>
+        </van-tab>
+      </van-tabs>
     </div>
-
   </div>
 </template>
 
 <script>
   import {checkLogin} from "@/network/token";
   import {getAchievement} from "@/network/achievement";
-  import {Panel} from "vant";
+  import {Tab, Tabs} from "vant";
 
   function init(vm, res) {
     if (res.data.code === "1000") vm.achievement = res.data.message
@@ -147,13 +189,17 @@
   }
 
   export default {
-    components: {[Panel.name]: Panel},
+    components: {
+      [Tab.name]: Tab,
+      [Tabs.name]: Tabs
+    },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
     data() {
       return {
         achievement: null,
+        active: 0
       }
     },
     computed: {
@@ -181,11 +227,16 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/common.css";
 
-  .classList {
-    padding: 10px 20px;
-    font-size: 14px;
-    color: #6e6f71;
+  .card {
+    background: #ffffff;
+    border-radius: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+
+  .cardItem {
+    border-radius: 8px;
   }
 </style>
