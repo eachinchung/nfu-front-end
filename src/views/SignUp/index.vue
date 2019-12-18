@@ -27,13 +27,6 @@
       <van-button type="primary" class="button" :loading="loading" @click="signUpBtn">注册</van-button>
     </van-row>
 
-    <van-dialog
-      v-model="show"
-      title="注册成功"
-      message="激活邮件已发送至您的邮箱，请查看。"
-      @confirm="$router.push('/login')"
-    />
-
     <popup :showPicker="showPicker" @getRoomId="getDormitory" @close="showPicker = false"/>
   </div>
 </template>
@@ -42,7 +35,7 @@
   import {signUp} from "@/network/oauth"
   import Popup from "@/components/dormitoryPopup"
   import User from "./components/User"
-  import {Button} from "vant";
+  import {Button, Col, Dialog, Field, Row} from "vant";
 
   export default {
     data() {
@@ -52,7 +45,6 @@
         nullErr: null,
         password: "",
         roomId: null,
-        show: false,
         showPicker: false,
         username: "",
         value: null
@@ -61,7 +53,10 @@
     components: {
       User,
       Popup,
-      [Button.name]: Button
+      [Button.name]: Button,
+      [Field.name]: Field,
+      [Row.name]: Row,
+      [Col.name]: Col
     },
     methods: {
       getUserData(user) {
@@ -105,8 +100,13 @@
             .then(res => {
               this.loading = false
 
-              if (res.data.code === "1000") this.show = true
-              else this.$notify(res.data.message)
+              if (res.data.code === "1000") {
+                Dialog.alert({
+                  title: "注册成功",
+                  message: "激活邮件已发送至您的邮箱，请查看。"
+                }).then(() => this.$router.push('/login'))
+              } else this.$notify(res.data.message)
+
             })
             .catch(() => {
               this.loading = false

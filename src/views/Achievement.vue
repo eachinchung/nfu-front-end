@@ -62,7 +62,7 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {getAchievement, getTotalAchievement} from "@/network/achievement";
-  import {Collapse, CollapseItem} from "vant";
+  import {Collapse, CollapseItem, Panel} from "vant";
 
   function init(vm, data) {
 
@@ -76,7 +76,11 @@
 
 
   export default {
-    components: {[Collapse.name]: Collapse, [CollapseItem.name]: CollapseItem},
+    components: {
+      [Collapse.name]: Collapse,
+      [CollapseItem.name]: CollapseItem,
+      [Panel.name]: Panel
+    },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
@@ -84,7 +88,7 @@
       return {
         achievement: null,
         totalAchievement: null,
-        activeNames:[],
+        activeNames: [],
         semester: {1: '第一学期', 2: '第二学期'}
       }
     },

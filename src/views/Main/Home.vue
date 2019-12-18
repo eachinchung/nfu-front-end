@@ -39,8 +39,10 @@
 
 <script>
   import {checkLogin} from "@/network/token";
+  import {Panel} from "vant";
 
   export default {
+    components: {[Panel.name]: Panel},
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     }

@@ -33,10 +33,15 @@
 <script>
   import {login} from "../network/oauth"
   import {handleToken} from "../network/token"
-  import {Button} from "vant";
+  import {Button, Col, Field, Row} from "vant";
 
   export default {
-    components:{[Button.name]: Button},
+    components: {
+      [Button.name]: Button,
+      [Field.name]: Field,
+      [Row.name]: Row,
+      [Col.name]: Col
+    },
     data() {
       return {
         path: '/',

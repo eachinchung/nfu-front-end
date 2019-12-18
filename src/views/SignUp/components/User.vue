@@ -22,7 +22,10 @@
 </template>
 
 <script>
+  import {Dialog, Field} from "vant";
+
   export default {
+    components: {[Field.name]: Field},
     data() {
       return {
         username: "",
@@ -34,12 +37,12 @@
         this.$emit("getUser", [this.username, this.password])
       },
       passwordText() {
-        this.$dialog.alert({
+        Dialog.alert({
           title: "密码说明",
           messageAlign: "left",
           message:
             "教务系统密码将作为账号默认密码。\n账号密码将采用哈希加密，本平台无权读取您的密码。"
-        })
+        }).then(() => {})
       }
     }
   }

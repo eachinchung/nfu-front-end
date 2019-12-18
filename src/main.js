@@ -3,13 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import {
-  Cell, CellGroup, Field, NavBar, Row,
-  Col, Notify, Toast, Dialog, Panel
+  Cell, CellGroup, NavBar, Notify, Toast
 } from "vant"
 
-Vue.use(Col).use(Cell).use(CellGroup)
-  .use(Field).use(NavBar).use(Notify).use(Toast)
-  .use(Dialog).use(Row).use(Panel)
+Vue.use(Cell).use(CellGroup).use(NavBar).use(Notify).use(Toast)
 
 Vue.config.productionTip = false
 

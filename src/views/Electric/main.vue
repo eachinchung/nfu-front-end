@@ -34,14 +34,16 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {getElectric} from "@/network/electric";
-  import {Button, Skeleton} from "vant";
+  import {Button, Col, Row, Skeleton} from "vant";
   import {getUserData} from "@/network/profile";
 
 
   export default {
     components: {
       [Skeleton.name]: Skeleton,
-      [Button.name]: Button
+      [Button.name]: Button,
+      [Row.name]: Row,
+      [Col.name]: Col
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)

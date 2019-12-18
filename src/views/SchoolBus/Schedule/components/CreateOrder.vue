@@ -30,7 +30,7 @@
 
 <script>
   import {createOrder} from "../../../../network/schoolBus"
-  import {Button, Checkbox, CheckboxGroup} from "vant";
+  import {Button, Checkbox, CheckboxGroup, Panel} from "vant";
   // import {accelerateOrder, createOrder} from "../../../../network/schoolBus"
 
   // 刷票
@@ -65,7 +65,10 @@
       return {result: []}
     },
     components: {
-      [Checkbox.name]: Checkbox, [CheckboxGroup.name]: CheckboxGroup, [Button.name]: Button
+      [Checkbox.name]: Checkbox,
+      [CheckboxGroup.name]: CheckboxGroup,
+      [Button.name]: Button,
+      [Panel.name]:Panel
     },
     props: ["list", "schedule"],
     computed: {

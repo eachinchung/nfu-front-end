@@ -110,6 +110,7 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {getAchievement} from "@/network/achievement";
+  import {Panel} from "vant";
 
   function init(vm, res) {
     if (res.data.code === "1000") vm.achievement = res.data.message
@@ -146,6 +147,7 @@
   }
 
   export default {
+    components: {[Panel.name]: Panel},
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
