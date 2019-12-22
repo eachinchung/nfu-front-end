@@ -6,7 +6,7 @@
       left-arrow
       @click-left="$router.push('/main/home')"
     />
-    <div v-if="achievement">
+    <div v-if="$store.state.achievement">
       <van-tabs
         v-model="active"
         sticky
@@ -168,10 +168,6 @@
   import {getAchievement, updateAchievement} from "@/network/achievement";
   import {PullRefresh, Tab, Tabs} from "vant";
 
-  function init(vm, res) {
-    if (res.data.code === "1000") vm.achievement = res.data.message
-    else vm.$notify(res.data.message)
-  }
 
   function initAchievement(vm) {
     let classification = {
@@ -182,7 +178,7 @@
       publicCompulsory: [], // 公共必修
       growingCompulsory: []  // 成长必修
     }
-    for (const item of vm.achievement) {
+    for (const item of vm.$store.state.achievement) {
       // 去除挂科的课程
       if (item.totalAchievements < 60) {
         if (!item.resitExam) continue
@@ -212,7 +208,6 @@
     },
     data() {
       return {
-        achievement: null,
         active: 0,
         isLoading: false,
         successText: null
@@ -224,16 +219,19 @@
       }
     },
     mounted() {
-      this.$toast.loading({forbidClick: true, duration: 0})
-      getAchievement()
-        .then(res => {
-          init(this, res)
-          this.$toast.clear()
-        })
-        .catch(() => {
-          this.$notify("无法连接到服务器")
-          this.$toast.clear()
-        })
+      if (this.$store.state.achievement == null) {
+        this.$toast.loading({forbidClick: true, duration: 0})
+        getAchievement()
+          .then(res => {
+            if (res.data.code === "1000") this.$store.commit('setAchievement', res.data.message)
+            else this.$notify(res.data.message)
+            this.$toast.clear()
+          })
+          .catch(() => {
+            this.$notify("无法连接到服务器")
+            this.$toast.clear()
+          })
+      }
     },
     methods: {
       total(classType) {
@@ -245,7 +243,7 @@
         updateAchievement()
           .then(res => {
             if (res.data.code === "1000") {
-              this.achievement = res.data.message
+              this.$store.commit('setAchievement', res.data.message)
               this.successText = "刷新成功"
             } else this.successText = res.data.message
             this.isLoading = false

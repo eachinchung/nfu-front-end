@@ -20,3 +20,10 @@ export function updateAchievement() {
     url: "/achievement/update",
   })
 }
+
+export function updateTotalAchievement() {
+  return request({
+    method: "get",
+    url: "/achievement/update/total",
+  })
+}
