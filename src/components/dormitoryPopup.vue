@@ -32,12 +32,12 @@
           {
             values: Object.keys(dormitory["西学楼1号"]),
             defaultIndex: 0
-        },
-        {
-          values: Object.keys(dormitory["西学楼1号"]["1楼"]),
-          defaultIndex: 0
-        }
-      ]
+          },
+          {
+            values: Object.keys(dormitory["西学楼1号"]["1楼"]),
+            defaultIndex: 0
+          }
+        ]
     };
   },
   props: ["showPicker", "dormitoryValue"],
@@ -76,7 +76,4 @@
   }
 }
 </script>
-
-<style>
-</style>
 

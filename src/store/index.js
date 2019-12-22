@@ -13,6 +13,10 @@ const state = {
   email: null,
   dormitory: null,
 
+  achievement: null,
+  semesterList: null,
+  totalAchievement: null,
+
   routeId: null,
   busDate: null,
   ticketType: null

@@ -4,7 +4,7 @@
 
     <div class="card">
       <div class="version">
-        bate v0.1.8
+        beta v0.2.0
       </div>
       <div class="plain">
         更新日志
@@ -18,24 +18,23 @@
         美化学分查询 UI，增加课程详细类别。<br>
         <br>
         学分查询页面，下拉刷新缓存。
-
       </div>
     </div>
 
 
     <van-row class="cardLinks">
       <van-col span="8" @click="$router.push('/electric/main')">
-        <van-icon name="bulb-o" size="25" :style="{marginBottom: '8px'}"/>
+        <van-icon name="bulb-o" size="22" :style="{marginBottom: '6px'}"/>
         <br>
         电费管理
       </van-col>
       <van-col span="8" @click="$router.push('/credit')">
-        <van-icon name="medel-o" size="25" :style="{marginBottom: '8px'}"/>
+        <van-icon name="medel-o" size="22" :style="{marginBottom: '6px'}"/>
         <br>
         学分查询
       </van-col>
       <van-col span="8" @click="$router.push('/achievement')">
-        <van-icon name="orders-o" size="25" :style="{marginBottom: '8px'}"/>
+        <van-icon name="orders-o" size="22" :style="{marginBottom: '6px'}"/>
         <br>
         成绩查询
       </van-col>
@@ -94,7 +93,7 @@
     border-radius: 8px;
     margin-left: 10px;
     margin-right: 10px;
-    padding: 15px 0;
+    padding: 12px 0;
     font-size: 12px;
     text-align: center;
     background-color: #fff;

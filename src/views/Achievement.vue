@@ -6,55 +6,114 @@
       left-arrow
       @click-left="$router.push('/main/home')"
     />
-    <div v-if="achievement">
-      <van-cell-group :style="{marginBottom:'20px'}">
+    <div v-if="$store.state.totalAchievement&&$store.state.achievement">
+      <div class="card">
         <van-cell
+          class="cardItem"
           title="平均成绩"
-          :value="totalAchievement.averageAchievement"
+          :value="$store.state.totalAchievement.averageAchievement"
         />
         <van-cell
+          class="cardItem"
           title="平均绩点"
-          :value="totalAchievement.averageAchievementPoint"
+          :value="$store.state.totalAchievement.averageAchievementPoint"
         />
         <van-cell
+          class="cardItem"
           title="已选学分"
-          :value="totalAchievement.selectedCredit"
+          :value="$store.state.totalAchievement.selectedCredit"
         />
         <van-cell
+          class="cardItem"
           title="已获得学分"
-          :value="totalAchievement.getCredit"
+          :value="$store.state.totalAchievement.getCredit"
         />
-      </van-cell-group>
-
-      <div v-for="(item,index) in achievement" :key="index">
-        <div v-for="(minItem,minIndex) in item" :key="minIndex">
-          <van-panel :title="index"
-                     :status="semester[minIndex]"
-                     :style="{marginBottom:'20px'}">
-                        <van-collapse v-model="activeNames[index]" :border="false" accordion>
-                          <van-collapse-item
-                            v-for="(classItem,classIndex) in minItem"
-                            :title="classItem.courseName"
-                            :key="classIndex"
-                            :name="classIndex"
-                            :value="classItem.totalAchievements"
-                          >
-                            获得绩点：{{classItem.achievementPoint}}<br>
-                            课程学分：{{classItem.credit}}<br>
-                            平时成绩：{{classItem.peacetimeAchievements}}<br>
-                            期中成绩：{{classItem.midtermAchievements}}<br>
-                            期末成绩：{{classItem.finalAchievements}}<br>
-                            实践成绩：{{classItem.practiceAchievements}}<br>
-                            总评成绩：{{classItem.totalAchievements}}
-                            <div v-if="classItem.resitExam">
-                              重修成绩：{{classItem.resitExamAchievementPoint}}
-                            </div>
-                          </van-collapse-item>
-                        </van-collapse>
-          </van-panel>
-
-        </div>
       </div>
+
+      <div class="card">
+        <van-cell
+          class="cardItem"
+          :title="schoolYear"
+          :value="semester"
+          @click="show=true"
+          is-link
+        />
+      </div>
+
+      <div class="card">
+        <div v-for="(item,index) in $store.state.achievement" :key="index">
+          <van-cell
+            class="cardItem"
+            v-if="item.schoolYear.toString()===schoolYear&&item.semester===semesterOJ[semester]"
+            :title="item.courseName"
+            :value="item.totalAchievements"
+            :label="item.subdivisionType"
+            @click="showAchievementList(item)"
+            is-link
+          />
+        </div>
+
+      </div>
+
+      <van-popup
+        v-model="show"
+        position="bottom"
+      >
+        <van-picker
+          show-toolbar
+          :columns="columns"
+          @cancel="show=false"
+          @confirm="onConfirm"
+          @change="onChange"
+        />
+      </van-popup>
+
+      <van-popup
+        v-model="showList"
+        round
+      >
+        <div class="popup-card">
+          <van-cell
+            title="获得绩点"
+            :value="showItem.achievementPoint"
+          />
+          <van-cell
+            title="课程学分"
+            :value="showItem.credit"
+          />
+          <van-cell
+            v-if="showItem.peacetimeAchievements!==0"
+            title="平时成绩"
+            :value="showItem.peacetimeAchievements"
+          />
+          <van-cell
+            v-if="showItem.midtermAchievements!==0"
+            title="期中成绩"
+            :value="showItem.midtermAchievements"
+          />
+          <van-cell
+            v-if="showItem.finalAchievements!==0"
+            title="期末成绩"
+            :value="showItem.finalAchievements"
+          />
+          <van-cell
+            v-if="showItem.practiceAchievements!==0"
+            title="实践成绩"
+            :value="showItem.practiceAchievements"
+          />
+          <van-cell
+            class="cardItem"
+            title="总评成绩"
+            :value="showItem.totalAchievements"
+          />
+          <van-cell
+            class="cardItem"
+            title="重修成绩"
+            v-if="showItem.resitExam"
+            :value="showItem.resitExamAchievementPoint"
+          />
+        </div>
+      </van-popup>
     </div>
   </div>
 </template>
@@ -62,46 +121,60 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {getAchievement, getTotalAchievement} from "@/network/achievement";
-  import {Collapse, CollapseItem, Panel} from "vant";
-
-  function init(vm, data) {
-
-    let achievement = {}
-    for (const item of data) achievement[item.schoolYear] = {}
-    for (const item of data) achievement[item.schoolYear][item.semester] = []
-    for (const item of data) achievement[item.schoolYear][item.semester].push(item)
-
-    vm.achievement = achievement
-  }
+  import {Collapse, CollapseItem, Picker, Popup} from "vant";
 
 
   export default {
+    data() {
+      return {
+        show: false,
+        schoolYear: "2018",
+        semester: '第二学期',
+        semesterOJ: {\u7b2c\u4e00\u5b66\u671f: 1, \u7b2c\u4e8c\u5b66\u671f: 2},
+        showList: false,
+        showItem: {}
+      }
+    },
+    computed: {
+      columns() {
+        const schoolYear = Object.keys(this.$store.state.semesterList)
+        const theSchoolYearIndex = schoolYear.length - 1
+
+        const theSemester = this.$store.state.semesterList[schoolYear[theSchoolYearIndex]]
+        const theSemesterIndex = theSemester.length - 1
+
+        return [
+          {
+            values: schoolYear,
+            defaultIndex: theSchoolYearIndex
+          },
+          {
+            values: theSemester,
+            defaultIndex: theSemesterIndex
+          }
+        ]
+
+      }
+    },
     components: {
       [Collapse.name]: Collapse,
       [CollapseItem.name]: CollapseItem,
-      [Panel.name]: Panel
+      [Picker.name]: Picker,
+      [Popup.name]: Popup
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
-    },
-    data() {
-      return {
-        achievement: null,
-        totalAchievement: null,
-        activeNames: [],
-        semester: {1: '第一学期', 2: '第二学期'}
-      }
     },
     created() {
       this.$toast.loading({forbidClick: true, duration: 0})
       getTotalAchievement()
         .then(res => {
-          if (res.data.code === "1000") this.totalAchievement = res.data.message
+          if (res.data.code === "1000") this.$store.commit('setTotalAchievement', res.data.message)
           else this.$notify(res.data.message)
           return getAchievement()
         })
         .then(res => {
-          if (res.data.code === "1000") init(this, res.data.message)
+          if (res.data.code === "1000") this.$store.commit('setAchievement', res.data.message)
           else this.$notify(res.data.message)
           this.$toast.clear()
         })
@@ -110,9 +183,28 @@
           this.$toast.clear()
         })
     },
+    methods: {
+      onChange(picker, values) {
+        picker.setColumnValues(1, this.$store.state.semesterList[values[0]])
+      },
+      onConfirm(value) {
+        this.schoolYear = value[0]
+        this.semester = value[1]
+        this.show = false
+      },
+      showAchievementList(item) {
+        this.showList = true
+        this.showItem = item
+      }
+    }
   }
 </script>
 
 <style scoped>
+  @import "~@/assets/css/card.css";
 
+  .popup-card {
+    background: #ffffff;
+    width: 90vw;
+  }
 </style>

@@ -25,5 +25,17 @@ export default {
   },
   updateDormitory(state, dormitory) {
     state.dormitory = dormitory
+  },
+  setAchievement(state, achievementData) {
+    let semesterList = {}
+    for (const item of achievementData) {
+      if (item.semester === 1) semesterList[item.schoolYear] = ["\u7b2c\u4e00\u5b66\u671f"]
+      if (item.semester === 2) semesterList[item.schoolYear] = ["\u7b2c\u4e00\u5b66\u671f", "\u7b2c\u4e8c\u5b66\u671f"]
+    }
+    state.achievement = achievementData
+    state.semesterList = semesterList
+  },
+  setTotalAchievement(state, totalAchievement) {
+    state.totalAchievement = totalAchievement
   }
 }

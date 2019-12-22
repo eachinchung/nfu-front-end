@@ -7,11 +7,10 @@
       :loading="$store.state.dormitory==null"
     >
       <div class="card">
-        <van-cell class="cardItem" size="large" icon="contact" title="账号" :value="$store.state.userId"/>
-        <van-cell class="cardItem" size="large" icon="smile-o" title="姓名" :value="$store.state.name"/>
+        <van-cell class="cardItem" icon="contact" title="账号" :value="$store.state.userId"/>
+        <van-cell class="cardItem" icon="smile-o" title="姓名" :value="$store.state.name"/>
         <van-cell
           class="cardItem"
-          size="large"
           icon="location-o"
           title="宿舍"
           :value="$store.state.dormitory"
@@ -21,7 +20,6 @@
         />
         <van-cell
           class="cardItem"
-          size="large"
           icon="envelop-o"
           title="邮箱"
           :value="$store.state.email"
@@ -33,7 +31,6 @@
       <div class="card">
         <van-cell
           class="cardItem"
-          size="large"
           icon="comment-o"
           title="意见反馈"
           @click="$toast('该功能正在开发中')"
@@ -41,7 +38,6 @@
         />
         <van-cell
           class="cardItem"
-          size="large"
           icon="gift-card-o"
           title="请我喝红牛"
           @click="showPay=true"
@@ -59,7 +55,6 @@
 
       <div :style="{height:'100px'}"></div>
     </van-skeleton>
-
 
     <my-popup
       :showPicker="showPicker"
