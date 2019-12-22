@@ -48,18 +48,16 @@
             </div>
 
             <div class="card">
-              <div v-for="(item,index) in $store.state.achievement" :key="index">
-                <van-cell
-                  class="cardItem"
-                  v-if="item.schoolYear.toString()===schoolYear&&item.semester===semesterOJ[semester]"
-                  :title="item.courseName"
-                  :value="item.totalAchievements"
-                  :label="item.subdivisionType"
-                  @click="showAchievementList(item)"
-                  is-link
-                />
-              </div>
-
+              <van-cell
+                v-for="(item,index) in achievement"
+                :key="index"
+                class="cardItem"
+                :title="item.courseName"
+                :value="item.totalAchievements"
+                :label="item.subdivisionType"
+                @click="showAchievementList(item)"
+                is-link
+              />
             </div>
 
             <van-popup
@@ -150,6 +148,14 @@
       }
     },
     computed: {
+      achievement() {
+        let list = []
+        for (let item of this.$store.state.achievement)
+          if (item.schoolYear.toString() === this.schoolYear && item.semester === this.semesterOJ[this.semester])
+            list.push(item)
+
+        return list
+      },
       columns() {
         const schoolYear = Object.keys(this.$store.state.semesterList)
         const theSchoolYearIndex = schoolYear.length - 1
