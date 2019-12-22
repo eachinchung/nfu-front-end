@@ -130,7 +130,7 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {getAchievement, getTotalAchievement, updateAchievement, updateTotalAchievement} from "@/network/achievement";
-  import {Collapse, CollapseItem, Picker, Popup, PullRefresh} from "vant";
+  import {Picker, Popup, PullRefresh} from "vant";
 
 
   export default {
@@ -177,8 +177,6 @@
       }
     },
     components: {
-      [Collapse.name]: Collapse,
-      [CollapseItem.name]: CollapseItem,
       [Picker.name]: Picker,
       [Popup.name]: Popup,
       [PullRefresh.name]: PullRefresh
