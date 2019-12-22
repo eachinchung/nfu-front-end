@@ -190,13 +190,13 @@
             return getAchievement()
           })
           .then(res => {
-            if (res.data.code === "1000") {
-              this.$store.commit('setAchievement', res.data.message)
-              setTimeout(() => {
-                this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
-              }, 100)
-            } else this.$notify(res.data.message)
+            if (res.data.code === "1000") this.$store.commit('setAchievement', res.data.message)
+            else this.$notify(res.data.message)
             this.$toast.clear()
+
+            setTimeout(() => {
+              this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
+            }, 100)
           })
           .catch(() => {
             this.$notify("无法连接到服务器")
@@ -208,13 +208,20 @@
           .then(res => {
             if (res.data.code === "1000") this.$store.commit('setTotalAchievement', res.data.message)
             else this.$notify(res.data.message)
+
             this.$toast.clear()
+            setTimeout(() => {
+              this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
+            }, 100)
           })
           .catch(() => {
             this.$notify("无法连接到服务器")
             this.$toast.clear()
           })
       }
+      setTimeout(() => {
+        this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
+      }, 100)
 
     },
     methods: {
@@ -225,6 +232,7 @@
         this.schoolYear = value[0]
         this.semester = value[1]
         this.show = false
+
         setTimeout(() => {
           this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
         }, 100)
@@ -246,11 +254,12 @@
             if (res.data.code === "1000") {
               this.$store.commit('setAchievement', res.data.message)
               this.successText = "刷新成功"
-              setTimeout(() => {
-                this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
-              }, 100)
             } else this.successText = res.data.message
             this.isLoading = false
+
+            setTimeout(() => {
+              this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
+            }, 100)
           })
           .catch(() => {
             this.successText = "无法连接到服务器"

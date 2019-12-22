@@ -4,7 +4,6 @@
 
     <div class="card">
       <van-cell
-        size="large"
         class="cardItem"
         v-for="item in dateList"
         :title="item[0]"
