@@ -6,7 +6,6 @@
       left-arrow
       @click-left="$router.push('/main/home')"
     />
-    <div v-if="$store.state.totalAchievement&&$store.state.achievement">
       <van-pull-refresh
         v-model="isLoading"
         @refresh="onRefresh"
@@ -14,116 +13,116 @@
       >
         <div :class="{ refresh: isRefresh }">
           <div ref="list">
-            <div class="card">
-              <van-cell
-                class="cardItem"
-                title="平均成绩"
-                :value="$store.state.totalAchievement.averageAchievement"
-              />
-              <van-cell
-                class="cardItem"
-                title="平均绩点"
-                :value="$store.state.totalAchievement.averageAchievementPoint"
-              />
-              <van-cell
-                class="cardItem"
-                title="已选学分"
-                :value="$store.state.totalAchievement.selectedCredit"
-              />
-              <van-cell
-                class="cardItem"
-                title="已获得学分"
-                :value="$store.state.totalAchievement.getCredit"
-              />
-            </div>
-
-            <div class="card">
-              <van-cell
-                class="cardItem"
-                :title="schoolYear"
-                :value="semester"
-                @click="show=true"
-                is-link
-              />
-            </div>
-
-            <div class="card">
-              <van-cell
-                v-for="(item,index) in achievement"
-                :key="index"
-                class="cardItem"
-                :title="item.courseName"
-                :value="item.totalAchievements"
-                :label="item.subdivisionType"
-                @click="showAchievementList(item)"
-                is-link
-              />
-            </div>
-
-            <van-popup
-              v-model="show"
-              position="bottom"
-            >
-              <van-picker
-                show-toolbar
-                :columns="columns"
-                @cancel="show=false"
-                @confirm="onConfirm"
-                @change="onChange"
-              />
-            </van-popup>
-
-            <van-popup
-              v-model="showList"
-              round
-            >
-              <div class="popup-card">
+            <div v-if="$store.state.totalAchievement&&$store.state.achievement">
+              <div class="card">
                 <van-cell
-                  title="获得绩点"
-                  :value="showItem.achievementPoint"
-                />
-                <van-cell
-                  title="课程学分"
-                  :value="showItem.credit"
-                />
-                <van-cell
-                  v-if="showItem.peacetimeAchievements!==0"
-                  title="平时成绩"
-                  :value="showItem.peacetimeAchievements"
-                />
-                <van-cell
-                  v-if="showItem.midtermAchievements!==0"
-                  title="期中成绩"
-                  :value="showItem.midtermAchievements"
-                />
-                <van-cell
-                  v-if="showItem.finalAchievements!==0"
-                  title="期末成绩"
-                  :value="showItem.finalAchievements"
-                />
-                <van-cell
-                  v-if="showItem.practiceAchievements!==0"
-                  title="实践成绩"
-                  :value="showItem.practiceAchievements"
+                  class="cardItem"
+                  title="平均成绩"
+                  :value="$store.state.totalAchievement.averageAchievement"
                 />
                 <van-cell
                   class="cardItem"
-                  title="总评成绩"
-                  :value="showItem.totalAchievements"
+                  title="平均绩点"
+                  :value="$store.state.totalAchievement.averageAchievementPoint"
                 />
                 <van-cell
                   class="cardItem"
-                  title="重修成绩"
-                  v-if="showItem.resitExam"
-                  :value="showItem.resitExamAchievementPoint"
+                  title="已选学分"
+                  :value="$store.state.totalAchievement.selectedCredit"
+                />
+                <van-cell
+                  class="cardItem"
+                  title="已获得学分"
+                  :value="$store.state.totalAchievement.getCredit"
                 />
               </div>
-            </van-popup>
+
+              <div class="card">
+                <van-cell
+                  class="cardItem"
+                  :title="schoolYear"
+                  :value="semester"
+                  @click="show=true"
+                  is-link
+                />
+              </div>
+
+              <div class="card">
+                <van-cell
+                  v-for="(item,index) in achievement"
+                  :key="index"
+                  class="cardItem"
+                  :title="item.courseName"
+                  :value="item.totalAchievements"
+                  :label="item.subdivisionType"
+                  @click="showAchievementList(item)"
+                  is-link
+                />
+              </div>
+
+              <van-popup
+                v-model="show"
+                position="bottom"
+              >
+                <van-picker
+                  show-toolbar
+                  :columns="columns"
+                  @cancel="show=false"
+                  @confirm="onConfirm"
+                  @change="onChange"
+                />
+              </van-popup>
+
+              <van-popup
+                v-model="showList"
+                round
+              >
+                <div class="popup-card">
+                  <van-cell
+                    title="获得绩点"
+                    :value="showItem.achievementPoint"
+                  />
+                  <van-cell
+                    title="课程学分"
+                    :value="showItem.credit"
+                  />
+                  <van-cell
+                    v-if="showItem.peacetimeAchievements!==0"
+                    title="平时成绩"
+                    :value="showItem.peacetimeAchievements"
+                  />
+                  <van-cell
+                    v-if="showItem.midtermAchievements!==0"
+                    title="期中成绩"
+                    :value="showItem.midtermAchievements"
+                  />
+                  <van-cell
+                    v-if="showItem.finalAchievements!==0"
+                    title="期末成绩"
+                    :value="showItem.finalAchievements"
+                  />
+                  <van-cell
+                    v-if="showItem.practiceAchievements!==0"
+                    title="实践成绩"
+                    :value="showItem.practiceAchievements"
+                  />
+                  <van-cell
+                    class="cardItem"
+                    title="总评成绩"
+                    :value="showItem.totalAchievements"
+                  />
+                  <van-cell
+                    class="cardItem"
+                    title="重修成绩"
+                    v-if="showItem.resitExam"
+                    :value="showItem.resitExamAchievementPoint"
+                  />
+                </div>
+              </van-popup>
+            </div>
           </div>
         </div>
       </van-pull-refresh>
-
-    </div>
   </div>
 </template>
 
