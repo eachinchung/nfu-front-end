@@ -13,13 +13,12 @@
         电费充值功能已开放。<br>
         目前学校电费数据停止更新，故电费不是实时数据。<br>
         <br>
-        美化学分查询、查询页面 UI，增加课程详细类别。<br>
-        学分查询页面、查询页面，下拉刷新缓存。<br>
+        美化学分查询、成绩查询 UI，增加课程详细类别。<br>
+        学分查询页面、成绩查询页面，下拉刷新缓存。<br>
         <br>
         性能优化
       </div>
     </div>
-
 
     <van-row class="cardLinks">
       <van-col span="8" @click="$router.push('/electric/main')">
