@@ -58,14 +58,13 @@
 
 <script>
   import {getVerificationCode, setPassword} from "../../../../network/profile"
-  import {Button, Col, Field, Row} from "vant";
+  import {Button, Field, Row} from "vant";
 
   export default {
     components: {
       [Button.name]: Button,
       [Field.name]: Field,
-      [Row.name]: Row,
-      [Col.name]: Col
+      [Row.name]: Row
     },
     data() {
       return {

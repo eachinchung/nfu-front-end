@@ -1,36 +1,47 @@
 <template>
-  <div>
-    <van-panel
-      :title="`${schedule.station_from_name} -> ${schedule.station_to_name}`"
-      :desc="schedule.pathway"
-    >
-      <van-checkbox-group v-model="result">
-        <van-cell-group>
-          <van-cell
-            v-for="(item, index) in list"
-            clickable
-            :key="item.id"
-            :title="item.name"
-            @click="toggle(index)"
-          >
-            <van-checkbox
-              :name="item"
-              ref="checkboxes"
-              slot="right-icon"
-            />
-          </van-cell>
-        </van-cell-group>
-      </van-checkbox-group>
-      <div slot="footer" :style="{textAlign:'right'}">
-        <van-button size="small" type="danger" :style="{marginTop:'5px'}" @click="createOrder">提交订单</van-button>
+  <div :style="{background:'rgb(248, 248, 248)'}">
+    <div class="item">
+      <div :style="{padding:'14px 16px',fontSize:'16px',background: '#fff'}">
+        {{`${schedule.station_from_name} -> ${schedule.station_to_name}`}}
       </div>
-    </van-panel>
+    </div>
+
+    <div class="item">
+      <div :style="{padding:'12px 16px',fontSize:'12px',color:'#6e6f71',background: '#fff'}">
+        <div :style="{paddingBottom:'4px'}">
+          {{`${$store.state.busDate} ${schedule.start_time}`}}
+        </div>
+
+        {{schedule.pathway}}
+      </div>
+    </div>
+
+    <van-checkbox-group v-model="result">
+        <van-cell
+          v-for="(item, index) in list"
+          clickable
+          :key="item.id"
+          :title="item.name"
+          @click="toggle(index)"
+        >
+          <van-checkbox
+            :name="item"
+            ref="checkboxes"
+            slot="right-icon"
+          />
+        </van-cell>
+    </van-checkbox-group>
+
+    <van-row type="flex" justify="center" class="myRow">
+      <van-button type="danger" class="button" size="small" :loading="loading" @click="createOrder">提交订单</van-button>
+    </van-row>
+
   </div>
 </template>
 
 <script>
   import {createOrder} from "../../../../network/schoolBus"
-  import {Button, Checkbox, CheckboxGroup, Panel} from "vant";
+  import {Button, Checkbox, CheckboxGroup, Row} from "vant";
   // import {accelerateOrder, createOrder} from "../../../../network/schoolBus"
 
   // 刷票
@@ -68,7 +79,7 @@
       [Checkbox.name]: Checkbox,
       [CheckboxGroup.name]: CheckboxGroup,
       [Button.name]: Button,
-      [Panel.name]:Panel
+      [Row.name]: Row
     },
     props: ["list", "schedule"],
     computed: {
@@ -118,4 +129,17 @@
 </script>
 
 <style scoped>
+  .item {
+    margin-bottom: 12px;
+    background: rgb(255, 255, 255);
+  }
+
+  .button {
+    width: 80%;
+  }
+
+  .myRow {
+    padding-top: 20px;
+    padding-bottom: 15px;
+  }
 </style>
