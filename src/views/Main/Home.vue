@@ -4,7 +4,7 @@
 
     <div class="card">
       <div class="version">
-        beta v0.2.0
+        beta v0.2.1
       </div>
       <div class="plain">
         更新日志
@@ -16,7 +16,7 @@
         美化学分查询、成绩查询 UI，增加课程详细类别。<br>
         学分查询页面、成绩查询页面，下拉刷新缓存。<br>
         <br>
-        性能优化
+        修复已知错误
       </div>
     </div>
 

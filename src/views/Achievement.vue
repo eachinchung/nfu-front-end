@@ -131,13 +131,21 @@
   import {getAchievement, getTotalAchievement, updateAchievement, updateTotalAchievement} from "@/network/achievement";
   import {Picker, Popup, PullRefresh} from "vant";
 
+  function init(vm) {
+    const schoolYear = Object.keys(vm.$store.state.semesterList)
+    vm.schoolYear = schoolYear[schoolYear.length - 1]
+
+    const theSemester = vm.$store.state.semesterList[vm.schoolYear]
+    vm.semester = theSemester[theSemester.length - 1]
+  }
+
 
   export default {
     data() {
       return {
         show: false,
-        schoolYear: '2018',
-        semester: '第二学期',
+        schoolYear: null,
+        semester: null,
         semesterOJ: {\u7b2c\u4e00\u5b66\u671f: 1, \u7b2c\u4e8c\u5b66\u671f: 2},
         showList: false,
         showItem: {},
@@ -193,8 +201,12 @@
             return getAchievement()
           })
           .then(res => {
-            if (res.data.code === "1000") this.$store.commit('setAchievement', res.data.message)
-            else this.$notify(res.data.message)
+            if (res.data.code === "1000") {
+              this.$store.commit('setAchievement', res.data.message)
+
+              init(this)
+
+            } else this.$notify(res.data.message)
             this.$toast.clear()
 
             setTimeout(() => {
@@ -206,6 +218,9 @@
             this.$toast.clear()
           })
       } else if (this.$store.state.totalAchievement == null && this.$store.state.achievement != null) {
+
+        init(this)
+
         this.$toast.loading({forbidClick: true, duration: 0})
         getTotalAchievement()
           .then(res => {
@@ -221,7 +236,8 @@
             this.$notify("无法连接到服务器")
             this.$toast.clear()
           })
-      }
+      } else init(this)
+
       setTimeout(() => {
         this.isRefresh = window.innerHeight - 71 > this.$refs.list.offsetHeight
       }, 100)
@@ -247,10 +263,8 @@
       onRefresh() {
         updateTotalAchievement()
           .then(res => {
-            if (res.data.code === "1000") {
-              this.$store.commit('setTotalAchievement', res.data.message)
-              this.successText = "刷新成功"
-            } else this.successText = res.data.message
+            if (res.data.code === "1000") this.$store.commit('setTotalAchievement', res.data.message)
+            else this.successText = res.data.message
             return updateAchievement()
           })
           .then(res => {
@@ -258,6 +272,7 @@
               this.$store.commit('setAchievement', res.data.message)
               this.successText = "刷新成功"
             } else this.successText = res.data.message
+
             this.isLoading = false
 
             setTimeout(() => {
