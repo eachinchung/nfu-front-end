@@ -33,7 +33,7 @@
     </van-checkbox-group>
 
     <van-row type="flex" justify="center" class="myRow">
-      <van-button type="danger" class="button" size="small" :loading="loading" @click="createOrder">提交订单</van-button>
+      <van-button type="danger" class="button" size="small" @click="createOrder">提交订单</van-button>
     </van-row>
 
   </div>

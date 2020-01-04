@@ -129,7 +129,7 @@
 
   .plain {
     padding-top: 15px;
-    padding-left: 18px;
+    padding-left: 20px;
     color: #2196f3;
   }
 

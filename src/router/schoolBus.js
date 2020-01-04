@@ -4,6 +4,7 @@ const Accelerate = () => import("../views/SchoolBus/Accelerate")
 const PendingPaymentList = () => import("../views/SchoolBus/PendingPaymentList")
 const WaitingRideList = () => import("../views/SchoolBus/WaitingRideList")
 const Pay = () => import("../views/SchoolBus/Pay")
+const ReturnTicket =() => import("../views/SchoolBus/ReturnTicket")
 
 export default [
   {
@@ -29,5 +30,9 @@ export default [
   {
     path: "order/pay",
     component: Pay
+  },
+  {
+    path:'order/return-ticket',
+    component:ReturnTicket
   }
 ]

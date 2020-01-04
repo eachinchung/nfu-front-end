@@ -38,8 +38,8 @@
 </template>
 
 <script>
-  import {checkLogin} from "../../network/token";
-  import {pendingPayment} from "../../network/schoolBus";
+  import {checkLogin} from "@/network/token";
+  import {pendingPayment} from "@/network/schoolBus";
   import {PullRefresh} from "vant";
 
   function initList(vm, res) {

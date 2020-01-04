@@ -29,105 +29,47 @@
                 @click="onClickList(item.id,item.ticketUrl)"
               />
             </div>
+
           </div>
         </div>
       </div>
     </van-pull-refresh>
 
-    <van-popup v-model="show">
-      <van-cell-group class="cellGroup">
-        <van-cell
-          title="电子票"
-          size="large"
-          clickable
-          :url="ticketUrl"
-        />
-        <van-cell
-          title="退票"
-          size="large"
-          clickable
-          @click="onClickReturnTicket"
-        />
-      </van-cell-group>
-    </van-popup>
-
-    <van-popup v-model="returnShow">
-      <van-cell-group class="cellGroup">
-        <van-cell
-          v-for="(item, index) in ticketList"
-          :key="item.ticket_id"
-          :title="item.name"
-          size="large"
-          clickable
-          @click="returnTicket(index)">
-
-          <span slot="default" v-if="item.code!=='1000'">
-            已退款
-          </span>
-
-        </van-cell>
-      </van-cell-group>
-    </van-popup>
+    <van-action-sheet
+      v-model="showActions"
+      :actions="actions"
+      @select="onSelect"
+      cancel-text="取消"
+      close-on-click-action
+    />
 
   </div>
 </template>
 
 <script>
+  import {checkLogin} from "@/network/token"
+  import {waitingRideOrder} from "@/network/schoolBus"
+  import {ActionSheet, PullRefresh} from "vant";
 
-  import {checkLogin} from "../../network/token"
-  import {getTicketId, returnTicket, waitingRideOrder} from "../../network/schoolBus"
-  import {Popup, PullRefresh} from "vant";
-
-  function initList(vm, res) {
-    if (res.data.code === "1000") vm.list = res.data.message
-    else vm.$notify(res.data.message)
-
-    // 延时100毫秒，计算车票列表是否高于窗口
-    setTimeout(() => {
-      vm.isRefresh = window.innerHeight - 71 > vm.$refs.busList.offsetHeight
-    }, 100);
-  }
-
-  // 抽出退票函数
-  function rmTicket(vm, ticketIndex) {
-    // 判断车票为未退票
-    if (vm.ticketList[ticketIndex].code === '1000') {
-
-      // 提示加载中
-      vm.$toast.loading({forbidClick: true, duration: 0})
-
-      // 发送退票请求
-      returnTicket({orderId: vm.orderId, ticketId: vm.ticketList[ticketIndex].ticketId})
-        .then(res => {
-
-          // 先擦除加载提示
-          vm.$toast.clear()
-
-          if (res.data.code === "1000") {
-            vm.$notify({type: 'primary', message: res.data.message})
-            vm.ticketList[ticketIndex].code = '1001'
-          } else vm.$notify(res.data.message)
-        })
-        .catch(() => {
-          vm.$toast.clear()
-          vm.$notify('未知错误')
-        })
-
-    } else vm.$notify('该车票已退款')
-  }
 
   export default {
-    components: {[PullRefresh.name]: PullRefresh, [Popup.name]: Popup},
+    components: {
+      [PullRefresh.name]: PullRefresh,
+      [ActionSheet.name]: ActionSheet,
+    },
     data() {
       return {
         list: null,
-        show: false,
         orderId: null,
         isLoading: false,
         isRefresh: true,
-        ticketList: null,
-        returnShow: false,
-        ticketUrl: null
+        ticketUrl: null,
+
+        showActions: false,
+        actions: [
+          {name: '电子票'},
+          {name: '退票'}
+        ]
       }
     },
     beforeRouteEnter(to, from, next) {
@@ -164,34 +106,36 @@
       },
       // 点击车票
       onClickList(orderId, ticketUrl) {
-        this.show = true
+        this.showActions = true
         this.orderId = orderId
         this.ticketUrl = ticketUrl
       },
-      // 点击退票
-      onClickReturnTicket() {
-        getTicketId(this.orderId)
-          .then(res => {
-            if (res.data.code === "1000") this.ticketList = res.data.message
-            this.show = false
-            this.returnShow = true
-          })
-          .catch(() => this.$notify("无法连接到服务器"))
-      },
-      // 退票
-      returnTicket(ticketIndex) {
-        rmTicket(this,ticketIndex)
+      onSelect(item) {
+        if (item.name === '电子票') location.href = this.ticketUrl
+        else this.$router.push({
+          path: '/school-bus/order/return-ticket',
+          query: {
+            orderId: this.orderId
+          }
+        })
       }
     }
   }
+
+  function initList(vm, res) {
+    if (res.data.code === "1000") vm.list = res.data.message
+    else vm.$notify(res.data.message)
+
+    // 延时100毫秒，计算车票列表是否高于窗口
+    setTimeout(() => {
+      vm.isRefresh = window.innerHeight - 71 > vm.$refs.busList.offsetHeight
+    }, 100);
+  }
+
 </script>
 
 <style scoped>
   @import "~@/assets/css/card.css";
-
-  .cellGroup {
-    width: 85vw;
-  }
 
   .valueClass {
     color: #F44336;

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import dormitory from "@/assets/dormitory.json"
+  import dormitory from "@/assets/json/dormitory"
   import {Picker, Popup} from "vant";
 
   export default {

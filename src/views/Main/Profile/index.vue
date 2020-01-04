@@ -135,7 +135,7 @@
     },
     methods: {
       logout() {
-        this.$store.commit("rmAccessToken")
+        this.$store.commit("logout")
         this.$router.push("/login")
       },
       getDormitory(room) {
