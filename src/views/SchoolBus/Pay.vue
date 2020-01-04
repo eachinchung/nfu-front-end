@@ -10,26 +10,30 @@
     />
 
     <div v-if="orderData">
-      <van-steps :active="1">
+
+      <van-steps :active="1" class="card">
         <van-step>生成订单</van-step>
         <van-step>待付款</van-step>
         <van-step>生成车票</van-step>
       </van-steps>
-      <van-cell-group class="group">
+
+      <div class="card">
         <van-cell
+          class="cardItem"
           :title="orderData.route"
           :value="orderData.date"
         />
         <van-cell
+          class="cardItem"
           v-for="item in orderData.passengers"
           :title="item.name"
           :value="`${price}¥`"
           :label="item.phone"
           :key="item.name"
         />
-      </van-cell-group>
+      </div>
 
-      <div :style="{textAlign:'right'}">
+      <div class="price">
         <p class="total">合计：{{orderData.price}}¥</p>
       </div>
 
@@ -110,18 +114,20 @@
 </script>
 
 <style scoped>
-
-  .group {
-    margin-top: 15px;
-    margin-bottom: 0;
-  }
+  @import "~@/assets/css/card.css";
 
   .row {
     margin-bottom: 15px;
   }
 
   .button {
-    width: 90%;
+    width: 85%;
+    border-radius: 5px;
+  }
+
+  .price {
+    text-align: right;
+    margin-right: 10px;
   }
 
   .total {
