@@ -22,10 +22,13 @@
 </template>
 
 <script>
-  import {Dialog, Field} from "vant";
+  import {CellGroup, Dialog, Field} from "vant";
 
   export default {
-    components: {[Field.name]: Field},
+    components: {
+      [Field.name]: Field,
+      [CellGroup.name]: CellGroup
+    },
     data() {
       return {
         username: "",

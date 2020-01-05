@@ -35,7 +35,7 @@
   import {signUp} from "@/network/oauth"
   import Popup from "@/components/dormitoryPopup"
   import User from "./components/User"
-  import {Button, Col, Dialog, Field, Row} from "vant";
+  import {Button, CellGroup, Col, Dialog, Field, Row} from "vant";
 
   export default {
     data() {
@@ -56,7 +56,8 @@
       [Button.name]: Button,
       [Field.name]: Field,
       [Row.name]: Row,
-      [Col.name]: Col
+      [Col.name]: Col,
+      [CellGroup.name]: CellGroup
     },
     methods: {
       getUserData(user) {

@@ -33,14 +33,15 @@
 <script>
   import {login} from "../network/oauth"
   import {handleToken} from "../network/token"
-  import {Button, Col, Field, Row} from "vant";
+  import {Button, CellGroup, Col, Field, Row} from "vant";
 
   export default {
     components: {
       [Button.name]: Button,
       [Field.name]: Field,
       [Row.name]: Row,
-      [Col.name]: Col
+      [Col.name]: Col,
+      [CellGroup.name]: CellGroup
     },
     data() {
       return {
