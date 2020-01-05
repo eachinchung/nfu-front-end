@@ -43,11 +43,11 @@ export default {
   },
   setAchievement(state, achievementData) {
     let semesterList = {}
-    for (const item of achievementData) {
+    for (const item of achievementData.achievement_list) {
       if (item.semester === 1) semesterList[item.schoolYear] = ["\u7b2c\u4e00\u5b66\u671f"]
       if (item.semester === 2) semesterList[item.schoolYear] = ["\u7b2c\u4e00\u5b66\u671f", "\u7b2c\u4e8c\u5b66\u671f"]
     }
-    state.achievement = achievementData
+    state.achievement = achievementData.achievement_list
     state.semesterList = semesterList
   },
   setTotalAchievement(state, totalAchievement) {

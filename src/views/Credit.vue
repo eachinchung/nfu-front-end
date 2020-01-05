@@ -14,13 +14,12 @@
         animated
       >
         <van-tab title="专业课">
-          <div :style="{height:'10px'}"></div>
+          <div :style="{height:'20px'}"></div>
           <van-pull-refresh
             v-model="isLoading"
             @refresh="onRefresh"
             :success-text="successText"
           >
-            <div :style="{height:'10px'}"></div>
             <div class="card">
               <van-cell
                 v-if="classification.professionalCore.length!==0"
@@ -80,20 +79,16 @@
                 :label="item.subdivisionType"
               />
             </div>
-
           </van-pull-refresh>
-
         </van-tab>
 
         <van-tab title="公共课">
-          <div :style="{height:'10px'}"></div>
+          <div :style="{height:'20px'}"></div>
           <van-pull-refresh
             v-model="isLoading"
             @refresh="onRefresh"
             :success-text="successText"
           >
-            <div :style="{height:'10px'}"></div>
-
             <div class="card">
               <van-cell
                 v-if="classification.publicCompulsory.length!==0"
@@ -179,9 +174,10 @@
       growingCompulsory: []  // 成长必修
     }
     for (const item of vm.$store.state.achievement) {
+
       // 去除挂科的课程
       if (item.totalAchievements < 60) {
-        if (!item.resitExam) continue
+        if (item.resitExamAchievementPoint == null) continue
         else if (item.resitExamAchievementPoint < 60) continue
       }
 

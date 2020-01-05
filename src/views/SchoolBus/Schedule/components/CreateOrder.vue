@@ -17,19 +17,19 @@
     </div>
 
     <van-checkbox-group v-model="result">
-        <van-cell
-          v-for="(item, index) in list"
-          clickable
-          :key="item.id"
-          :title="item.name"
-          @click="toggle(index)"
-        >
-          <van-checkbox
-            :name="item"
-            ref="checkboxes"
-            slot="right-icon"
-          />
-        </van-cell>
+      <van-cell
+        v-for="(item, index) in list"
+        clickable
+        :key="item.id"
+        :title="item.name"
+        @click="toggle(index)"
+      >
+        <van-checkbox
+          :name="item"
+          ref="checkboxes"
+          slot="right-icon"
+        />
+      </van-cell>
     </van-checkbox-group>
 
     <van-row type="flex" justify="center" class="myRow">
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import {createOrder} from "../../../../network/schoolBus"
+  import {createOrder} from "@/network/schoolBus"
   import {Button, Checkbox, CheckboxGroup, Row} from "vant";
   // import {accelerateOrder, createOrder} from "../../../../network/schoolBus"
 
@@ -139,7 +139,7 @@
   }
 
   .myRow {
-    padding-top: 20px;
-    padding-bottom: 15px;
+    padding-top: 25px;
+    padding-bottom: 20px;
   }
 </style>

@@ -114,7 +114,7 @@
                   <van-cell
                     class="cardItem"
                     title="重修成绩"
-                    v-if="showItem.resitExam"
+                    v-if="showItem.resitExamAchievementPoint != null"
                     :value="showItem.resitExamAchievementPoint"
                   />
                 </div>
