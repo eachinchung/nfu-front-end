@@ -5,6 +5,8 @@
     </van-dropdown-menu>
 
     <div v-if="calendar">
+
+      <!-- 课程表日期、星期 -->
       <div class="schedule-date">
         <div class="schedule-box schedule-box-date"/>
         <div
@@ -17,6 +19,7 @@
         </div>
       </div>
 
+      <!-- 上课时间 -->
       <div class="schedule-class-time">
         <div
           class="schedule-box"
@@ -26,7 +29,6 @@
           <b>{{ index+1 }}</b><br>
           {{ item }}
         </div>
-
       </div>
 
       <van-row type="flex" justify="center" class="row">
@@ -39,6 +41,7 @@
 
 <script>
   import optionWeek from "@/assets/json/optionWeek"
+  import classScheduleModels from "@/assets/json/classScheduleModels"
   import {checkLogin} from "@/network/token"
   import {getClassSchedule, schoolConfig} from "@/network/classSchedule"
   import {Button, DropdownItem, DropdownMenu, Row} from 'vant'
@@ -68,7 +71,7 @@
 
     // 课程表数据
     calendar: null,
-    classSchedule: null,
+    classSchedule: classScheduleModels,
 
     // 下拉框数据
     week: 0,

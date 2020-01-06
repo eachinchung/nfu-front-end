@@ -4,19 +4,14 @@
 
     <div class="card">
       <div class="version">
-        beta v0.2.1
+        RC v0.1.0
       </div>
       <div class="plain">
         更新日志
       </div>
       <div class="notice">
-        电费充值功能已开放。<br>
-        目前学校电费数据停止更新，故电费不是实时数据。<br>
-        <br>
-        美化学分查询、成绩查询 UI，增加课程详细类别。<br>
-        学分查询页面、成绩查询页面，下拉刷新缓存。<br>
-        <br>
-        修复已知错误
+        普通用户可浏览校巴车票，<br>
+        vip 用户可购买校巴车票。
       </div>
     </div>
 
