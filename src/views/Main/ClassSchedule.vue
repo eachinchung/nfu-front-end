@@ -42,7 +42,7 @@
           <div
             v-for="(item,index) in dayItem"
             :key="index"
-            :style="classStyle(item.startNode,item.endNode)"
+            :style="classStyle(item.startNode,item.endNode,item.background)"
             class="schedule-class"
           >
             <div class="class-text" :style="textLine(item.startNode,item.endNode)">
@@ -67,7 +67,8 @@
   import optionWeek from "@/assets/json/optionWeek"
   import calendarModels from "@/assets/json/calendarModels"
   import classStartTime from "@/assets/json/classStartTime"
-  import classScheduleModels from "@/assets/json/classScheduleModels";
+  import classScheduleModels from "@/assets/json/classScheduleModels"
+  import scheduleBackground from "@/assets/json/scheduleBackground"
 
   import {checkLogin} from "@/network/token"
   import {getClassSchedule, schoolConfig} from "@/network/classSchedule"
@@ -164,8 +165,10 @@
     // 课程按照上课时间的先后排序
     classList.sort((a, b) => a.startNode - b.startNode)
 
-    for (const item of classList) for (let i = item.startWeek; i < item.endWeek; i++)
+    for (const item of classList) for (let i = item.startWeek; i < item.endWeek; i++) {
+      item.background = scheduleBackground[Math.floor(Math.random() * scheduleBackground.length)]
       vm.classSchedule[i][weekdayModels[item.weekday]].push(item)
+    }
 
     vm.downloadFinished = true
   }
@@ -180,10 +183,11 @@
   }
 
   // 计算课程方块的高度
-  function classStyle(start, end) {
+  function classStyle(start, end, background) {
     return {
       height: `calc(15vw * ${end - start + 1} - 0.6vw)`,
       top: `calc(15vw * ${start})`,
+      background
     }
   }
 
@@ -217,6 +221,7 @@
     width: 12.85vw;
     text-align: center;
     font-size: 12px;
+    color: #424242;
   }
 
   .schedule-class-time {
@@ -231,6 +236,7 @@
     width: 10vw;
     text-align: center;
     font-size: 12px;
+    color: #424242;
   }
 
   .day-list {
@@ -242,13 +248,12 @@
 
   .schedule-class {
     margin: 5px;
-    background: #ffffff;
-    box-shadow: 1px 1px 3px #888888;
+    box-shadow: 1px 1px 3px #929292;
     position: absolute;
     width: 12.25vw;
     font-size: 12px;
     border-radius: 5px;
-    color: #343537;
+    color: white;
   }
 
   .class-text {
