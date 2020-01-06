@@ -4,13 +4,13 @@
       <van-dropdown-item v-model="week" :options="option"/>
     </van-dropdown-menu>
 
-    <div v-if="calendar">
+    <div v-if="downloadFinished">
 
       <!-- 课程表日期、星期 -->
       <div class="schedule-date">
-        <div class="schedule-box schedule-box-date"/>
+        <div class="schedule-class-time-box" :style="{float: 'left'}"/>
         <div
-          class="schedule-box schedule-box-date"
+          class="schedule-box-date"
           v-for="item in calendar[week]"
           :key="item.toLocaleDateString()"
         >
@@ -22,12 +22,36 @@
       <!-- 上课时间 -->
       <div class="schedule-class-time">
         <div
-          class="schedule-box"
-          v-for="(item,index) in classTime"
+          class="schedule-class-time-box"
+          v-for="(item,index) in classStartTime"
           :key="item.item"
         >
           <b>{{ index+1 }}</b><br>
           {{ item }}
+        </div>
+      </div>
+
+      <!-- 课程 -->
+      <div
+        v-for="(dayItem,dayIndex) in classSchedule[week]"
+        :key="dayIndex"
+        class="day-list"
+        :style="dayStyle(dayIndex)"
+      >
+        <div v-if="dayItem.length!==0">
+          <div
+            v-for="(item,index) in dayItem"
+            :key="index"
+            :style="classStyle(item.startNode,item.endNode)"
+            class="schedule-class"
+          >
+            <div class="class-text" :style="textLine(item.startNode,item.endNode)">
+              {{item.courseName}}
+            </div>
+            <div :style="{paddingLeft: '4px',paddingRight: '4px'}">
+              {{`@${item.classroom}`}}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -41,10 +65,14 @@
 
 <script>
   import optionWeek from "@/assets/json/optionWeek"
-  import classScheduleModels from "@/assets/json/classScheduleModels"
+  import calendarModels from "@/assets/json/calendarModels"
+  import classStartTime from "@/assets/json/classStartTime"
+  import classScheduleModels from "@/assets/json/classScheduleModels";
+
   import {checkLogin} from "@/network/token"
   import {getClassSchedule, schoolConfig} from "@/network/classSchedule"
   import {Button, DropdownItem, DropdownMenu, Row} from 'vant'
+
 
   export default {
     beforeRouteEnter(to, from, next) {
@@ -61,13 +89,19 @@
     },
     created() {
       init(this)
+    },
+    methods: {
+      dayStyle,
+      classStyle,
+      textLine
     }
   }
 
   const vueData = {
     // 基础数据
     weekdays: ["日", "一", "二", "三", "四", "五", "六"],
-    classTime: ["08:00", "08:50", "09:45", "10:35", "11:20", "12:50", "13:40", "14:30", "15:15", "16:10", "16:55", "18:45", "19:30", "20:15", "21:05"],
+    classStartTime: classStartTime,
+    downloadFinished: false,
 
     // 课程表数据
     calendar: null,
@@ -85,19 +119,28 @@
 
     // 获取课程表的数据
     schoolConfig().then(res => {
+      vm.week = handleWeek(res.data.message.schoolOpensTimestamp)
       vm.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
       return getClassSchedule()
     }).then(res => {
-      if (res.data.code === "1000") {
-        vm.classSchedule = res.data.message
-
-      } else vm.$notify(res.data.message)
+      if (res.data.code === "1000") handleClassSchedule(vm, res.data.message)
+      else vm.$notify(res.data.message)
 
       vm.$toast.clear()
     }).catch(() => {
       vm.$notify("无法连接到服务器")
       vm.$toast.clear()
     })
+  }
+
+  // 计算当前是第几周
+  function handleWeek(timestamp) {
+    const timestampInterval = new Date().getTime() - timestamp
+    if (timestampInterval < 0) return 0
+
+    const week = timestampInterval / 604800000
+    if (week > 20) return 20
+    return ~~week
   }
 
   // 课程日历
@@ -107,13 +150,47 @@
     const month = schoolOpens.getMonth()
 
     let day = schoolOpens.getDate()
-    let calendar = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
+    let calendar = calendarModels
 
-    for (let i = 0; i < 20; i++)
-      for (let j = 0; j < 7; j++)
-        calendar[i][j] = new Date(year, month, day++)
+    for (let i = 0; i < 20; i++) for (let j = 0; j < 7; j++)
+      calendar[i][j] = new Date(year, month, day++)
 
     return calendar
+  }
+
+  // 处理课程表的数据
+  function handleClassSchedule(vm, classList) {
+    const weekdayModels = [1, 2, 3, 4, 5, 6, 0]
+    // 课程按照上课时间的先后排序
+    classList.sort((a, b) => a.startNode - b.startNode)
+
+    for (const item of classList) for (let i = item.startWeek; i < item.endWeek; i++)
+      vm.classSchedule[i][weekdayModels[item.weekday]].push(item)
+
+    vm.downloadFinished = true
+  }
+
+  // 计算课程方块的位置
+  function dayStyle(dayIndex) {
+    let day
+    if (dayIndex === 0) day = 7
+    else day = dayIndex
+
+    return {left: `calc(12.85vw * ${day - 1} + 9vw)`,}
+  }
+
+  // 计算课程方块的高度
+  function classStyle(start, end) {
+    return {
+      height: `calc(15vw * ${end - start + 1} - 0.6vw)`,
+      top: `calc(15vw * ${start})`,
+    }
+  }
+
+  function textLine(start, end) {
+    return {
+      lineClamp: `${(end - start + 1) * 2}`
+    }
   }
 
 </script>
@@ -134,33 +211,65 @@
     z-index: -1;
   }
 
-  .schedule-class-time {
-    position: absolute;
-    z-index: -1;
-    top: calc(12.5vw + 58px);
-    left: 0;
-  }
-
-  .schedule-box {
-    height: 12.5vw;
-    width: 12.5vw;
+  .schedule-box-date {
+    float: left;
+    height: 15vw;
+    width: 12.85vw;
     text-align: center;
     font-size: 12px;
   }
 
-  .schedule-box-date {
-    float: left;
+  .schedule-class-time {
+    position: absolute;
+    z-index: -1;
+    top: calc(15vw + 55px);
+    left: 0;
+  }
+
+  .schedule-class-time-box {
+    height: 15vw;
+    width: 10vw;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .day-list {
+    position: absolute;
+    top: calc(15vw + 42px);
+    font-size: 12px;
+    z-index: -1;
+  }
+
+  .schedule-class {
+    margin: 5px;
+    background: #ffffff;
+    box-shadow: 1px 1px 3px #888888;
+    position: absolute;
+    width: 12.25vw;
+    font-size: 12px;
+    border-radius: 5px;
+    color: #343537;
+  }
+
+  .class-text {
+    padding-top: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    line-height: 16px;
   }
 
   .row {
     position: absolute;
     width: 100%;
-    top: calc(12.5vw * 16 + 95px);
+    top: calc(15vw * 16 + 90px);
     height: 150px;
   }
 
   .button {
     width: 75%;
-    border-radius: 5px;
+    border-radius: 8px;
   }
 </style>
