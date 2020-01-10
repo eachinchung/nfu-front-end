@@ -235,7 +235,7 @@
   .schedule-class-time {
     position: absolute;
     z-index: -1;
-    top: 110px;
+    top: 102px;
   }
 
   /*时间箱子*/
