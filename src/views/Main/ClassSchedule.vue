@@ -26,8 +26,11 @@
           v-for="(item,index) in classStartTime"
           :key="item.item"
         >
-          <b>{{ index+1 }}</b><br>
-          {{ item }}
+          <div class="schedule-class-time-text">
+            <b>{{ index+1 }}</b><br>
+            {{ item }}
+          </div>
+
         </div>
       </div>
 
@@ -179,18 +182,19 @@
     if (dayIndex === 0) day = 7
     else day = dayIndex
 
-    return {left: `calc(12.85vw * ${day - 1} + 9vw)`,}
+    return {left: `calc(((100vw - 46px) / 7) * ${day - 1} + 43px)`}
   }
 
   // 计算课程方块的高度
   function classStyle(start, end, background) {
     return {
-      height: `calc(15vw * ${end - start + 1} - 0.6vw)`,
-      top: `calc(15vw * ${start})`,
+      height: `calc(15vw * ${end - start + 1} - 3px)`,
+      top: `calc(15vw * ${start} + 3px)`,
       background
     }
   }
 
+  // 课程名称超过多少行省略
   function textLine(start, end) {
     return {
       lineClamp: `${(end - start + 1) * 2}`
@@ -202,6 +206,7 @@
 <style scoped>
   @import "~@/assets/css/card.css";
 
+  /*标题*/
   .class-schedule-title {
     position: fixed;
     width: 100%;
@@ -209,53 +214,66 @@
     left: 0;
   }
 
+  /*日期共用定位*/
   .schedule-date {
     position: absolute;
     top: 58px;
     z-index: -1;
   }
 
+  /*日期箱子*/
   .schedule-box-date {
     float: left;
     height: 15vw;
-    width: 12.85vw;
+    width: calc(((100vw - 46px) / 7));
     text-align: center;
     font-size: 12px;
     color: #424242;
   }
 
+  /*上课时间共用定位*/
   .schedule-class-time {
     position: absolute;
     z-index: -1;
-    top: calc(15vw + 55px);
-    left: 0;
+    top: 110px;
   }
 
+  /*时间箱子*/
   .schedule-class-time-box {
     height: 15vw;
-    width: 10vw;
-    text-align: center;
-    font-size: 12px;
-    color: #424242;
+    width: 46px;
+    display: flex;
   }
 
+  /*上课时间*/
+  .schedule-class-time-text {
+    text-align: center;
+    align-self: center;
+    color: #424242;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  /*每一天的定位*/
   .day-list {
     position: absolute;
-    top: calc(15vw + 42px);
+    top: 95px;
     font-size: 12px;
     z-index: -1;
   }
 
+  /*课程的箱子*/
   .schedule-class {
     margin: 5px;
     box-shadow: 1px 1px 3px #929292;
     position: absolute;
-    width: 12.25vw;
+    width: calc(((100vw - 45px) / 7) - 3px);
     font-size: 12px;
     border-radius: 5px;
     color: white;
   }
 
+  /*课程*/
   .class-text {
     padding-top: 4px;
     padding-left: 4px;
