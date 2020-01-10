@@ -47,6 +47,7 @@
             :key="index"
             :style="classStyle(item.startNode,item.endNode,item.background)"
             class="schedule-class"
+            @click="showPopup(item)"
           >
             <div class="class-text" :style="textLine(item.startNode,item.endNode)">
               {{item.courseName}}
@@ -62,12 +63,38 @@
         <van-button type="default" class="button">重置课程表</van-button>
       </van-row>
 
+      <van-popup v-model="show" round>
+        <div class="popup-card">
+          <van-cell
+            title="课程名称"
+            :value="showCourseName"
+          />
+          <van-cell
+            title="上课周次"
+            :value="showClassWeek"
+          />
+          <van-cell
+            title="上课时间"
+            :value="showClassTime"
+          />
+          <van-cell
+            title="上课地点"
+            :value="showClassroom"
+          />
+          <van-cell
+            title="任课教师"
+            :value="showClassTeacher"
+          />
+        </div>
+      </van-popup>
+
     </div>
   </div>
 </template>
 
 <script>
   import optionWeek from "@/assets/json/optionWeek"
+  import classTimes from "@/assets/json/classTimes"
   import calendarModels from "@/assets/json/calendarModels"
   import classStartTime from "@/assets/json/classStartTime"
   import classScheduleModels from "@/assets/json/classScheduleModels"
@@ -75,7 +102,7 @@
 
   import {checkLogin} from "@/network/token"
   import {getClassSchedule, schoolConfig} from "@/network/classSchedule"
-  import {Button, DropdownItem, DropdownMenu, Row} from 'vant'
+  import {Button, DropdownItem, DropdownMenu, Popup, Row} from 'vant'
 
 
   export default {
@@ -86,55 +113,71 @@
       [DropdownMenu.name]: DropdownMenu,
       [DropdownItem.name]: DropdownItem,
       [Button.name]: Button,
+      [Popup.name]: Popup,
       [Row.name]: Row
     },
     data() {
       return vueData
     },
-    created() {
-      init(this)
-    },
+    created,
     methods: {
       dayStyle,
       classStyle,
-      textLine
+      textLine,
+      showPopup
     }
   }
 
   const vueData = {
+    // 下拉框数据
+    week: 0,
+    option: optionWeek,
+
     // 基础数据
     weekdays: ["日", "一", "二", "三", "四", "五", "六"],
     classStartTime: classStartTime,
     downloadFinished: false,
+    show: false,
 
     // 课程表数据
     calendar: null,
     classSchedule: classScheduleModels,
 
-    // 下拉框数据
-    week: 0,
-    option: optionWeek
+    // 展示数据
+    showCourseName: null,
+    showClassroom: null,
+    showClassTime: null,
+    showClassWeek: null,
+    showClassTeacher: null
   }
 
-
   // 初始化
-  function init(vm) {
-    vm.$toast.loading({forbidClick: true, duration: 0})
+  function created() {
+    this.$toast.loading({forbidClick: true, duration: 0})
 
     // 获取课程表的数据
     schoolConfig().then(res => {
-      vm.week = handleWeek(res.data.message.schoolOpensTimestamp)
-      vm.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
+      this.week = handleWeek(res.data.message.schoolOpensTimestamp)
+      this.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
       return getClassSchedule()
     }).then(res => {
-      if (res.data.code === "1000") handleClassSchedule(vm, res.data.message)
-      else vm.$notify(res.data.message)
+      if (res.data.code === "1000") handleClassSchedule(this, res.data.message)
+      else this.$notify(res.data.message)
 
-      vm.$toast.clear()
+      this.$toast.clear()
     }).catch(() => {
-      vm.$notify("无法连接到服务器")
-      vm.$toast.clear()
+      this.$notify("无法连接到服务器")
+      this.$toast.clear()
     })
+  }
+
+  function showPopup(item) {
+    this.show = true
+    this.showCourseName = item.courseName
+    this.showClassroom = item.classroom
+    this.showClassTime = `${classTimes[item.startNode][0]} ~ ${classTimes[item.endNode][1]}`
+    this.showClassWeek = `${item.startWeek + 1} ~ ${item.endWeek + 1}`
+    this.showClassTeacher = item.teacher.toString()
   }
 
   // 计算当前是第几周
@@ -282,6 +325,11 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     line-height: 16px;
+  }
+
+  .popup-card {
+    background: #ffffff;
+    width: 90vw;
   }
 
   .row {
