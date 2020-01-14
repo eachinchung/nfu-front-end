@@ -59,7 +59,7 @@
       </div>
 
       <van-row type="flex" justify="center" class="row">
-        <van-button type="default" class="button">重置课程表</van-button>
+        <van-button type="default" class="button" @click="update">重置课程表</van-button>
       </van-row>
 
       <van-popup v-model="show" round>
@@ -98,7 +98,7 @@
 
   import md5 from "@/common/md5"
   import {checkLogin} from "@/network/token"
-  import {getClassSchedule, schoolConfig, versionClassSchedule} from "@/network/classSchedule"
+  import {getClassSchedule, schoolConfig, updateClassSchedule, versionClassSchedule} from "@/network/classSchedule"
   import {Button, DropdownItem, DropdownMenu, Popup, Row} from 'vant'
   import {cachingClassSchedule, classCalendar, handleWeek} from "@/common/classSchedule"
 
@@ -123,7 +123,8 @@
       classStyle,
       textLine,
       showPopup,
-      dayKey
+      dayKey,
+      update
     }
   }
 
@@ -195,6 +196,27 @@
       })
     }
 
+  }
+
+  // 更新课表
+  function update() {
+    this.$toast.loading({forbidClick: true, duration: 0})
+
+    // 获取课程表的数据
+    schoolConfig().then(res => {
+      this.week = handleWeek(res.data.message.schoolOpensTimestamp)
+      this.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
+
+      localStorage.setItem("schoolOpensTimestamp", res.data.message.schoolOpensTimestamp)
+      return updateClassSchedule()
+    }).then(res => {
+      if (res.data.code === "1000") this.classSchedule = cachingClassSchedule(res.data)
+      else this.$notify(res.data.message)
+      this.$toast.clear()
+    }).catch(() => {
+      this.$notify("无法连接到服务器")
+      this.$toast.clear()
+    })
   }
 
   // 详情弹窗
