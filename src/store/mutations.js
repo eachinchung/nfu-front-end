@@ -1,23 +1,4 @@
 export default {
-  logout(state){
-    state.userId = null
-    state.busPower = null
-
-    state.name = null
-    state.email = null
-    state.dormitory = null
-
-    state.achievement = null
-    state.semesterList = null
-    state.totalAchievement = null
-
-    state.routeId = null
-    state.busDate = null
-    state.ticketType = null
-
-    state.accessToken = null
-    localStorage.clear()
-  },
   upAccessToken(state, token) {
     const tokenData = JSON.parse(window.atob(token.split('.')[1]))
     state.accessToken = token
@@ -43,11 +24,11 @@ export default {
   },
   setAchievement(state, achievementData) {
     let semesterList = {}
-    for (const item of achievementData.achievement_list) {
+    for (const item of achievementData) {
       if (item.semester === 1) semesterList[item.schoolYear] = ["\u7b2c\u4e00\u5b66\u671f"]
       if (item.semester === 2) semesterList[item.schoolYear] = ["\u7b2c\u4e00\u5b66\u671f", "\u7b2c\u4e8c\u5b66\u671f"]
     }
-    state.achievement = achievementData.achievement_list
+    state.achievement = achievementData
     state.semesterList = semesterList
   },
   setTotalAchievement(state, totalAchievement) {

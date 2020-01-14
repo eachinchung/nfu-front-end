@@ -79,6 +79,10 @@
               >
                 <div class="popup-card">
                   <van-cell
+                    title="课程名称"
+                    :value="showItem.courseName"
+                  />
+                  <van-cell
                     title="获得绩点"
                     :value="showItem.achievementPoint"
                   />

@@ -13,3 +13,17 @@ export function getClassSchedule() {
     url: "/class-schedule/get",
   })
 }
+
+export function updateClassSchedule() {
+  return request({
+    method: "get",
+    url: "/class-schedule/update",
+  })
+}
+
+export function versionClassSchedule() {
+  return request({
+    method: "get",
+    url: "/class-schedule/version",
+  })
+}

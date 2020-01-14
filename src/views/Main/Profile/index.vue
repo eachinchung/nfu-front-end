@@ -134,8 +134,8 @@
     },
     methods: {
       logout() {
-        this.$store.commit("logout")
-        this.$router.push("/login")
+        localStorage.clear()
+        location.reload()
       },
       getDormitory(room) {
         if (room[0] !== this.dormitory) setDormitory(room[1])

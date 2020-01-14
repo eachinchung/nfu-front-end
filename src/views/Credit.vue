@@ -181,14 +181,13 @@
         else if (item.resitExamAchievementPoint < 60) continue
       }
 
-      if (item.courseType === '专业选修') classification.professionalElective.push(item)
-      if (item.courseType === '专业必修') {
-        if (item.subdivisionType === '专业方向课') classification.professionalDirection.push(item)
-        if (item.subdivisionType === '专业核心课') classification.professionalCore.push(item)
-      }
-      if (item.courseType === '公共必修') classification.publicCompulsory.push(item)
-      if (item.courseType === '公共选修') classification.publicElective.push(item)
-      if (item.courseType === '成长必修') classification.growingCompulsory.push(item)
+      if (item.subdivisionType === '专业选修课') classification.professionalElective.push(item)
+      else if (item.subdivisionType === '专业方向课') classification.professionalDirection.push(item)
+      else if (item.subdivisionType === '专业核心课') classification.professionalCore.push(item)
+      else if (item.courseType === '公共必修') classification.publicCompulsory.push(item)
+      else if (item.courseType === '公共选修') classification.publicElective.push(item)
+      else if (item.courseType === '成长必修') classification.growingCompulsory.push(item)
+
     }
     return classification
   }
