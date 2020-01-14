@@ -98,7 +98,7 @@
 
   import md5 from "@/common/md5"
   import {checkLogin} from "@/network/token"
-  import {getClassSchedule, schoolConfig} from "@/network/classSchedule"
+  import {getClassSchedule, schoolConfig, versionClassSchedule} from "@/network/classSchedule"
   import {Button, DropdownItem, DropdownMenu, Popup, Row} from 'vant'
   import {cachingClassSchedule, classCalendar, handleWeek} from "@/common/classSchedule"
 
@@ -160,17 +160,16 @@
 
       // 获取课程表的数据
       schoolConfig().then(res => {
-
         this.week = handleWeek(res.data.message.schoolOpensTimestamp)
         this.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
-
         // 写入缓存
         localStorage.setItem("schoolOpensTimestamp", res.data.message.schoolOpensTimestamp)
         return getClassSchedule()
-
       }).then(res => {
-        if (res.data.code === "1000") handleClassSchedule(this, res.data)
-        else this.$notify(res.data.message)
+        if (res.data.code === "1000") {
+          this.classSchedule = cachingClassSchedule(res.data)
+          this.downloadFinished = true
+        } else this.$notify(res.data.message)
         this.$toast.clear()
       }).catch(() => {
         this.$notify("无法连接到服务器")
@@ -182,16 +181,23 @@
       this.calendar = classCalendar(schoolOpensTimestamp)
       this.classSchedule = JSON.parse(localStorage.getItem("classSchedule"))
       this.downloadFinished = true
+
+      // 检测是否有新的课程数据
+      versionClassSchedule().then(res => {
+        if (res.data.version !== version) schoolConfig().then(res => {
+          this.week = handleWeek(res.data.message.schoolOpensTimestamp)
+          this.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
+          localStorage.setItem("schoolOpensTimestamp", res.data.message.schoolOpensTimestamp)
+          return getClassSchedule()
+        }).then(res => {
+          if (res.data.code === "1000") this.classSchedule = cachingClassSchedule(res.data)
+        })
+      })
     }
 
   }
 
-  // 处理课程表的数据
-  function handleClassSchedule(vm, classList) {
-    vm.classSchedule = cachingClassSchedule(classList)
-    vm.downloadFinished = true
-  }
-
+  // 详情弹窗
   function showPopup(item) {
     this.show = true
     this.showCourseName = item.courseName
@@ -201,6 +207,7 @@
     this.showClassTeacher = item.teacher.toString()
   }
 
+  // 每一天的唯一key
   function dayKey(classArr, day) {
     let id = ""
     if (classArr.length === 0) id = `${this.weekdays[day]}`
@@ -232,7 +239,6 @@
       lineClamp: `${(end - start + 1) * 2}`
     }
   }
-
 </script>
 
 <style scoped>
