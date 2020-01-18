@@ -33,15 +33,15 @@
         />
       </div>
 
-      <div class="price">
-        <p class="total">合计：{{orderData.price}}¥</p>
+      <div class="bus-pay-price">
+        <p class="bus-pay-total">合计：{{orderData.price}}¥</p>
       </div>
 
-      <van-row type="flex" justify="center" class="row">
-        <van-button type="info" class="button" icon="alipay" @click="alipay">手机支付宝付款</van-button>
+      <van-row type="flex" justify="center" class="bus-pay-row">
+        <van-button type="info" class="bus-pay-button" icon="alipay" @click="alipay">手机支付宝付款</van-button>
       </van-row>
       <van-row type="flex" justify="center">
-        <van-button type="default" class="button" @click="show=true">支付宝付款码</van-button>
+        <van-button type="default" class="bus-pay-button" @click="show=true">支付宝付款码</van-button>
       </van-row>
 
       <van-popup v-model="show" close-on-popstate>
@@ -116,21 +116,21 @@
 <style scoped>
   @import "~@/assets/css/card.css";
 
-  .row {
+  .bus-pay-row {
     margin-bottom: 15px;
   }
 
-  .button {
+  .bus-pay-button {
     width: 85%;
     border-radius: 5px;
   }
 
-  .price {
+  .bus-pay-price {
     text-align: right;
     margin-right: 10px;
   }
 
-  .total {
+  .bus-pay-total {
     padding: 0 10px 35px;
     color: #6e6f71;
     font-size: 15px;

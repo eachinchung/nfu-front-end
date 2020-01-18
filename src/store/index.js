@@ -6,12 +6,7 @@ Vue.use(Vuex)
 
 const state = {
   accessToken: null,
-  userId: "null",
   busPower: true,
-
-  name: null,
-  email: null,
-  dormitory: null,
 
   achievement: null,
   semesterList: null,

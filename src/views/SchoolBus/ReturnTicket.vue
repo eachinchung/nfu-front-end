@@ -34,10 +34,10 @@
       </div>
 
       <div class="card">
-        <div class="plain">
+        <div class="bus-return-plain">
           说明
         </div>
-        <div class="notice">
+        <div class="bus-return-notice">
           发车前&nbsp;24小时&nbsp;退票无需手续费<br>
           发车前&nbsp;2小时&nbsp;退票收取10%手续费<br>
           发车前&nbsp;2小时内&nbsp;退票收取20%手续费<br>
@@ -122,14 +122,14 @@
 <style scoped>
   @import "~@/assets/css/card.css";
 
-  .plain {
+  .bus-return-plain {
     padding-top: 15px;
     padding-left: 20px;
     color: #2196f3;
   }
 
-  .notice {
-    padding: 20px;
+  .bus-return-notice {
+    padding: 12px 20px 18px;
     font-size: 14px;
     color: #6e6f71;
   }

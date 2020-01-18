@@ -1,6 +1,6 @@
 <template>
   <div id="SingUp">
-    <van-nav-bar class="title" title="注册新用户" left-arrow @click-left="$router.push('/login')"/>
+    <van-nav-bar class="sing-up-title" title="注册新用户" left-arrow @click-left="$router.push('/login')"/>
     <user @getUser="getUserData"/>
 
     <van-cell-group title="请设置个人信息">
@@ -23,8 +23,8 @@
       />
     </van-cell-group>
 
-    <van-row type="flex" justify="center" class="row">
-      <van-button type="primary" class="button" :loading="loading" @click="signUpBtn">注册</van-button>
+    <van-row type="flex" justify="center" class="sing-up-row">
+      <van-button type="primary" class="sing-up-button" :loading="loading" @click="signUpBtn">注册</van-button>
     </van-row>
 
     <popup :showPicker="showPicker" @getRoomId="getDormitory" @close="showPicker = false"/>
@@ -121,9 +121,19 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/login.css";
-
-  .button {
+  .sing-up-button {
+    width: 90%;
     margin-top: 55px;
+  }
+
+  .sing-up-title {
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin-bottom: 20px;
+  }
+
+  .sing-up-row {
+    margin-bottom: 15px;
   }
 </style>

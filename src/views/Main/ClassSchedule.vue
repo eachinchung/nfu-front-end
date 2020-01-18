@@ -58,15 +58,19 @@
         </div>
       </div>
 
-      <van-row type="flex" justify="center" class="row">
-        <van-button type="default" class="button" @click="update">重置课程表</van-button>
+      <van-row type="flex" justify="center" class="class-schedule-row">
+        <van-button type="default" class="class-schedule-button" @click="update">重置课程表</van-button>
       </van-row>
 
       <van-popup v-model="show" round>
-        <div class="popup-card">
+        <div class="class-schedule-popup-card">
           <van-cell
             title="课程名称"
             :value="showCourseName"
+          />
+          <van-cell
+            title="课程学分"
+            :value="showCourseCredit"
           />
           <van-cell
             title="上课周次"
@@ -98,9 +102,9 @@
 
   import md5 from "@/common/md5"
   import {checkLogin} from "@/network/token"
-  import {getClassSchedule, schoolConfig, updateClassSchedule, versionClassSchedule} from "@/network/classSchedule"
-  import {Button, DropdownItem, DropdownMenu, Popup, Row} from 'vant'
   import {cachingClassSchedule, classCalendar, handleWeek} from "@/common/classSchedule"
+  import {getClassSchedule, schoolConfig, updateClassSchedule, versionClassSchedule} from "@/network/classSchedule"
+  import {Button, Dialog, DropdownItem, DropdownMenu, Popup, Row} from 'vant'
 
 
   export default {
@@ -145,6 +149,7 @@
 
     // 展示数据
     showCourseName: null,
+    showCourseCredit: null,
     showClassroom: null,
     showClassTime: null,
     showClassWeek: null,
@@ -199,29 +204,41 @@
 
   // 更新课表
   function update() {
-    this.$toast.loading({forbidClick: true, duration: 0})
+    Dialog.confirm({
+      messageAlign: "left",
+      title: '更新课程表数据',
+      message: '重新向教务系统请求课程表数据，\n并且和南苑聚合服务器同步当前学期信息'
+    }).then(() => {
+      this.$toast.loading({forbidClick: true, duration: 0})
 
-    // 获取课程表的数据
-    schoolConfig().then(res => {
-      this.week = handleWeek(res.data.message.schoolOpensTimestamp)
-      this.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
+      // 获取课程表的数据
+      schoolConfig().then(res => {
+        this.week = handleWeek(res.data.message.schoolOpensTimestamp)
+        this.calendar = classCalendar(res.data.message.schoolOpensTimestamp)
 
-      localStorage.setItem("schoolOpensTimestamp", res.data.message.schoolOpensTimestamp)
-      return updateClassSchedule()
-    }).then(res => {
-      if (res.data.code === "1000") this.classSchedule = cachingClassSchedule(res.data)
-      else this.$notify(res.data.message)
-      this.$toast.clear()
+        localStorage.setItem("schoolOpensTimestamp", res.data.message.schoolOpensTimestamp)
+        return updateClassSchedule()
+      }).then(res => {
+        this.$toast.clear()
+        if (res.data.code === "1000") {
+          this.classSchedule = cachingClassSchedule(res.data)
+          this.$toast.success('课程表数据更新成功')
+        } else this.$toast.fail(res.data.message)
+      }).catch(() => {
+        this.$toast.clear()
+        this.$toast.fail("无法连接到服务器")
+      })
     }).catch(() => {
-      this.$notify("无法连接到服务器")
-      this.$toast.clear()
+      // on cancel
     })
+
   }
 
   // 详情弹窗
   function showPopup(item) {
     this.show = true
     this.showCourseName = item.courseName
+    this.showCourseCredit = item.credit
     this.showClassroom = item.classroom
     this.showClassTime = `${classTimes[item.startNode][0]} ~ ${classTimes[item.endNode][1]}`
     this.showClassWeek = `${item.startWeek + 1} ~ ${item.endWeek + 1}`

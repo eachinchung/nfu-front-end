@@ -9,19 +9,19 @@
     <van-skeleton
       title
       :row="10"
-      :loading="electric==null||$store.state.dormitory==null"
+      :loading="electric==null"
     >
-      <div class="card">
-        <div class="room">
-          {{$store.state.dormitory}}
+      <div class="electric-main-card">
+        <div class="electric-main-room">
+          {{dormitory}}
         </div>
-        <div class="electric">
+        <div class="electric-main-electric">
           <b>{{electric}}&nbsp;kW·h</b>
         </div>
       </div>
 
       <van-row type="flex" justify="center">
-        <van-button type="primary" to="/electric/pay" class="button">
+        <van-button type="primary" to="/electric/pay" class="electric-main-button">
           电费充值
         </van-button>
       </van-row>
@@ -32,10 +32,9 @@
 </template>
 
 <script>
-  import {checkLogin} from "@/network/token";
-  import {getElectric} from "@/network/electric";
-  import {Button, Col, Row, Skeleton} from "vant";
-  import {getUserData} from "@/network/profile";
+  import {checkLogin} from "@/network/token"
+  import {getElectric} from "@/network/electric"
+  import {Button, Col, Row, Skeleton} from "vant"
 
 
   export default {
@@ -51,18 +50,11 @@
     data() {
       return {
         date: null,
-        electric: null
+        electric: null,
+        dormitory: localStorage.getItem('dormitory'),
       }
     },
     created() {
-      if (this.$store.state.dormitory == null) getUserData()
-        .then(res => this.$store.commit("setUserData", {
-          name: res.data.name,
-          email: res.data.email,
-          dormitory: res.data.dormitory
-        }))
-        .catch(() => this.$notify("无法连接到服务器"))
-
       getElectric().then(res => {
         this.date = res.data.date
         this.electric = res.data.electric
@@ -72,13 +64,13 @@
 </script>
 
 <style scoped>
-  .electric {
+  .electric-main-electric {
     text-align: center;
     padding-top: 38px;
     font-size: 24px;
   }
 
-  .card {
+  .electric-main-card {
     background: #ffffff;
     border-radius: 8px;
     margin-left: 10px;
@@ -87,13 +79,13 @@
     height: 168px;
   }
 
-  .room {
+  .electric-main-room {
     padding-top: 15px;
     padding-left: 18px;
     color: #6e6f71;
   }
 
-  .button {
+  .electric-main-button {
     width: 75%;
     border-radius: 5px;
   }

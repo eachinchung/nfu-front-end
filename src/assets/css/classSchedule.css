@@ -75,19 +75,19 @@
   line-height: 16px;
 }
 
-.popup-card {
+.class-schedule-popup-card {
   background: #ffffff;
   width: 90vw;
 }
 
-.row {
+.class-schedule-row {
   position: absolute;
   width: 100%;
   top: calc(15vw * 16 + 90px);
   height: 150px;
 }
 
-.button {
+.class-schedule-button {
   width: 75%;
   border-radius: 8px;
 }

@@ -53,10 +53,10 @@
     </div>
 
     <div class="card">
-      <div class="plain">
+      <div class="electric-pay-plain">
         说明
       </div>
-      <div class="notice">
+      <div class="electric-pay-notice">
         电费充值即时到账。<br>
         学校电费价格参考：¥0.67/kW·h<br>
         学校电费系统每天刷新一次余额，请以实际为准。<br>
@@ -127,13 +127,13 @@
 <style scoped>
   @import "~@/assets/css/card.css";
 
-  .plain {
+  .electric-pay-plain {
     padding-top: 15px;
     padding-left: 20px;
     color: #2196f3;
   }
 
-  .notice {
+  .electric-pay-notice {
     padding: 20px;
     font-size: 14px;
     color: #6e6f71;

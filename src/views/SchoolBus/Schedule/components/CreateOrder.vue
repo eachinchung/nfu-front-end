@@ -1,12 +1,12 @@
 <template>
   <div :style="{background:'rgb(248, 248, 248)'}">
-    <div class="item">
+    <div class="bus-create-item">
       <div :style="{padding:'14px 16px',fontSize:'16px',background: '#fff'}">
         {{`${schedule.station_from_name} -> ${schedule.station_to_name}`}}
       </div>
     </div>
 
-    <div class="item">
+    <div class="bus-create-item">
       <div :style="{padding:'12px 16px',fontSize:'12px',color:'#6e6f71',background: '#fff'}">
         <div :style="{paddingBottom:'4px'}">
           {{`${$store.state.busDate} ${schedule.start_time}`}}
@@ -32,8 +32,8 @@
       </van-cell>
     </van-checkbox-group>
 
-    <van-row type="flex" justify="center" class="myRow">
-      <van-button type="danger" class="button" size="small" @click="createOrder">提交订单</van-button>
+    <van-row type="flex" justify="center" class="bus-create-row">
+      <van-button type="danger" class="bus-create-button" size="small" @click="createOrder">提交订单</van-button>
     </van-row>
 
   </div>
@@ -129,16 +129,16 @@
 </script>
 
 <style scoped>
-  .item {
+  .bus-create-item {
     margin-bottom: 12px;
     background: rgb(255, 255, 255);
   }
 
-  .button {
+  .bus-create-button {
     width: 80%;
   }
 
-  .myRow {
+  .bus-create-row {
     padding-top: 25px;
     padding-bottom: 20px;
   }

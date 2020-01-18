@@ -1,19 +1,14 @@
 <template>
   <div>
     <van-nav-bar class="title" title="个人档案"/>
-    <van-skeleton
-      title
-      :row="12"
-      :loading="$store.state.dormitory==null"
-    >
       <div class="card">
-        <van-cell class="cardItem" icon="contact" title="账号" :value="$store.state.userId"/>
-        <van-cell class="cardItem" icon="smile-o" title="姓名" :value="$store.state.name"/>
+        <van-cell class="cardItem" icon="contact" title="账号" :value="userId"/>
+        <van-cell class="cardItem" icon="smile-o" title="姓名" :value="name"/>
         <van-cell
           class="cardItem"
           icon="location-o"
           title="宿舍"
-          :value="$store.state.dormitory"
+          :value="dormitory"
           placeholder="选择宿舍"
           @click="showPicker = true"
           is-link
@@ -22,7 +17,7 @@
           class="cardItem"
           icon="envelop-o"
           title="邮箱"
-          :value="$store.state.email"
+          :value="email"
           @click="$toast('该功能正在开发中')"
           is-link
         />
@@ -33,7 +28,7 @@
           class="cardItem"
           icon="comment-o"
           title="意见反馈"
-          @click="$toast('该功能正在开发中')"
+          to="/feedback"
           is-link
         />
         <van-cell
@@ -46,25 +41,25 @@
       </div>
 
 
-      <van-row type="flex" justify="center" class="profileRow">
-        <van-button type="default" class="profileButton" @click="showSetPassword=true">修改密码</van-button>
+      <van-row type="flex" justify="center" class="profile-row">
+        <van-button type="default" class="profile-button" @click="showSetPassword=true">修改密码</van-button>
       </van-row>
       <van-row type="flex" justify="center">
-        <van-button type="warning" class="profileButton" @click="logout">退出登录</van-button>
+        <van-button type="warning" class="profile-button" :loading="loading" @click="logout">退出登录</van-button>
       </van-row>
 
       <div :style="{height:'100px'}"></div>
-    </van-skeleton>
+
 
     <my-popup
       :showPicker="showPicker"
       @getRoomId="getDormitory"
       @close="close"
-      :dormitoryValue="$store.state.dormitory"
+      :dormitoryValue="dormitory"
     />
 
     <van-popup v-model="showSetPassword">
-      <set-password class="myPopup" @close="showSetPassword=false"/>
+      <set-password class="profile-popup" @close="showSetPassword=false"/>
     </van-popup>
 
     <van-action-sheet
@@ -88,17 +83,21 @@
 </template>
 
 <script>
-  import {getUserData, setDormitory} from "@/network/profile"
+  import {setDormitory} from "@/network/profile"
   import {checkLogin} from "@/network/token"
 
   import SetPassword from "./components/SetPassword"
   import MyPopup from "@/components/dormitoryPopup"
-  import {ActionSheet, Button, Image, Loading, Popup, Row, Skeleton} from "vant";
+  import {ActionSheet, Button, Image, Loading, Popup, Row} from "vant";
 
 
   export default {
     data() {
       return {
+        userId: localStorage.getItem('userId'),
+        name: localStorage.getItem('name'),
+        dormitory: localStorage.getItem('dormitory'),
+        email: localStorage.getItem('email'),
         actions: [
           {name: '唤起支付宝付款'},
           {name: '支付宝付款码'}
@@ -106,14 +105,14 @@
         showPay: false,
         showPayQr: false,
         showPicker: false,
-        showSetPassword: false
+        showSetPassword: false,
+        loading: false
       };
     },
     components: {
       MyPopup,
       SetPassword,
       [ActionSheet.name]: ActionSheet,
-      [Skeleton.name]: Skeleton,
       [Image.name]: Image,
       [Loading.name]: Loading,
       [Popup.name]: Popup,
@@ -123,24 +122,17 @@
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
-    created() {
-      if (this.$store.state.dormitory == null) getUserData()
-        .then(res => this.$store.commit("setUserData", {
-          name: res.data.name,
-          email: res.data.email,
-          dormitory: res.data.dormitory
-        }))
-        .catch(() => this.$notify("无法连接到服务器"))
-    },
     methods: {
       logout() {
+        this.loading = true
         localStorage.clear()
         location.reload()
       },
       getDormitory(room) {
-        if (room[0] !== this.dormitory) setDormitory(room[1])
-          .then(() => this.$store.commit("updateDormitory", room[0]))
-          .catch(() => this.$notify("无法连接到服务器"))
+        if (room[0] !== this.dormitory) setDormitory(room[1]).then(() => {
+          localStorage.setItem("dormitory", room[0])
+          this.dormitory = room[0]
+        }).catch(() => this.$notify("无法连接到服务器"))
       },
       close() {
         this.showPicker = false;
@@ -156,17 +148,17 @@
 <style scoped>
   @import "~@/assets/css/card.css";
 
-  .profileRow {
+  .profile-row {
     margin-top: 40px;
     margin-bottom: 15px;
   }
 
-  .profileButton {
+  .profile-button {
     width: 85%;
     border-radius: 5px;
   }
 
-  .myPopup {
+  .profile-popup {
     width: 85vw;
   }
 </style>

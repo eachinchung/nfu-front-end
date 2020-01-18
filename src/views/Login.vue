@@ -1,7 +1,7 @@
 <template>
   <div>
-    <van-nav-bar class="title" title="南苑聚合"/>
-    <van-cell-group title="请登录您的账号" class="group">
+    <van-nav-bar class="login-title" title="南苑聚合"/>
+    <van-cell-group title="请登录您的账号" class="login-group">
       <van-field
         v-model="username"
         left-icon="contact"
@@ -21,11 +21,11 @@
       />
     </van-cell-group>
 
-    <van-row type="flex" justify="center" class="row">
-      <van-button type="primary" class="button" :loading="loading" @click="loginBtu">登录</van-button>
+    <van-row type="flex" justify="center" class="login-row">
+      <van-button type="primary" class="login-button" :loading="loading" @click="loginBtu">登录</van-button>
     </van-row>
     <van-row type="flex" justify="center">
-      <van-button type="default" class="button" to="/sign-up">注册</van-button>
+      <van-button type="default" class="login-button" to="/sign-up">注册</van-button>
     </van-row>
   </div>
 </template>
@@ -96,5 +96,22 @@
 </script>
 
 <style scoped>
-  @import "~@/assets/css/login.css";
+  .login-button {
+    width: 90%;
+  }
+
+  .login-title {
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin-bottom: 20px;
+  }
+
+  .login-group {
+    margin-bottom: 45px;
+  }
+
+  .login-row {
+    margin-bottom: 15px;
+  }
 </style>

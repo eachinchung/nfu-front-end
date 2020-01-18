@@ -77,7 +77,7 @@
                 v-model="showList"
                 round
               >
-                <div class="popup-card">
+                <div class="achievement-popup-popup-card">
                   <van-cell
                     title="课程名称"
                     :value="showItem.courseName"
@@ -295,7 +295,7 @@
 <style scoped>
   @import "~@/assets/css/card.css";
 
-  .popup-card {
+  .achievement-popup-card {
     background: #ffffff;
     width: 90vw;
   }

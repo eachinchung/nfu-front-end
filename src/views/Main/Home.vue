@@ -2,20 +2,22 @@
   <div>
     <van-nav-bar class="title" title="南苑聚合"/>
 
-    <div class="card">
-      <div class="version">
-        RC v0.1.0
+    <div class="home-card">
+      <div class="home-version">
+        beta v0.3.1
       </div>
-      <div class="plain">
+      <div class="home-plain">
         更新日志
       </div>
-      <div class="notice">
-        普通用户可浏览校巴车票，<br>
-        vip 用户可购买校巴车票。
+      <div class="home-notice">
+        新版课程表<br>
+        开放意见反馈<br>
+        <br>
+        性能优化
       </div>
     </div>
 
-    <van-row class="cardLinks">
+    <van-row class="home-cardLinks">
       <van-col span="8" @click="$router.push('/electric/main')">
         <van-icon name="bulb-o" size="22" :style="{marginBottom: '6px'}"/>
         <br>
@@ -54,19 +56,19 @@
 
 <style scoped>
 
-  .notice {
+  .home-notice {
     padding: 20px;
     font-size: 14px;
     color: #6e6f71;
   }
 
-  .plain {
+  .home-plain {
     padding-top: 15px;
     padding-left: 20px;
     color: #2196f3;
   }
 
-  .version{
+  .home-version{
     float: right;
     padding-top: 15px;
     padding-right: 20px;
@@ -74,7 +76,7 @@
     color: #6e6f71;
   }
 
-  .card {
+  .home-card {
     background: #ffffff;
     border-radius: 8px;
     margin-left: 10px;
@@ -82,7 +84,7 @@
     margin-bottom: 20px;
   }
 
-  .cardLinks {
+  .home-cardLinks {
     border-radius: 8px;
     margin-left: 10px;
     margin-right: 10px;

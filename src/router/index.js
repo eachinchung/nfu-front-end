@@ -14,6 +14,7 @@ const Achievement = () => import('../views/Achievement')
 const Credit = () => import('../views/Credit')
 const SchoolBus = () => import('../views/SchoolBus')
 
+const Feedback = () => import('../views/feedback')
 const Login = () => import('../views/Login')
 const SignUp = () => import('../views/SignUp')
 const Activation = () => import('../views/Activation')
@@ -49,6 +50,10 @@ const routes = [
     component: SchoolBus,
     redirect: '/main/school-bus',
     children: SchoolBusRouter
+  },
+  {
+    path: '/feedback',
+    component: Feedback
   },
   {
     path: '/login',

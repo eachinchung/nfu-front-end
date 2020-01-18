@@ -1,9 +1,16 @@
 export default {
+  update(state) {
+    state.accessToken = null
+  },
   upAccessToken(state, token) {
     const tokenData = JSON.parse(window.atob(token.split('.')[1]))
+    const userData = JSON.parse(tokenData.data)
     state.accessToken = token
-    state.userId = tokenData.id
     state.busPower = tokenData.busPower
+    localStorage.setItem("userId", tokenData.id)
+    localStorage.setItem("name", userData.name)
+    localStorage.setItem("email", userData.email)
+    localStorage.setItem("dormitory", userData.dormitory)
   },
   setRouteId(state, route_id) {
     state.routeId = route_id
@@ -13,14 +20,6 @@ export default {
   },
   setTicketType(state, type) {
     state.ticketType = type
-  },
-  setUserData(state, data) {
-    state.name = data.name
-    state.email = data.email
-    state.dormitory = data.dormitory
-  },
-  updateDormitory(state, dormitory) {
-    state.dormitory = dormitory
   },
   setAchievement(state, achievementData) {
     let semesterList = {}

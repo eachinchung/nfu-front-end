@@ -32,3 +32,11 @@ export function setPassword(data) {
     data
   })
 }
+
+export function feedback(data) {
+  return request({
+    method: "post",
+    url: "/user/feedback",
+    data
+  })
+}

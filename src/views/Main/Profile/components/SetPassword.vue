@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="setGroup">
+    <div class="set-password-group">
       <van-cell-group title="两步验证">
         <van-field
           v-model="password"
@@ -50,8 +50,8 @@
       />
     </van-cell-group>
 
-    <van-row type="flex" justify="center" class="myRow">
-      <van-button type="warning" class="button" size="small" :loading="loading" @click="setPassword">修改密码</van-button>
+    <van-row type="flex" justify="center" class="set-password-row">
+      <van-button type="warning" class="set-password-button" size="small" :loading="loading" @click="setPassword">修改密码</van-button>
     </van-row>
   </div>
 </template>
@@ -172,16 +172,16 @@
 </script>
 
 <style scoped>
-  .button {
+  .set-password-button {
     width: 80%;
   }
 
-  .myRow {
+  .set-password-row {
     padding-top: 30px;
     padding-bottom: 20px;
   }
 
-  .setGroup {
+  .set-password-group {
     padding-top: 5px;
     padding-bottom: 10px;
   }
