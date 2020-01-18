@@ -131,6 +131,7 @@
       getDormitory(room) {
         if (room[0] !== this.dormitory) setDormitory(room[1]).then(() => {
           localStorage.setItem("dormitory", room[0])
+          this.$store.commit("update")
           this.dormitory = room[0]
         }).catch(() => this.$notify("无法连接到服务器"))
       },

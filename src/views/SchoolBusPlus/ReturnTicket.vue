@@ -4,7 +4,7 @@
       class="title"
       title="退票"
       left-arrow
-      @click-left="$router.push('/school-bus/order/list/waiting-ride')"
+      @click-left="$router.push('/school-bus-plus/order/list/waiting-ride')"
     />
 
     <div v-if="ticketData">
@@ -53,11 +53,11 @@
 <script>
   import {Step, Steps} from "vant";
   import {checkLogin} from "@/network/token";
-  import {getTicketId, returnTicket} from "@/network/schoolBus";
+  import {getTicketId, returnTicket} from "@/network/schoolBusPlus";
 
   export default {
     beforeRouteEnter(to, from, next) {
-      if (to.query.orderId == null || to.query.orderId === "") next("/main/school-bus")
+      if (to.query.orderId == null || to.query.orderId === "") next("/main/school-bus-plus")
       checkLogin(to, next)
     },
     components: {

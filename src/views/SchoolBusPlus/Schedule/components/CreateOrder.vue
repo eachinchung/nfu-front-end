@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import {createOrder} from "@/network/schoolBus"
+  import {createOrder} from "@/network/schoolBusPlus"
   import {Button, Checkbox, CheckboxGroup, Row} from "vant";
   // import {accelerateOrder, createOrder} from "../../../../network/schoolBus"
 
@@ -60,10 +60,10 @@
   //       orderType: 2
   //     }).then(res => {
   //       if (res.data.code === "1000") vm.$router.push({
-  //         path: "/school-bus/order/accelerate",
+  //         path: "/school-bus-plus/order/accelerate",
   //         query: {
   //           orderId: res.data.orderId,
-  //           from: "/school-bus/schedule"
+  //           from: "/school-bus-plus/schedule"
   //         }
   //       })
   //       else vm.$notify(res.data.message)
@@ -112,10 +112,10 @@
           }).then(res => {
             this.$toast.clear()
             if (res.data.code === "1000") this.$router.push({
-              path: "/school-bus/order/pay",
+              path: "/school-bus-plus/order/pay",
               query: {
                 orderId: res.data.message.orderId,
-                from: "/school-bus/schedule"
+                from: "/school-bus-plus/schedule"
               }
             })
             // else if (res.data.busCode === "0009") brushTicket(this, res)

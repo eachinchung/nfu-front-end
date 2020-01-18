@@ -4,7 +4,7 @@
       class="title"
       title="待付款订单"
       left-arrow
-      @click-left="$router.push('/main/school-bus')"
+      @click-left="$router.push('/main/school-bus-plus')"
     />
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
       <div :class="{ refresh: isRefresh }">
@@ -39,7 +39,7 @@
 
 <script>
   import {checkLogin} from "@/network/token";
-  import {pendingPayment} from "@/network/schoolBus";
+  import {pendingPayment} from "@/network/schoolBusPlus";
   import {PullRefresh} from "vant";
 
   function initList(vm, res) {
@@ -93,10 +93,10 @@
       },
       pay(orderId){
         this.$router.push({
-          path: "/school-bus/order/pay",
+          path: "/school-bus-plus/order/pay",
           query: {
             orderId,
-            from: "/school-bus/order/list/pending-payment"
+            from: "/school-bus-plus/order/list/pending-payment"
           }
         })
       }

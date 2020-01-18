@@ -77,7 +77,7 @@
                 v-model="showList"
                 round
               >
-                <div class="achievement-popup-popup-card">
+                <div class="achievement-popup-card">
                   <van-cell
                     title="课程名称"
                     :value="showItem.courseName"

@@ -4,7 +4,7 @@
       class="title"
       title="待乘车订单"
       left-arrow
-      @click-left="$router.push('/main/school-bus')"
+      @click-left="$router.push('/main/school-bus-plus')"
     />
 
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
@@ -48,7 +48,7 @@
 
 <script>
   import {checkLogin} from "@/network/token"
-  import {waitingRideOrder} from "@/network/schoolBus"
+  import {waitingRideOrder} from "@/network/schoolBusPlus"
   import {ActionSheet, PullRefresh} from "vant";
 
 
@@ -113,7 +113,7 @@
       onSelect(item) {
         if (item.name === '电子票') location.href = this.ticketUrl
         else this.$router.push({
-          path: '/school-bus/order/return-ticket',
+          path: '/school-bus-plus/order/return-ticket',
           query: {
             orderId: this.orderId
           }

@@ -11,8 +11,8 @@
 
     <div class="card">
       <!--      <van-cell class="cardItem" title="刷票订单" is-link/>-->
-      <van-cell class="cardItem" title="待付款订单" is-link to="/school-bus/order/list/pending-payment"/>
-      <van-cell class="cardItem" title="待乘车订单" is-link to="/school-bus/order/list/waiting-ride"/>
+      <van-cell class="cardItem" title="待付款订单" is-link to="/school-bus-plus/order/list/pending-payment"/>
+      <van-cell class="cardItem" title="待乘车订单" is-link to="/school-bus-plus/order/list/waiting-ride"/>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@
     methods: {
       toDate(routeId) {
         this.$store.commit("setRouteId", routeId);
-        this.$router.push("/school-bus/date");
+        this.$router.push("/school-bus-plus/date");
       }
     }
   };

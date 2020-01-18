@@ -6,7 +6,7 @@
       left-arrow
       right-text="已付款"
       @click-left="$router.push(path)"
-      @click-right="$router.push('/school-bus/order/list/waiting-ride')"
+      @click-right="$router.push('/school-bus-plus/order/list/waiting-ride')"
     />
 
     <div v-if="orderData">
@@ -58,7 +58,7 @@
 
 <script>
   import {checkLogin} from "../../network/token";
-  import {ordePay} from "../../network/schoolBus";
+  import {ordePay} from "../../network/schoolBusPlus";
   import {Button, Col, Image, Loading, Popup, Row, Step, Steps} from "vant";
 
   export default {
@@ -85,7 +85,7 @@
       [Col.name]: Col
     },
     beforeRouteEnter(to, from, next) {
-      if (to.query.orderId == null || to.query.orderId === "") next("/main/school-bus")
+      if (to.query.orderId == null || to.query.orderId === "") next("/main/school-bus-plus")
       checkLogin(to, next)
     },
     created() {
@@ -93,7 +93,7 @@
       this.$toast.loading({forbidClick: true, duration: 0})
 
       // 从哪来回哪去
-      if (this.$route.query.from == null) this.path = "/main/school-bus"
+      if (this.$route.query.from == null) this.path = "/main/school-bus-plus"
       else this.path = this.$route.query.from
 
       ordePay(this.$route.query.orderId).then(res => {

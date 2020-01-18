@@ -1,6 +1,6 @@
 export default {
   update(state) {
-    state.accessToken = null
+    state.accessToken = "update"
   },
   upAccessToken(state, token) {
     const tokenData = JSON.parse(window.atob(token.split('.')[1]))
