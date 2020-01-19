@@ -12,7 +12,7 @@ const Electric = () => import('../views/Electric')
 
 const Achievement = () => import('../views/Achievement')
 const Credit = () => import('../views/Credit')
-const SchoolBusPro = () => import('../views/SchoolBusPlus')
+const SchoolBusPro = () => import('../views/SchoolBusPro')
 
 const Feedback = () => import('../views/feedback')
 const Login = () => import('../views/Login')
