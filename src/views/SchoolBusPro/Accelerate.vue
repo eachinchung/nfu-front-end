@@ -8,7 +8,7 @@
   export default {
     methods: {
       onClickLeft() {
-        this.$router.push("/school-bus-plus/schedule");
+        this.$router.push("/school-bus-pro/schedule");
       }
     }
   }

@@ -1,6 +1,6 @@
 const Home = () => import('../views/Main/Home')
 const ClassSchedule = () => import('../views/Main/ClassSchedule')
-const SchoolBusPlus = () => import('../views/Main/SchoolBusPlus')
+const SchoolBusPro = () => import('../views/Main/SchoolBusPro')
 const Profile = () => import('../views/Main/Profile')
 
 export default [
@@ -13,8 +13,8 @@ export default [
     component: ClassSchedule
   },
   {
-    path: 'school-bus-plus',
-    component: SchoolBusPlus
+    path: 'school-bus-pro',
+    component: SchoolBusPro
   },
   {
     path: 'profile',

@@ -33,7 +33,7 @@
 
     // 根据班车路线，选择预售日期的范围
     if (vm.$store.state.routeId == null) {
-      vm.$router.push("/main/school-bus-plus")
+      vm.$router.push("/main/school-bus-pro")
       return null;
     } else if (vm.$store.state.routeId < 20) {
       loop = 6;
@@ -73,12 +73,12 @@
     },
     methods: {
       onClickLeft() {
-        this.$router.push("/main/school-bus-plus")
+        this.$router.push("/main/school-bus-pro")
       },
       onClickDate(date, type) {
         this.$store.commit("setBusDate", date)
         this.$store.commit("setTicketType", type)
-        this.$router.push("/school-bus-plus/schedule")
+        this.$router.push("/school-bus-pro/schedule")
       }
     }
   };

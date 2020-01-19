@@ -13,7 +13,7 @@
   export default {
     data() {
       return {
-        schoolBusUrl: "/main/school-bus-plus"
+        schoolBusUrl: "/main/school-bus-pro"
       }
     },
     components: {
@@ -21,7 +21,7 @@
       [TabbarItem.name]: TabbarItem
     },
     created() {
-      if (this.$store.state.busPower) this.schoolBusUrl = "/main/school-bus-plus"
+      if (this.$store.state.busPower) this.schoolBusUrl = "/main/school-bus-pro"
       else this.schoolBusUrl = "/main/school-bus"
     }
   };

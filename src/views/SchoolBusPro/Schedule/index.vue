@@ -4,7 +4,7 @@
       class="title"
       :title="$store.state.busDate"
       left-arrow
-      @click-left="$router.push('/school-bus-plus/date')"
+      @click-left="$router.push('/school-bus-pro/date')"
     />
 
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
@@ -61,7 +61,7 @@
 
   import CreateOrder from "./components/CreateOrder";
   import {checkLogin} from "../../../network/token";
-  import {passenger, schedule} from "../../../network/schoolBusPlus";
+  import {passenger, schedule} from "../../../network/schoolBusPro";
   import {Popup, PullRefresh, Tag} from "vant";
 
   export default {
@@ -82,7 +82,7 @@
     components: {CreateOrder, [Tag.name]: Tag, [PullRefresh.name]: PullRefresh, [Popup.name]: Popup},
 
     mounted() {
-      if (this.$store.state.busDate == null || this.$store.state.routeId == null) this.$router.push("/main/school-bus-plus")
+      if (this.$store.state.busDate == null || this.$store.state.routeId == null) this.$router.push("/main/school-bus-pro")
       else {
         // 提示正在加载中
         this.$toast.loading({forbidClick: true, duration: 0})
