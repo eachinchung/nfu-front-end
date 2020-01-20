@@ -259,7 +259,7 @@
     if (dayIndex === 0) day = 7
     else day = dayIndex
 
-    return {left: `calc(((100vw - 46px) / 7) * ${day - 1} + 43px)`}
+    return {left: `calc(((100vw - 46px) / 7) * ${day - 1} + 42px)`}
   }
 
   // 计算课程方块的高度

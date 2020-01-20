@@ -4,15 +4,16 @@
 
     <div class="home-card">
       <div class="home-version">
-        beta v0.3.1
+        beta v0.3.3
       </div>
       <div class="home-plain">
         更新日志
       </div>
       <div class="home-notice">
+        修复激活链接失效的问题！！！<br>
+        <br>
         新版课程表<br>
         开放意见反馈<br>
-        <br>
         性能优化
       </div>
     </div>
@@ -68,7 +69,7 @@
     color: #2196f3;
   }
 
-  .home-version{
+  .home-version {
     float: right;
     padding-top: 15px;
     padding-right: 20px;
