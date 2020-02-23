@@ -79,8 +79,12 @@
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
     },
-    components: {CreateOrder, [Tag.name]: Tag, [PullRefresh.name]: PullRefresh, [Popup.name]: Popup},
-
+    components: {
+      CreateOrder,
+      [Tag.name]: Tag,
+      [PullRefresh.name]: PullRefresh,
+      [Popup.name]: Popup
+    },
     mounted() {
       if (this.$store.state.busDate == null || this.$store.state.routeId == null) this.$router.push("/main/school-bus-pro")
       else {

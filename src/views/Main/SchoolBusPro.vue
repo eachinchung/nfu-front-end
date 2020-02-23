@@ -1,6 +1,11 @@
 <template>
   <div>
-    <van-nav-bar class="title" title="南苑 Bus"/>
+    <van-nav-bar class="title">
+      <div slot="title">
+          <span :style="{marginRight: '8px',verticalAlign: 'middle'}">南苑 Bus</span>
+          <van-tag  plain >Pro</van-tag>
+      </div>
+    </van-nav-bar>
 
     <div class="card">
       <van-cell class="cardItem" title="南苑->河堤公园" value="¥5" is-link @click="toDate(21)"/>
@@ -19,10 +24,14 @@
 
 <script>
   import {checkLogin} from "../../network/token";
+  import {Tag} from "vant";
 
   export default {
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
+    },
+    components: {
+      [Tag.name]: Tag
     },
     methods: {
       toDate(routeId) {

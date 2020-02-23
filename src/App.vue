@@ -3,5 +3,14 @@
 </template>
 
 <style>
-  @import "~@/assets/css/main.css";
+  body {
+    background: rgb(248, 248, 248);
+  }
+
+  .title {
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin-bottom: 25px;
+  }
 </style>
