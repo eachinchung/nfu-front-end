@@ -42,6 +42,7 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {Col, Icon, Row} from "vant";
+  import {getProfile} from "@/network/profile";
 
   export default {
     components: {
@@ -51,6 +52,9 @@
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
+    },
+    created() {
+      getProfile().then()
     }
   }
 </script>

@@ -1,10 +1,9 @@
 import request from "./request"
 
-
-export function getUserData() {
+export function getProfile() {
   return request({
     method: "get",
-    url: "/user/data",
+    url: "/user/profile",
   })
 }
 
