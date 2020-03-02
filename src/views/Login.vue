@@ -78,13 +78,20 @@
           login(this.username, this.password).then(
             res => {
               this.loading = false
+
               if (res.data.code === "1000") {
                 handleToken(res)
                 this.$router.push(this.path)
               }
+
               if (res.data.code === "0002") this.$notify(res.data.message)
               if (res.data.code === "0003") this.passwordErr = res.data.message
-              if (res.data.code === "0001") this.usernameErr = res.data.message
+              if (res.data.code === "0004") this.usernameErr = res.data.message
+
+              if (res.data.code === "0001") {
+                this.$router.push("/sign-up")
+                this.$toast.fail(res.data.message)
+              }
             }).catch(() => {
             this.loading = false
             this.$notify("无法连接到服务器")
