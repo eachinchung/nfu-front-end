@@ -118,7 +118,7 @@
                 from: "/school-bus-pro/schedule"
               }
             })
-            // else if (res.data.busCode === "0009") brushTicket(this, res)
+              // else if (res.data.busCode === "0009") brushTicket(this, res)
             // else if (res.data.busCode === "0002") brushTicket(this, res)
             else this.$toast.fail(res.data.message)
           }).catch(() => this.$toast.fail("无法连接到服务器"))

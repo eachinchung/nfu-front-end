@@ -94,8 +94,8 @@
         url: null
       }
     },
-    computed:{
-      qrUrl(){
+    computed: {
+      qrUrl() {
         return `${process.env.VUE_APP_POST_URL}/electric/wechat-pay/qrcode?url=${this.url}`
       }
     },

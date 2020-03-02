@@ -51,7 +51,8 @@
     </van-cell-group>
 
     <van-row type="flex" justify="center" class="set-password-row">
-      <van-button type="warning" class="set-password-button" size="small" :loading="loading" @click="setPassword">修改密码</van-button>
+      <van-button type="warning" class="set-password-button" size="small" :loading="loading" @click="setPassword">修改密码
+      </van-button>
     </van-row>
   </div>
 </template>

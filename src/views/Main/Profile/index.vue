@@ -1,54 +1,54 @@
 <template>
   <div>
     <van-nav-bar class="title" title="个人档案"/>
-      <div class="card">
-        <van-cell class="cardItem" icon="contact" title="账号" :value="userId"/>
-        <van-cell class="cardItem" icon="smile-o" title="姓名" :value="name"/>
-        <van-cell
-          class="cardItem"
-          icon="location-o"
-          title="宿舍"
-          :value="dormitory"
-          placeholder="选择宿舍"
-          @click="showPicker = true"
-          is-link
-        />
-        <van-cell
-          class="cardItem"
-          icon="envelop-o"
-          title="邮箱"
-          :value="email"
-          @click="$toast('该功能正在开发中')"
-          is-link
-        />
-      </div>
+    <div class="card">
+      <van-cell class="cardItem" icon="contact" title="账号" :value="userId"/>
+      <van-cell class="cardItem" icon="smile-o" title="姓名" :value="name"/>
+      <van-cell
+        class="cardItem"
+        icon="location-o"
+        title="宿舍"
+        :value="dormitory"
+        placeholder="选择宿舍"
+        @click="showPicker = true"
+        is-link
+      />
+      <van-cell
+        class="cardItem"
+        icon="envelop-o"
+        title="邮箱"
+        :value="email"
+        @click="$toast('该功能正在开发中')"
+        is-link
+      />
+    </div>
 
-      <div class="card">
-        <van-cell
-          class="cardItem"
-          icon="comment-o"
-          title="意见反馈"
-          to="/feedback"
-          is-link
-        />
-        <van-cell
-          class="cardItem"
-          icon="gift-card-o"
-          title="请我喝红牛"
-          @click="showPay=true"
-          is-link
-        />
-      </div>
+    <div class="card">
+      <van-cell
+        class="cardItem"
+        icon="comment-o"
+        title="意见反馈"
+        to="/feedback"
+        is-link
+      />
+      <van-cell
+        class="cardItem"
+        icon="gift-card-o"
+        title="请我喝红牛"
+        @click="showPay=true"
+        is-link
+      />
+    </div>
 
 
-      <van-row type="flex" justify="center" class="profile-row">
-        <van-button type="default" class="profile-button" @click="showSetPassword=true">修改密码</van-button>
-      </van-row>
-      <van-row type="flex" justify="center">
-        <van-button type="warning" class="profile-button" :loading="loading" @click="logout">退出登录</van-button>
-      </van-row>
+    <van-row type="flex" justify="center" class="profile-row">
+      <van-button type="default" class="profile-button" @click="showSetPassword=true">修改密码</van-button>
+    </van-row>
+    <van-row type="flex" justify="center">
+      <van-button type="warning" class="profile-button" :loading="loading" @click="logout">退出登录</van-button>
+    </van-row>
 
-      <div :style="{height:'100px'}"></div>
+    <div :style="{height:'100px'}"></div>
 
 
     <my-popup

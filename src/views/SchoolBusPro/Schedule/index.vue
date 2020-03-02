@@ -150,6 +150,7 @@
 
 <style scoped>
   @import "~@/assets/css/card.css";
+
   .ticketPathway {
     white-space: nowrap;
     text-overflow: ellipsis;

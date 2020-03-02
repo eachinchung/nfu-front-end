@@ -79,7 +79,7 @@
           this.$toast.clear()
         })
     },
-    methods:{
+    methods: {
       onRefresh() {
         pendingPayment()
           .then(res => {
@@ -91,7 +91,7 @@
             this.isLoading = false
           })
       },
-      pay(orderId){
+      pay(orderId) {
         this.$router.push({
           path: "/school-bus-pro/order/pay",
           query: {
