@@ -1,10 +1,10 @@
 <template>
   <div>
     <van-nav-bar
-      title="学分查询"
+      title="已选学分"
       :border="false"
       left-arrow
-      @click-left="$router.push('/main/home')"
+      @click-left="$router.push('/credit-pro')"
     />
     <div v-if="$store.state.achievement">
       <van-tabs
@@ -229,11 +229,6 @@
       }
     },
     methods: {
-      total(classType) {
-        let count = 0;
-        for (const item of classType) count += item.credit
-        return count
-      },
       onRefresh() {
         updateAchievement()
           .then(res => {

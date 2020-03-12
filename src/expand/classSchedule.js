@@ -25,20 +25,24 @@ export function classCalendar(timestamp) {
 
 // 课程数据写入缓存
 export function cachingClassSchedule(classList) {
+  let myClassList = {}
   const classScheduleList = classScheduleModels()
   const weekdayModels = [1, 2, 3, 4, 5, 6, 0]
 
   // 课程按照上课时间的先后排序
   classList.message.sort((a, b) => a.startNode - b.startNode)
 
-  for (const item of classList.message) for (let i = item.startWeek; i <= item.endWeek; i++) {
-    item.background = scheduleBackground[Math.floor(Math.random() * scheduleBackground.length)]
-    classScheduleList[i][weekdayModels[item.weekday]].push(item)
+  for (const item of classList.message) {
+    myClassList[item.courseName] = item.credit
+    for (let i = item.startWeek; i <= item.endWeek; i++) {
+      item.background = scheduleBackground[Math.floor(Math.random() * scheduleBackground.length)]
+      classScheduleList[i][weekdayModels[item.weekday]].push(item)
+    }
   }
 
   // 写入缓存
   localStorage.setItem("classScheduleVersion", classList.version)
-  localStorage.setItem("classList", JSON.stringify(classList.message))
+  localStorage.setItem("classList", JSON.stringify(myClassList))
   localStorage.setItem("classSchedule", JSON.stringify(classScheduleList))
 
   return classScheduleList

@@ -2,6 +2,7 @@
   <div>
     <van-nav-bar
       class="title"
+      :border="false"
       :title="$store.state.busDate"
       left-arrow
       @click-left="$router.push('/school-bus-pro/date')"

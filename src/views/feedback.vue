@@ -2,6 +2,7 @@
   <div>
     <van-nav-bar
       class="title"
+      :border="false"
       title="意见反馈"
       left-arrow
       @click-left="$router.push('/main/profile')"

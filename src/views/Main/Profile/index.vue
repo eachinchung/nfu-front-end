@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar class="title" title="个人档案"/>
+    <van-nav-bar class="title" :border="false" title="个人档案"/>
     <div class="card">
       <van-cell class="cardItem" icon="contact" title="账号" :value="userId"/>
       <van-cell class="cardItem" icon="smile-o" title="姓名" :value="name"/>

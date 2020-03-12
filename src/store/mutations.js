@@ -6,7 +6,7 @@ export default {
     const tokenData = JSON.parse(window.atob(token.split('.')[1]))
     const userData = JSON.parse(tokenData.data)
     state.accessToken = token
-    state.busPower = tokenData.busPower
+    localStorage.setItem("busPower", tokenData.busPower)
     localStorage.setItem("userId", tokenData.id)
     localStorage.setItem("name", userData.name)
     localStorage.setItem("email", userData.email)
@@ -20,6 +20,15 @@ export default {
   },
   setTicketType(state, type) {
     state.ticketType = type
+  },
+  setProfile(state, profile) {
+    state.profile = profile
+  },
+  setCreditPro(state, creditPro) {
+    state.creditPro = creditPro
+  },
+  setCreditCount(state, creditCount) {
+    state.creditCount = creditCount
   },
   setAchievement(state, achievementData) {
     let semesterList = {}

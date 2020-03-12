@@ -3,6 +3,7 @@
     <van-nav-bar
       class="title"
       title="确认订单"
+      :border="false"
       left-arrow
       right-text="已付款"
       @click-left="$router.push(path)"

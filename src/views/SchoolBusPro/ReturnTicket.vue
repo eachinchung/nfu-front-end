@@ -2,6 +2,7 @@
   <div>
     <van-nav-bar
       class="title"
+      :border="false"
       title="退票"
       left-arrow
       @click-left="$router.push('/school-bus-pro/order/list/waiting-ride')"

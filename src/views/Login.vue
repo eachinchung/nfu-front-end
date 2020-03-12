@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar class="login-title" title="南苑聚合"/>
+    <van-nav-bar class="login-title" :border="false" title="南苑聚合"/>
     <van-cell-group title="请登录您的账号" class="login-group">
       <van-field
         v-model="username"

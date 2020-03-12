@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar class="title" title="南苑聚合"/>
+    <van-nav-bar class="title" :border="false" title="南苑聚合"/>
 
     <div class="home-card">
       <div class="home-version">
@@ -24,7 +24,7 @@
         <br>
         电费管理
       </van-col>
-      <van-col span="8" @click="$router.push('/credit')">
+      <van-col span="8" @click="$router.push('/credit-pro')">
         <van-icon name="medel-o" size="22" :style="{marginBottom: '6px'}"/>
         <br>
         学分查询
@@ -42,7 +42,6 @@
 <script>
   import {checkLogin} from "@/network/token";
   import {Col, Icon, Row} from "vant";
-  import {getProfile} from "@/network/profile";
 
   export default {
     components: {
@@ -52,9 +51,6 @@
     },
     beforeRouteEnter(to, from, next) {
       checkLogin(to, next)
-    },
-    created() {
-      getProfile().then()
     }
   }
 </script>

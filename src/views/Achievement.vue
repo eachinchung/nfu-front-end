@@ -3,6 +3,7 @@
     <van-nav-bar
       class="title"
       title="成绩查询"
+      :border="false"
       left-arrow
       @click-left="$router.push('/main/home')"
     />

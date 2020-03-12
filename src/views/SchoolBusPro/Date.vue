@@ -1,6 +1,12 @@
 <template>
   <div>
-    <van-nav-bar class="title" title="请选择乘车日期" left-arrow @click-left="onClickLeft"/>
+    <van-nav-bar
+      :border="false"
+      class="title"
+      title="请选择乘车日期"
+      left-arrow
+      @click-left="onClickLeft"
+    />
 
     <div class="card">
       <van-cell

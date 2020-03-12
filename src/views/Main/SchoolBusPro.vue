@@ -1,9 +1,9 @@
 <template>
   <div>
     <van-nav-bar class="title">
-      <div slot="title">
-        <span class="school-bus-pro-title school-bus-pro-title-text">南苑 Bus</span>
-        <van-tag plain class="school-bus-pro-title">Pro</van-tag>
+      <div slot="title" :style="{flex:1, lineHeight: '46px'}">
+        <span class="title-tag title-text">南苑 Bus</span>
+        <van-tag class="title-tag" plain>Pro</van-tag>
       </div>
     </van-nav-bar>
 
@@ -45,11 +45,11 @@
 <style scoped>
   @import "~@/assets/css/card.css";
 
-  .school-bus-pro-title {
+  .title-tag {
     vertical-align: middle;
   }
 
-  .school-bus-pro-title-text {
+  .title-text {
     margin-right: 8px;
   }
 </style>

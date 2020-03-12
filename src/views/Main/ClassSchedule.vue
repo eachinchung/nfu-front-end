@@ -102,7 +102,7 @@
 
   import md5 from "@/common/md5"
   import {checkLogin} from "@/network/token"
-  import {cachingClassSchedule, classCalendar, handleWeek} from "@/common/classSchedule"
+  import {cachingClassSchedule, classCalendar, handleWeek} from "@/expand/classSchedule"
   import {getClassSchedule, schoolConfig, updateClassSchedule, versionClassSchedule} from "@/network/classSchedule"
   import {Button, Dialog, DropdownItem, DropdownMenu, Popup, Row} from 'vant'
 

@@ -12,6 +12,8 @@ const Electric = () => import('../views/Electric')
 
 const Achievement = () => import('../views/Achievement')
 const Credit = () => import('../views/Credit')
+const CreditPro = () => import('../views/CreditPro/index')
+const creditList = () => import('../views/CreditPro/creditList')
 const SchoolBusPro = () => import('../views/SchoolBusPro')
 
 const Feedback = () => import('../views/feedback')
@@ -44,6 +46,15 @@ const routes = [
   {
     path: '/credit',
     component: Credit
+  },
+  {
+    path: '/credit-pro',
+    component: CreditPro
+  },
+  {
+    name: 'creditList',
+    path: '/credit-pro/:courseType',
+    component: creditList
   },
   {
     path: '/school-bus-pro',

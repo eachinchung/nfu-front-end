@@ -3,6 +3,7 @@
     <van-nav-bar
       class="title"
       title="待乘车订单"
+      :border="false"
       left-arrow
       @click-left="$router.push('/main/school-bus-pro')"
     />
