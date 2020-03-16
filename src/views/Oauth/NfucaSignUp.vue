@@ -57,6 +57,14 @@
       [Row.name]: Row,
       [Col.name]: Col
     },
+    created(){
+      Dialog.alert({
+        title: "密码说明",
+        messageAlign: "left",
+        message:
+          "教务系统密码将作为账号默认密码。\n您的密码已加密，南苑聚合不能读取您的密码。"
+      }).then(() => {})
+    },
     methods: {
       getDormitory(room) {
         this.value = room[0]
