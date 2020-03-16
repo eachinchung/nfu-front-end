@@ -127,8 +127,13 @@ function initAchievement(vm) {
           creditProData.matchFailed[item] = classData
           creditCountData.matchFailed += classData.credit
         } else {
-          creditProData[classTypeHash[subdivisionType]][item] = classData
-          creditCountData[classTypeHash[subdivisionType]] += classData.credit
+          try {
+            creditProData[classTypeHash[subdivisionType]][item] = classData
+            creditCountData[classTypeHash[subdivisionType]] += classData.credit
+          } catch (e) {
+            creditProData.matchFailed[item] = classData
+            creditCountData.matchFailed += classData.credit
+          }
         }
       }
     }
@@ -142,12 +147,17 @@ function initAchievement(vm) {
       continue
     }
 
-    item.accomplish = true
-    let courseType = classTypeHash[item.subdivisionType]
-    if (courseType == null) courseType = classTypeHash[item.courseType]
+    try {
+      item.accomplish = true
+      let courseType = classTypeHash[item.subdivisionType]
+      if (courseType == null) courseType = classTypeHash[item.courseType]
 
-    creditProData[courseType][item.courseName] = item
-    creditCountData[courseType] += item.credit
+      creditProData[courseType][item.courseName] = item
+      creditCountData[courseType] += item.credit
+    } catch (e) {
+      creditProData.matchFailed[item.courseName] = item
+      creditCountData.matchFailed += item.credit
+    }
   }
 
   vm.$store.commit('setCreditPro', creditProData)

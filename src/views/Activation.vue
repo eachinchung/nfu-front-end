@@ -5,7 +5,8 @@
     created() {
       activation(this.$route.query.token).then(
         res => {
-          this.$toast.fail(res.data.message)
+          if (res.data.code === "1000") this.$toast.success(res.data.message)
+          else this.$toast.fail(res.data.message)
           this.$router.push('/login')
         }
       ).catch(() => {

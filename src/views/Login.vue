@@ -1,8 +1,13 @@
 <template>
   <div>
-    <van-nav-bar class="login-title" :border="false" title="南苑聚合"/>
-    <van-cell-group title="请登录您的账号" class="login-group">
+    <van-nav-bar class="title" :border="false" title="南苑聚合"/>
+
+    <div class="login-group-title">
+      请登录您的账号
+    </div>
+    <div class="card login-group">
       <van-field
+        class="cardItem"
         v-model="username"
         left-icon="contact"
         label="学号"
@@ -11,6 +16,7 @@
         :error-message="usernameErr"
       />
       <van-field
+        class="cardItem"
         v-model="password"
         left-icon="edit"
         type="password"
@@ -19,10 +25,14 @@
         @keyup.enter="loginBtu"
         :error-message="passwordErr"
       />
-    </van-cell-group>
+    </div>
 
     <van-row type="flex" justify="center" class="login-row">
       <van-button type="primary" class="login-button" :loading="loading" @click="loginBtu">登录</van-button>
+    </van-row>
+    <van-row type="flex" justify="center" class="login-row">
+      <van-button icon="https://cdn.kaimon.cn/img/nfu/nfuca-logo.png" class="login-button" @click="nfucaLogin">南苑计协登录
+      </van-button>
     </van-row>
     <van-row type="flex" justify="center">
       <van-button type="default" class="login-button" to="/sign-up">注册</van-button>
@@ -33,15 +43,14 @@
 <script>
   import {login} from "../network/oauth"
   import {handleToken} from "../network/token"
-  import {Button, CellGroup, Col, Field, Row} from "vant";
+  import {Button, Col, Dialog, Field, Row} from "vant";
 
   export default {
     components: {
       [Button.name]: Button,
       [Field.name]: Field,
       [Row.name]: Row,
-      [Col.name]: Col,
-      [CellGroup.name]: CellGroup
+      [Col.name]: Col
     },
     data() {
       return {
@@ -97,28 +106,46 @@
             this.$notify("无法连接到服务器")
           })
         }
+      },
+      nfucaLogin() {
+        Dialog.alert({
+          title: '南苑计协登录',
+          message: '我们支持计协账号登录啦！\n只要你关注了南苑计协公众号、\n并在微信打开此页面，\n就可以无密码登录哦~',
+          showCancelButton: true,
+        }).then(() => {
+          location.href = 'https://api.nfuca.com/openLogin?name=Eachin&redirectUri=' + process.env.VUE_APP_POST_URL + '/oauth/nfuca'
+        }).catch(() => {
+          // on cancel
+        })
       }
     }
   };
 </script>
 
 <style scoped>
-  .login-button {
-    width: 90%;
-  }
+  @import "~@/assets/css/card.css";
 
-  .login-title {
-    position: sticky;
-    top: 0;
-    left: 0;
-    margin-bottom: 20px;
+  .login-button {
+    width: 80%;
+    border-radius: 8px;
   }
 
   .login-group {
     margin-bottom: 45px;
+    margin-left: 18px;
+    margin-right: 18px;
   }
 
   .login-row {
     margin-bottom: 15px;
+  }
+
+  .login-group-title {
+    padding-top: 10px;
+    padding-left: 32px;
+    padding-bottom: 12px;
+    color: #969799;
+    font-size: 14px;
+    line-height: 16px;
   }
 </style>

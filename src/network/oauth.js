@@ -34,3 +34,22 @@ export function activation(token) {
     }
   })
 }
+
+export function nfucaLogin(sign) {
+  return noToken({
+    method: "post",
+    url: "/oauth/nfuca/login",
+    data: {sign}
+  })
+}
+
+export function nfucaSignUp(sign, dormitory, email) {
+  return noToken({
+    method: "post",
+    url: "/oauth/nfuca/sign-up",
+    data: {
+      sign, email,
+      roomId: dormitory
+    }
+  })
+}

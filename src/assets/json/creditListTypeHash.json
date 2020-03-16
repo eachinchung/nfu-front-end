@@ -1,1 +1,42 @@
-{"professional-elective": {"type": "professionalElective", "title": "\u4e13\u4e1a\u9009\u4fee\u8bfe", "progressRate": true}, "professional-direction": {"type": "professionalDirection", "title": "\u4e13\u4e1a\u65b9\u5411\u8bfe", "progressRate": true}, "professional-core": {"type": "professionalCore", "title": "\u4e13\u4e1a\u6838\u5fc3\u8bfe", "progressRate": true}, "public-elective": {"type": "publicElective", "title": "\u516c\u5171\u9009\u4fee\u8bfe", "progressRate": true}, "public-compulsory": {"type": "publicCompulsory", "title": "\u516c\u5171\u5fc5\u4fee\u8bfe", "progressRate": true}, "growing-compulsory": {"type": "growingCompulsory", "title": "\u6210\u957f\u5fc5\u4fee\u8bfe", "progressRate": true}, "fail-subject": {"type": "failSubject", "title": "\u6302\u79d1\u8bfe\u7a0b", "progressRate": false}, "match-failed": {"type": "matchFailed", "title": "\u5339\u914d\u5931\u8d25\u8bfe\u7a0b", "progressRate": false}}
+{
+  "professional-elective": {
+    "type": "professionalElective",
+    "title": "\u4e13\u4e1a\u9009\u4fee\u8bfe",
+    "progressRate": true
+  },
+  "professional-direction": {
+    "type": "professionalDirection",
+    "title": "\u4e13\u4e1a\u65b9\u5411\u8bfe",
+    "progressRate": true
+  },
+  "professional-core": {
+    "type": "professionalCore",
+    "title": "\u4e13\u4e1a\u6838\u5fc3\u8bfe",
+    "progressRate": true
+  },
+  "public-elective": {
+    "type": "publicElective",
+    "title": "\u516c\u5171\u9009\u4fee\u8bfe",
+    "progressRate": true
+  },
+  "public-compulsory": {
+    "type": "publicCompulsory",
+    "title": "\u516c\u5171\u5fc5\u4fee\u8bfe",
+    "progressRate": true
+  },
+  "growing-compulsory": {
+    "type": "growingCompulsory",
+    "title": "\u6210\u957f\u5fc5\u4fee\u8bfe",
+    "progressRate": true
+  },
+  "fail-subject": {
+    "type": "failSubject",
+    "title": "\u6302\u79d1\u8bfe\u7a0b",
+    "progressRate": false
+  },
+  "match-failed": {
+    "type": "matchFailed",
+    "title": "\u5339\u914d\u5931\u8d25\u8bfe\u7a0b",
+    "progressRate": false
+  }
+}

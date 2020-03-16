@@ -20,6 +20,8 @@ const Feedback = () => import('../views/feedback')
 const Login = () => import('../views/Login')
 const SignUp = () => import('../views/SignUp')
 const Activation = () => import('../views/Activation')
+const Nfuca = () => import('../views/Oauth/Nfuca')
+const NfucaSignUp = () => import('../views/Oauth/NfucaSignUp')
 
 
 const routes = [
@@ -77,6 +79,14 @@ const routes = [
   {
     path: '/activation',
     component: Activation
+  },
+  {
+    path: '/oauth/nfuca',
+    component: Nfuca
+  },
+  {
+    path: '/oauth/nfuca/sign-up',
+    component: NfucaSignUp
   },
   {
     path: '*',

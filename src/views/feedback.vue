@@ -91,7 +91,7 @@
           title: this.title,
           feedback: this.feedback
         }).then(res => {
-          if (res.data.code === "1000") this.$toast.success('意见反馈提交成功')
+          if (res.data.code === "1000") this.$toast.success('意见反馈提交成功，请留意邮箱回信')
           else this.$toast.fail(res.data.message)
           this.loading = false
         }).catch(() => {

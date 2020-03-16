@@ -69,6 +69,10 @@
             :value="showCourseName"
           />
           <van-cell
+            title="课程性质"
+            :value="showSubdivisionType"
+          />
+          <van-cell
             title="课程学分"
             :value="showCourseCredit"
           />
@@ -153,7 +157,8 @@
     showClassroom: null,
     showClassTime: null,
     showClassWeek: null,
-    showClassTeacher: null
+    showClassTeacher: null,
+    showSubdivisionType: null,
   }
 
   // 初始化
@@ -243,6 +248,7 @@
     this.showClassTime = `${classTimes[item.startNode][0]} ~ ${classTimes[item.endNode][1]}`
     this.showClassWeek = `${item.startWeek + 1} ~ ${item.endWeek + 1}`
     this.showClassTeacher = item.teacher.toString()
+    this.showSubdivisionType=item.subdivisionType
   }
 
   // 每一天的唯一key

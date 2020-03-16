@@ -4,17 +4,22 @@
 
     <div class="home-card">
       <div class="home-version">
-        beta v0.3.5
+        beta v0.3.9
       </div>
       <div class="home-plain">
         更新日志
       </div>
       <div class="home-notice">
-        性能优化<br>
+        南苑聚合 X 南苑计协<br>
+        我们支持计协账号登录啦～<br>
+        只要你关注了计协公众号，就可以无密码登录哦<br><br>
+        新版学分管理<br>
         <br>
-        新版课程表<br>
-        开放意见反馈<br>
-        性能优化
+        2017级 计算机类 适配本学期正在学习的学分<br><br>
+        其他年级专业将在下个版本适配。<br><br>
+        正在学习的学分取自课程表，<br>如果发现课没有被算进去，可以重置课程表。<br>
+        如果发现课程未匹配，将在下个版本修复。
+
       </div>
     </div>
 

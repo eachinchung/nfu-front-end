@@ -2,6 +2,7 @@ import store from '@/store'
 
 // 储存获得的token
 export function handleToken(res) {
+  localStorage.clear()
   localStorage.setItem("remember", res.data.message.refreshToken)
   store.commit("upAccessToken", res.data.message.accessToken)
 }
