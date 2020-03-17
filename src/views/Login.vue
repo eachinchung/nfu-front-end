@@ -113,7 +113,7 @@
           message: '我们支持计协账号登录啦！\n只要你关注了南苑计协公众号、\n并在微信打开此页面，\n就可以无密码登录哦~',
           showCancelButton: true,
         }).then(() => {
-          location.replace = 'https://api.nfuca.com/openLogin?name=Eachin&redirectUri=' + process.env.VUE_APP_POST_URL + '/oauth/nfuca'
+          location.replace('https://api.nfuca.com/openLogin?name=Eachin&redirectUri=' + process.env.VUE_APP_POST_URL + '/oauth/nfuca')
         }).catch(() => {
           // on cancel
         })
