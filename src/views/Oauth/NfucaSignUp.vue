@@ -98,7 +98,7 @@
                 Dialog.alert({
                   title: "注册成功",
                   message: "激活邮件已发送至您的邮箱，请查看。"
-                }).then(() => this.$router.push('/login'))
+                }).then(() => this.$router.replace('/login'))
               } else this.$notify(res.data.message)
             })
             .catch(() => {
