@@ -90,7 +90,7 @@
 
               if (res.data.code === "1000") {
                 handleToken(res)
-                this.$router.push(this.path)
+                this.$router.replace(this.path)
               }
 
               if (res.data.code === "0002") this.$notify(res.data.message)
@@ -113,7 +113,7 @@
           message: '我们支持计协账号登录啦！\n只要你关注了南苑计协公众号、\n并在微信打开此页面，\n就可以无密码登录哦~',
           showCancelButton: true,
         }).then(() => {
-          location.href = 'https://api.nfuca.com/openLogin?name=Eachin&redirectUri=' + process.env.VUE_APP_POST_URL + '/oauth/nfuca'
+          location.replace = 'https://api.nfuca.com/openLogin?name=Eachin&redirectUri=' + process.env.VUE_APP_POST_URL + '/oauth/nfuca'
         }).catch(() => {
           // on cancel
         })
