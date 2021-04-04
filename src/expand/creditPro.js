@@ -19,8 +19,7 @@ export function created() {
       } else this.$notify(res.data.message)
       this.loadedSuccessfully = true
       this.$toast.clear()
-    }).catch((e) => {
-      console.log(e);
+    }).catch(() => {
       this.$notify("无法连接到服务器")
       this.$toast.clear()
     })
@@ -33,8 +32,7 @@ export function created() {
       } else this.$notify(res.data.message)
       this.loadedSuccessfully = true
       this.$toast.clear()
-    }).catch((e) => {
-      console.log(e);
+    }).catch(() => {
       this.$notify("无法连接到服务器")
       this.$toast.clear()
     })

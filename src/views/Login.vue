@@ -31,7 +31,7 @@
       <van-button type="primary" class="login-button" :loading="loading" @click="loginBtu">登录</van-button>
     </van-row>
     <van-row type="flex" justify="center" class="login-row">
-      <van-button icon="https://cdn.kaimon.cn/img/nfu/nfuca-logo.png" class="login-button" @click="nfucaLogin">南苑计协登录
+      <van-button icon="https://static.ek-studio.cn/image/60251266740a1dc7eb81854e95eab026.png" class="login-button" @click="nfucaLogin">南苑计协登录
       </van-button>
     </van-row>
     <van-row type="flex" justify="center">
